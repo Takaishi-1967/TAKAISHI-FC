@@ -8,18 +8,15 @@ html {
 
 body {
   margin: 0;
-  background: #f3f5f8;
+  background: #f5f6f8;
   color: #172033;
   font-family:
-    "M PLUS Rounded 1c",
     -apple-system,
     BlinkMacSystemFont,
     "Hiragino Kaku Gothic ProN",
     "Hiragino Sans",
     "Yu Gothic",
     sans-serif;
-  font-weight: 400;
-  letter-spacing: 0.01em;
 }
 
 button,
@@ -57,16 +54,14 @@ button:disabled {
 
 .header h1 {
   margin: 0;
-  font-size: 21px;
-  font-weight: 800;
-  letter-spacing: 0.05em;
+  font-size: 22px;
+  letter-spacing: 0.04em;
 }
 
 .header p {
   margin: 3px 0 0;
-  font-size: 11px;
-  opacity: 0.72;
-  font-weight: 400;
+  font-size: 12px;
+  opacity: 0.75;
 }
 
 /* =========================
@@ -92,33 +87,31 @@ button:disabled {
 
 .info-box {
   background: #ffffff;
-  border-radius: 14px;
-  padding: 13px 14px;
+  border-radius: 10px;
+  padding: 12px 14px;
   box-shadow: 0 2px 8px rgba(8, 27, 58, 0.06);
   min-height: 145px;
-  border: 1px solid #edf0f4;
 }
 
 .info-box h3 {
   margin: 0 0 7px;
   color: #081b3a;
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .info-text {
-  font-size: 11px;
-  line-height: 1.6;
-  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.55;
 }
 
 .icon-guide {
-  margin-top: 9px;
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: 10px;
-  color: #667085;
+  gap: 3px;
+  font-size: 11px;
+  color: #475467;
 }
 
 .rule-info-box {
@@ -138,10 +131,10 @@ button:disabled {
   min-height: 86px;
   resize: vertical;
   border: 1px solid #f0b4ae;
-  border-radius: 10px;
-  padding: 8px 9px;
+  border-radius: 7px;
+  padding: 7px 8px;
   color: #b42318;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   line-height: 1.5;
   background: #fffafa;
@@ -149,13 +142,13 @@ button:disabled {
 
 .notice-box textarea::placeholder {
   color: #d58a83;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .notice-box textarea:focus {
   outline: none;
   border-color: #b42318;
-  box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.07);
+  box-shadow: 0 0 0 2px rgba(180, 35, 24, 0.08);
 }
 
 /* =========================
@@ -165,29 +158,29 @@ button:disabled {
 .rule-box {
   background: #ffffff;
   border-left: 4px solid #f5c518;
-  border-radius: 14px;
+  border-radius: 8px;
   padding: 12px 14px;
   margin-bottom: 14px;
-  box-shadow: 0 2px 8px rgba(8, 27, 58, 0.06);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 .rule-title {
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 14px;
+  font-weight: 700;
   color: #081b3a;
   margin-bottom: 5px;
 }
 
 .rule-text {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.6;
 }
 
 .rule-notes {
   margin-top: 6px;
-  font-size: 9px;
+  font-size: 10px;
   color: #667085;
-  line-height: 1.6;
+  line-height: 1.55;
 }
 
 /* =========================
@@ -196,42 +189,32 @@ button:disabled {
 
 button {
   border: none;
-  border-radius: 10px;
+  border-radius: 7px;
   background: #081b3a;
   color: #ffffff;
-  padding: 8px 13px;
-  font-size: 12px;
-  font-weight: 700;
-  transition:
-    transform 0.12s ease,
-    opacity 0.12s ease;
+  padding: 7px 12px;
+  font-size: 13px;
 }
 
 button:hover {
-  opacity: 0.9;
-}
-
-button:active {
-  transform: scale(0.97);
+  opacity: 0.88;
 }
 
 .secondary-button {
-  background: #e9edf3;
+  background: #e8ebf0;
   color: #172033;
 }
 
 .delete-button {
   background: #b42318;
-  padding: 6px 10px;
-  font-size: 10px;
-  border-radius: 8px;
+  padding: 5px 9px;
+  font-size: 11px;
 }
 
 .edit-button {
   background: #475467;
-  padding: 6px 10px;
-  font-size: 10px;
-  border-radius: 8px;
+  padding: 5px 9px;
+  font-size: 11px;
 }
 
 .move-button {
@@ -239,9 +222,8 @@ button:active {
   height: 28px;
   padding: 0;
   font-size: 14px;
-  background: #e9edf3;
+  background: #e8ebf0;
   color: #172033;
-  border-radius: 8px;
 }
 
 /* =========================
@@ -256,9 +238,8 @@ button:active {
 }
 
 .home-actions button {
-  font-size: 10px;
-  padding: 7px 11px;
-  border-radius: 9px;
+  font-size: 11px;
+  padding: 6px 10px;
 }
 
 .compact-button {
@@ -271,18 +252,16 @@ button:active {
 
 .section {
   background: #ffffff;
-  border-radius: 15px;
+  border-radius: 10px;
   padding: 16px;
-  box-shadow: 0 2px 9px rgba(8, 27, 58, 0.06);
-  border: 1px solid #edf0f4;
+  box-shadow: 0 2px 8px rgba(8, 27, 58, 0.06);
   margin-bottom: 16px;
 }
 
 .section h2 {
   margin: 0 0 14px;
   color: #081b3a;
-  font-size: 17px;
-  font-weight: 800;
+  font-size: 18px;
 }
 
 /* =========================
@@ -302,7 +281,7 @@ button:active {
   table-layout: fixed;
   width: max-content;
   min-width: 100%;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .player-name-header,
@@ -314,7 +293,7 @@ button:active {
   position: sticky;
   left: 0;
   z-index: 2;
-  border-right: 1px solid #e0e5ec;
+  border-right: 1px solid #d9dee7;
 }
 
 .event-header,
@@ -332,19 +311,19 @@ button:active {
 }
 
 .attendance-table th {
-  border-bottom: 1px solid #dfe4eb;
-  border-right: 1px solid #dfe4eb;
+  border-bottom: 1px solid #d9dee7;
+  border-right: 1px solid #d9dee7;
   padding: 7px 5px;
   vertical-align: top;
   text-align: center;
 }
 
 .attendance-table td {
-  border-bottom: 1px solid #e5e9ef;
+  border-bottom: 1px solid #e1e5ec;
 }
 
 .event-header {
-  line-height: 1.4;
+  line-height: 1.35;
   font-weight: 700;
   word-break: break-word;
 }
@@ -358,9 +337,8 @@ button:active {
 }
 
 .event-type {
-  font-size: 8px;
+  font-size: 9px;
   color: #667085;
-  font-weight: 400;
 }
 
 .event-vs {
@@ -376,11 +354,11 @@ button:active {
 }
 
 .cell-navy {
-  background: #f8fafc;
+  background: #f7f9fc;
 }
 
 .cell-yellow {
-  background: #fffdf6;
+  background: #fffdf4;
 }
 
 .player-name {
@@ -401,8 +379,8 @@ button:active {
 .attendance-cell {
   padding: 6px 4px;
   text-align: center;
-  border-right: 1px solid #e5e9ef;
-  border-bottom: 1px solid #e5e9ef;
+  border-right: 1px solid #e1e5ec;
+  border-bottom: 1px solid #e1e5ec;
   vertical-align: top;
 }
 
@@ -413,50 +391,35 @@ button:active {
   height: 28px;
   padding: 2px 0;
   font-size: 12px;
-  border: 1px solid #d5dbe3;
-  border-radius: 9px;
+  border: 1px solid #cbd2dc;
+  border-radius: 6px;
   background: #ffffff;
   text-align: center;
   text-align-last: center;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  font-weight: 700;
 }
-
-/* ○ 青 */
 
 .attendance-cell select.status-○ {
   color: #2563eb;
-  font-weight: 800;
-  background: #eff6ff;
-  border-color: #bfdbfe;
+  font-weight: 700;
 }
-
-/* × 赤 */
 
 .attendance-cell select.status-× {
   color: #dc2626;
-  font-weight: 800;
-  background: #fff1f2;
-  border-color: #fecdd3;
+  font-weight: 700;
 }
-
-/* △ グレー */
 
 .attendance-cell select.status-△ {
   color: #667085;
-  font-weight: 800;
-  background: #f2f4f7;
-  border-color: #d0d5dd;
+  font-weight: 700;
 }
 
-/* 未 薄いグレー */
-
 .attendance-cell select.status-未 {
-  color: #c3c8cf;
+  color: #b8bec7;
   font-weight: 600;
-  border-color: #e4e7eb;
+  border-color: #dfe3e8;
   background: #fafbfc;
 }
 
@@ -498,8 +461,8 @@ button:active {
 
 .player-memo-cell {
   padding: 5px;
-  border-right: 1px solid #e5e9ef;
-  border-bottom: 1px solid #e5e9ef;
+  border-right: 1px solid #e1e5ec;
+  border-bottom: 1px solid #e1e5ec;
   vertical-align: top;
   text-align: left;
 }
@@ -507,12 +470,12 @@ button:active {
 .player-memo-cell input {
   width: 100%;
   min-width: 0;
-  border: 1px solid #d5dbe3;
-  border-radius: 9px;
-  padding: 6px 7px;
+  border: 1px solid #cbd2dc;
+  border-radius: 6px;
+  padding: 5px 6px;
   background: #ffffff;
   color: #172033;
-  font-size: 9px;
+  font-size: 10px;
   line-height: 1.3;
 }
 
@@ -523,7 +486,7 @@ button:active {
 .player-memo-cell input:focus {
   outline: none;
   border-color: #081b3a;
-  box-shadow: 0 0 0 3px rgba(8, 27, 58, 0.07);
+  box-shadow: 0 0 0 2px rgba(8, 27, 58, 0.08);
 }
 
 /* =========================
@@ -558,9 +521,9 @@ button:active {
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  padding: 9px 10px;
+  padding: 8px 10px;
   background: #f7f8fa;
-  border-radius: 10px;
+  border-radius: 7px;
 }
 
 .player-item > span {
@@ -568,7 +531,6 @@ button:active {
   overflow-wrap: anywhere;
   word-break: break-word;
   line-height: 1.35;
-  font-weight: 600;
 }
 
 .player-actions {
@@ -592,9 +554,8 @@ button:active {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  font-size: 11px;
+  font-size: 12px;
   color: #475467;
-  font-weight: 600;
 }
 
 .event-form button {
@@ -604,19 +565,10 @@ button:active {
 input,
 select,
 textarea {
-  border: 1px solid #d5dbe3;
-  border-radius: 10px;
+  border: 1px solid #cbd2dc;
+  border-radius: 6px;
   padding: 8px 10px;
   background: #ffffff;
-  color: #172033;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  border-color: #081b3a;
-  box-shadow: 0 0 0 3px rgba(8, 27, 58, 0.06);
 }
 
 /* =========================
@@ -635,8 +587,8 @@ textarea:focus {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  padding: 11px;
-  border-radius: 11px;
+  padding: 10px;
+  border-radius: 7px;
 }
 
 .event-navy {
@@ -652,7 +604,7 @@ textarea:focus {
   flex-wrap: wrap;
   gap: 4px 9px;
   align-items: center;
-  font-size: 11px;
+  font-size: 12px;
   min-width: 0;
 }
 
@@ -684,7 +636,7 @@ textarea:focus {
 
 .empty-message {
   color: #667085;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 /* =========================
@@ -692,7 +644,7 @@ textarea:focus {
 ========================= */
 
 .compact-page {
-  background: #f3f5f8;
+  background: #ffffff;
 }
 
 .compact-header {
@@ -700,68 +652,60 @@ textarea:focus {
 }
 
 .compact-header h1 {
-  font-size: 17px;
+  font-size: 18px;
 }
 
 .compact-header p {
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .compact-back {
-  padding: 6px 10px;
-  font-size: 10px;
-  border-radius: 9px;
+  padding: 5px 9px;
+  font-size: 11px;
 }
 
 .compact-main {
   width: 100%;
-  padding: 7px;
+  padding: 8px;
 }
 
 .compact-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 7px;
-  font-size: 10px;
-}
-
-.compact-title strong {
-  font-weight: 800;
+  margin-bottom: 6px;
+  font-size: 11px;
 }
 
 .compact-title span {
   color: #667085;
-  font-size: 8px;
+  font-size: 9px;
 }
 
 .compact-table-wrapper {
   width: 100%;
   overflow-x: auto;
-  border-radius: 11px;
-  box-shadow: 0 2px 8px rgba(8, 27, 58, 0.06);
 }
 
 .compact-table {
-  width: 100%;
-  min-width: 0;
+  width: auto;
+  min-width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  font-size: 8px;
-  overflow: hidden;
+  font-size: 9px;
 }
 
 .compact-table th,
 .compact-table td {
-  border: 1px solid #dfe4eb;
-  padding: 4px 3px;
+  border: 1px solid #cfd5dd;
+  padding: 3px 2px;
   text-align: center;
   line-height: 1.25;
 }
 
 .compact-table thead th {
   background: #edf2f8;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .compact-table thead th:nth-child(1) {
@@ -769,38 +713,32 @@ textarea:focus {
 }
 
 .compact-table thead th:nth-child(2) {
-  width: 1px;
-  display: none;
+  width: 54px;
 }
 
 .compact-table thead th:nth-child(3) {
-  width: 48px;
+  width: 50px;
 }
 
 .compact-table thead th:nth-child(4) {
-  width: auto;
+  width: 90px;
 }
 
 .compact-table tbody th {
-  background: #ffffff;
+  background: #f7f8fa;
   text-align: left;
-  padding-left: 6px;
+  padding-left: 4px;
   width: 62px;
   overflow-wrap: anywhere;
   word-break: break-word;
-  font-weight: 700;
 }
 
 .compact-event-info {
   display: none;
 }
 
-.compact-table tbody td:nth-child(2) {
-  display: none;
-}
-
 .compact-table tbody td:nth-child(3) {
-  width: 48px;
+  width: 50px;
   padding-left: 1px;
   padding-right: 1px;
 }
@@ -808,39 +746,30 @@ textarea:focus {
 .compact-table tbody td {
   font-weight: 700;
   font-size: 12px;
-  background: #ffffff;
 }
-
-/* ○ */
 
 .compact-status-○ {
   color: #2563eb !important;
-  background: #eff6ff !important;
   font-weight: 800 !important;
+  background: #f5f8ff !important;
 }
-
-/* × */
 
 .compact-status-× {
   color: #dc2626 !important;
-  background: #fff1f2 !important;
   font-weight: 800 !important;
+  background: #fff6f6 !important;
 }
-
-/* △ */
 
 .compact-status-△ {
   color: #667085 !important;
-  background: #f2f4f7 !important;
   font-weight: 800 !important;
+  background: #f6f7f8 !important;
 }
 
-/* 未 */
-
 .compact-status-未 {
-  color: #c7ccd2 !important;
-  background: #fafbfc !important;
+  color: #c0c5cc !important;
   font-weight: 600 !important;
+  background: #fafbfc !important;
 }
 
 .compact-warning {
@@ -855,7 +784,6 @@ textarea:focus {
   text-align: left !important;
   overflow-wrap: anywhere;
   word-break: break-word;
-  color: #475467;
 }
 
 /* =========================
@@ -868,30 +796,33 @@ textarea:focus {
   }
 
   .header h1 {
-    font-size: 19px;
+    font-size: 20px;
   }
 
   .main {
-    width: calc(100% - 12px);
-    padding-top: 10px;
+    width: calc(100% - 16px);
+    padding-top: 12px;
   }
 
   .section {
-    padding: 11px;
-    border-radius: 13px;
+    padding: 12px;
   }
 
-  /* 上部3枠 */
+  /* =================================
+     スマホでも運用方法＋ルールを横並び
+     全体連絡はその下
+  ================================= */
 
   .top-info-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 7px;
+    align-items: stretch;
   }
 
   .info-box {
-    min-height: auto;
-    padding: 9px 11px;
-    border-radius: 12px;
+    min-height: 0;
+    padding: 9px 10px;
+    border-radius: 9px;
   }
 
   .info-box h3 {
@@ -901,33 +832,54 @@ textarea:focus {
 
   .info-text {
     font-size: 10px;
+    line-height: 1.45;
   }
 
   .icon-guide {
+    margin-top: 6px;
+    gap: 2px;
     font-size: 9px;
-    gap: 3px;
+    line-height: 1.35;
+  }
+
+  .rule-info-box {
+    border-left-width: 3px;
+  }
+
+  .rule-info-box .rule-notes {
+    margin-top: 5px;
+    font-size: 8px;
+    line-height: 1.4;
+  }
+
+  /* 全体連絡は2列を使って横幅いっぱい */
+  .notice-box {
+    grid-column: 1 / -1;
+    min-height: 0;
+    border-left-width: 3px;
   }
 
   .notice-box textarea {
-    min-height: 62px;
-    font-size: 9px;
-    border-radius: 9px;
+    min-height: 58px;
+    font-size: 10px;
+    line-height: 1.4;
   }
 
   .rule-box {
-    padding: 9px 11px;
-    border-radius: 12px;
+    padding: 10px 12px;
   }
 
   .rule-text {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .rule-notes {
-    font-size: 9px;
+    font-size: 10px;
   }
 
-  /* 出欠表 */
+  /* =========================
+     ATTENDANCE MOBILE
+  ========================= */
 
   .player-name-header,
   .player-name {
@@ -951,15 +903,15 @@ textarea:focus {
   }
 
   .event-header {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .attendance-table {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .attendance-counts {
-    font-size: 6px;
+    font-size: 7px;
     gap: 2px;
   }
 
@@ -967,22 +919,23 @@ textarea:focus {
     width: 38px;
     min-width: 38px;
     max-width: 38px;
-    height: 27px;
+    height: 26px;
+    padding: 2px 0;
     font-size: 11px;
-    border-radius: 8px;
   }
 
   .player-name {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .player-memo-cell input {
     padding: 5px;
-    font-size: 8px;
-    border-radius: 8px;
+    font-size: 9px;
   }
 
-  /* 管理画面 */
+  /* =========================
+     ADMIN MOBILE
+  ========================= */
 
   .event-form {
     grid-template-columns: 1fr;
@@ -994,34 +947,48 @@ textarea:focus {
 
   .event-item {
     align-items: flex-start;
-    border-radius: 10px;
   }
 
   .event-info {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .event-buttons {
     flex-direction: column;
   }
 
-  /* スクショ画面 */
+  /* =========================
+     COMPACT MOBILE
+  ========================= */
 
   .compact-main {
     padding: 5px;
   }
 
   .compact-table {
-    width: 100%;
     min-width: 0;
+    width: 100%;
+    font-size: 8px;
   }
 
   .compact-table thead th:nth-child(1) {
     width: 58px;
   }
 
+  .compact-table thead th:nth-child(2) {
+    display: none;
+  }
+
   .compact-table thead th:nth-child(3) {
     width: 42px;
+  }
+
+  .compact-table thead th:nth-child(4) {
+    width: auto;
+  }
+
+  .compact-table tbody td:nth-child(2) {
+    display: none;
   }
 
   .compact-table tbody td:nth-child(3) {
@@ -1030,12 +997,18 @@ textarea:focus {
 
   .compact-table tbody td {
     font-size: 11px;
-    padding-top: 4px;
-    padding-bottom: 4px;
+  }
+
+  .compact-event-info {
+    display: none;
+  }
+
+  .compact-status-未 {
+    color: #c6cbd1 !important;
   }
 
   .compact-memo {
-    font-size: 7px !important;
+    font-size: 8px !important;
   }
 }
 
@@ -1044,19 +1017,40 @@ textarea:focus {
 ========================= */
 
 @media (max-width: 380px) {
-  .header h1 {
-    font-size: 18px;
+  .top-info-grid {
+    gap: 5px;
   }
 
-  .main {
-    width: calc(100% - 10px);
+  .info-box {
+    padding: 8px;
+  }
+
+  .info-box h3 {
+    font-size: 11px;
+  }
+
+  .info-text {
+    font-size: 9px;
+  }
+
+  .icon-guide {
+    font-size: 8px;
+  }
+
+  .rule-info-box .rule-notes {
+    font-size: 7px;
+  }
+
+  .notice-box textarea {
+    min-height: 52px;
+    font-size: 9px;
   }
 
   .player-name-header,
   .player-name {
-    width: 66px;
-    min-width: 66px;
-    max-width: 66px;
+    width: 68px;
+    min-width: 68px;
+    max-width: 68px;
   }
 
   .event-header,
@@ -1068,9 +1062,9 @@ textarea:focus {
 
   .memo-header,
   .player-memo-cell {
-    width: 76px;
-    min-width: 76px;
-    max-width: 76px;
+    width: 78px;
+    min-width: 78px;
+    max-width: 78px;
   }
 
   .attendance-cell select {
@@ -1080,14 +1074,14 @@ textarea:focus {
   }
 
   .compact-table thead th:nth-child(1) {
-    width: 53px;
+    width: 54px;
   }
 
   .compact-table thead th:nth-child(3) {
     width: 38px;
   }
 
-  .compact-table tbody td:nth-child(3) {
-    width: 38px;
+  .compact-table thead th:nth-child(4) {
+    width: auto;
   }
 }
