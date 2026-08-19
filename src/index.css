@@ -220,12 +220,16 @@ button:hover {
   border-right: 1px solid #d9dee7;
 }
 
+/* 予定欄 */
+
 .event-header,
 .attendance-cell {
   width: 108px;
   min-width: 108px;
   max-width: 108px;
 }
+
+/* 備考欄 */
 
 .memo-header,
 .player-memo-cell {
@@ -234,6 +238,8 @@ button:hover {
   max-width: 120px;
 }
 
+/* テーブル */
+
 .attendance-table th {
   border-bottom: 1px solid #d9dee7;
   border-right: 1px solid #d9dee7;
@@ -241,6 +247,12 @@ button:hover {
   vertical-align: top;
   text-align: center;
 }
+
+.attendance-table td {
+  border-bottom: 1px solid #e1e5ec;
+}
+
+/* 予定ヘッダー */
 
 .event-header {
   line-height: 1.35;
@@ -265,6 +277,10 @@ button:hover {
   font-weight: 800;
 }
 
+/* =========================
+   COLOR
+========================= */
+
 .header-navy {
   background: #edf2f8;
 }
@@ -280,6 +296,10 @@ button:hover {
 .cell-yellow {
   background: #fffdf4;
 }
+
+/* =========================
+   PLAYER NAME
+========================= */
 
 .player-name {
   padding: 8px 6px;
@@ -304,6 +324,8 @@ button:hover {
   vertical-align: top;
 }
 
+/* 出欠プルダウン */
+
 .attendance-cell select {
   width: 42px;
   min-width: 42px;
@@ -316,9 +338,44 @@ button:hover {
   background: #ffffff;
   text-align: center;
   text-align-last: center;
+
+  /* ▼を消す */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
-/* ○ × △ 未 の人数 */
+/* ○ = 青 */
+
+.attendance-cell select.status-○ {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+/* × = 赤 */
+
+.attendance-cell select.status-× {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+/* △ = グレー */
+
+.attendance-cell select.status-△ {
+  color: #667085;
+  font-weight: 700;
+}
+
+/* 未 = 黒 */
+
+.attendance-cell select.status-未 {
+  color: #171717;
+  font-weight: 700;
+}
+
+/* =========================
+   ATTENDANCE COUNTS
+========================= */
 
 .attendance-counts {
   margin-top: 5px;
@@ -336,7 +393,9 @@ button:hover {
   white-space: nowrap;
 }
 
-/* △の予定別備考 */
+/* =========================
+   △ MEMO
+========================= */
 
 .attendance-memo {
   margin-top: 4px;
@@ -627,6 +686,8 @@ select {
   word-break: break-word;
 }
 
+/* 締切後の未 */
+
 .compact-warning {
   background: #fff1f0 !important;
   color: #b42318;
@@ -667,6 +728,8 @@ select {
     font-size: 10px;
   }
 
+  /* 選手欄 */
+
   .player-name-header,
   .player-name {
     width: 72px;
@@ -674,12 +737,16 @@ select {
     max-width: 72px;
   }
 
+  /* 予定欄 */
+
   .event-header,
   .attendance-cell {
     width: 88px;
     min-width: 88px;
     max-width: 88px;
   }
+
+  /* 備考欄 */
 
   .memo-header,
   .player-memo-cell {
@@ -696,10 +763,14 @@ select {
     font-size: 10px;
   }
 
+  /* 人数表示をさらにコンパクト */
+
   .attendance-counts {
     font-size: 7px;
     gap: 2px;
   }
+
+  /* 出欠 */
 
   .attendance-cell select {
     width: 38px;
@@ -718,6 +789,8 @@ select {
     padding: 5px;
     font-size: 9px;
   }
+
+  /* 管理者 */
 
   .event-form {
     grid-template-columns: 1fr;
@@ -738,6 +811,8 @@ select {
   .event-buttons {
     flex-direction: column;
   }
+
+  /* スクショ画面 */
 
   .compact-main {
     padding: 5px;
