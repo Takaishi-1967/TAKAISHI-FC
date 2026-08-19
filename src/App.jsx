@@ -32,6 +32,9 @@ function App() {
 
   const [playerMemos, setPlayerMemos] = useState({});
 
+  // 全体連絡
+  const [generalNotice, setGeneralNotice] = useState("");
+
   useEffect(() => {
     loadData();
 
@@ -55,9 +58,20 @@ function App() {
       supabase
         .from("attendance")
         .select("*"),
+
+      supabase
+        .from("site_settings")
+        .select("*")
+        .eq("id", 1)
+        .maybeSingle(),
     ]);
 
-    const [playersRes, eventsRes, attendanceRes] = results;
+    const [
+      playersRes,
+      eventsRes,
+      attendanceRes,
+      settingsRes,
+    ] = results;
 
     if (playersRes.data) {
       setPlayers(playersRes.data);
@@ -79,6 +93,12 @@ function App() {
       setAttendance(attendanceRes.data);
     }
 
+    if (settingsRes.data) {
+      setGeneralNotice(
+        settingsRes.data.general_notice || ""
+      );
+    }
+
     if (playersRes.error) {
       console.error("players:", playersRes.error);
     }
@@ -89,6 +109,10 @@ function App() {
 
     if (attendanceRes.error) {
       console.error("attendance:", attendanceRes.error);
+    }
+
+    if (settingsRes.error) {
+      console.error("site_settings:", settingsRes.error);
     }
   }
 
@@ -268,6 +292,23 @@ function App() {
       ...current,
       [playerId]: trimmedMemo,
     }));
+  }
+
+  async function saveGeneralNotice(value) {
+    const result = await supabase
+      .from("site_settings")
+      .update({
+        general_notice: value,
+      })
+      .eq("id", 1);
+
+    if (result.error) {
+      console.error("general notice:", result.error);
+      alert("全体連絡の保存に失敗しました");
+      return;
+    }
+
+    setGeneralNotice(value);
   }
 
   function startEditEvent(event) {
@@ -733,9 +774,7 @@ function App() {
                       <tr key={player.id}>
                         <th>{player.name}</th>
 
-                        <td
-                          className="compact-event-info"
-                        >
+                        <td className="compact-event-info">
                           {formatDate(nextEvent.date)}
                         </td>
 
@@ -1060,17 +1099,74 @@ function App() {
       </header>
 
       <main className="main">
-        <RuleBox />
+        <div className="top-info-grid">
+
+          <section className="info-box operation-box">
+            <h3>運用方法</h3>
+
+            <div className="info-text">
+              自分の名前の「未」ボタンをタップして、
+              都合に合わせて予定を登録してください。
+            </div>
+
+            <div className="icon-guide">
+              <div>⌚️ → 活動時間</div>
+              <div>⌛ → 集合時間</div>
+              <div>👕 → ユニ</div>
+            </div>
+          </section>
+
+          <section className="info-box rule-info-box">
+            <h3>出欠ルール</h3>
+
+            <div className="info-text">
+              毎週金曜日の17:00までに、
+              各週末の予定を登録してください。
+            </div>
+
+            <div className="rule-notes">
+              ※締切後の○→×は全体に連絡
+              <br />
+              ※△の場合は備考欄に内容を記載
+              <br />
+              ※未のまま：500円
+              <br />
+              ※○→×の連絡なし：2,000円
+            </div>
+          </section>
+
+          <section className="info-box notice-box">
+            <h3>全体連絡</h3>
+
+            <textarea
+              value={generalNotice}
+              placeholder="ペナルティ対象者、特記事項など"
+              onChange={(e) =>
+                setGeneralNotice(e.target.value)
+              }
+              onBlur={(e) =>
+                saveGeneralNotice(e.target.value)
+              }
+            />
+          </section>
+
+        </div>
 
         <div className="home-actions">
           <button
             className="compact-button"
-            onClick={() => setPage("compact")}
+            onClick={() =>
+              setPage("compact")
+            }
           >
             📸 締切確認
           </button>
 
-          <button onClick={() => setPage("login")}>
+          <button
+            onClick={() =>
+              setPage("login")
+            }
+          >
             管理者ページ
           </button>
         </div>
@@ -1095,19 +1191,23 @@ function App() {
                       選手
                     </th>
 
-                    {events.map((event, index) => (
-                      <th
-                        key={event.id}
-                        className={
-                          "event-header " +
-                          (index % 2 === 0
-                            ? "header-navy"
-                            : "header-yellow")
-                        }
-                      >
-                        <EventInfo event={event} />
-                      </th>
-                    ))}
+                    {events.map(
+                      (event, index) => (
+                        <th
+                          key={event.id}
+                          className={
+                            "event-header " +
+                            (index % 2 === 0
+                              ? "header-navy"
+                              : "header-yellow")
+                          }
+                        >
+                          <EventInfo
+                            event={event}
+                          />
+                        </th>
+                      )
+                    )}
 
                     <th className="memo-header">
                       備考
@@ -1122,57 +1222,61 @@ function App() {
                         {player.name}
                       </th>
 
-                      {events.map((event, index) => {
-                        const item = getAttendance(
-                          player.id,
-                          event.id
-                        );
+                      {events.map(
+                        (event, index) => {
+                          const item =
+                            getAttendance(
+                              player.id,
+                              event.id
+                            );
 
-                        const currentStatus =
-                          item?.status || "未";
+                          const currentStatus =
+                            item?.status || "未";
 
-                        return (
-                          <td
-                            key={event.id}
-                            className={
-                              "attendance-cell " +
-                              (index % 2 === 0
-                                ? "cell-navy"
-                                : "cell-yellow")
-                            }
-                          >
-                            <select
-                              className={`attendance-select status-${currentStatus}`}
-                              value={currentStatus}
-                              onChange={(e) =>
-                                updateAttendance(
-                                  player.id,
-                                  event.id,
-                                  e.target.value
-                                )
+                          return (
+                            <td
+                              key={event.id}
+                              className={
+                                "attendance-cell " +
+                                (index % 2 === 0
+                                  ? "cell-navy"
+                                  : "cell-yellow")
                               }
                             >
-                              {statusOptions.map(
-                                (status) => (
-                                  <option
-                                    key={status}
-                                    value={status}
-                                  >
-                                    {status}
-                                  </option>
-                                )
-                              )}
-                            </select>
+                              <select
+                                className={`attendance-select status-${currentStatus}`}
+                                value={currentStatus}
+                                onChange={(e) =>
+                                  updateAttendance(
+                                    player.id,
+                                    event.id,
+                                    e.target.value
+                                  )
+                                }
+                              >
+                                {statusOptions.map(
+                                  (status) => (
+                                    <option
+                                      key={status}
+                                      value={status}
+                                    >
+                                      {status}
+                                    </option>
+                                  )
+                                )}
+                              </select>
 
-                            {currentStatus === "△" &&
-                              item?.memo && (
-                                <div className="attendance-memo">
-                                  {item.memo}
-                                </div>
-                              )}
-                          </td>
-                        );
-                      })}
+                              {currentStatus ===
+                                "△" &&
+                                item?.memo && (
+                                  <div className="attendance-memo">
+                                    {item.memo}
+                                  </div>
+                                )}
+                            </td>
+                          );
+                        }
+                      )}
 
                       <td className="player-memo-cell">
                         <input
