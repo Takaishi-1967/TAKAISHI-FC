@@ -967,12 +967,10 @@ function App() {
                               {status}
                             </td>
 
-                            <td className="compact-memo">
-                              {playerMemos[
-                                player.id
-                              ] ||
-                                player.memo ||
-                                ""}
+                           <td className="compact-memo">
+  {status === "△"
+    ? item?.memo || ""
+    : playerMemos[player.id] || player.memo || ""}
                             </td>
                           </tr>
                         );
