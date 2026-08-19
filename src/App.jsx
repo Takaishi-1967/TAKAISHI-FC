@@ -24,12 +24,12 @@ function App() {
   const [newEventType, setNewEventType] = useState("練習");
   const [newEventTitle, setNewEventTitle] = useState("");
   const [newEventTime, setNewEventTime] = useState("");
+  const [newEventMeetingTime, setNewEventMeetingTime] = useState("");
   const [newEventPlace, setNewEventPlace] = useState("");
   const [newEventUniform, setNewEventUniform] = useState("");
 
   const [editingEventId, setEditingEventId] = useState(null);
 
-  // 選手ごとの備考
   const [playerMemos, setPlayerMemos] = useState({});
 
   useEffect(() => {
@@ -237,8 +237,6 @@ function App() {
     setPlayers(updated);
   }
 
-  // 選手ごとの備考を保存
-  // 入力欄の「最新の値」を直接受け取って保存する
   async function savePlayerMemo(playerId, memo) {
     const trimmedMemo = memo.trim();
 
@@ -278,6 +276,7 @@ function App() {
     setNewEventType(event.type || "練習");
     setNewEventTitle(event.title || "");
     setNewEventTime(event.time || "");
+    setNewEventMeetingTime(event.meeting_time || "");
     setNewEventPlace(event.place || "");
     setNewEventUniform(event.uniform || "");
 
@@ -293,6 +292,7 @@ function App() {
     setNewEventType("練習");
     setNewEventTitle("");
     setNewEventTime("");
+    setNewEventMeetingTime("");
     setNewEventPlace("");
     setNewEventUniform("");
   }
@@ -313,6 +313,7 @@ function App() {
       type: newEventType,
       title: newEventTitle.trim(),
       time: newEventTime.trim(),
+      meeting_time: newEventMeetingTime.trim(),
       place: newEventPlace.trim(),
       uniform: newEventUniform.trim(),
     };
@@ -584,6 +585,12 @@ function App() {
           </div>
         )}
 
+        {event.meeting_time && (
+          <div>
+            ⌛ {event.meeting_time}
+          </div>
+        )}
+
         {event.place && (
           <div>
             📍 {event.place}
@@ -690,6 +697,12 @@ function App() {
                         </div>
                       )}
 
+                      {nextEvent.meeting_time && (
+                        <div>
+                          ⌛ {nextEvent.meeting_time}
+                        </div>
+                      )}
+
                       {nextEvent.place && (
                         <div>
                           📍 {nextEvent.place}
@@ -697,6 +710,7 @@ function App() {
                       )}
                     </th>
 
+                    <th>出欠</th>
                     <th>備考</th>
                   </tr>
                 </thead>
@@ -720,11 +734,17 @@ function App() {
                         <th>{player.name}</th>
 
                         <td
-                          className={
+                          className="compact-event-info"
+                        >
+                          {formatDate(nextEvent.date)}
+                        </td>
+
+                        <td
+                          className={`compact-status-${status} ${
                             showWarning
                               ? "compact-warning"
                               : ""
-                          }
+                          }`}
                         >
                           {showWarning && "⚠️"}
                           {status}
@@ -845,10 +865,7 @@ function App() {
                       className="move-button"
                       disabled={index === 0}
                       onClick={() =>
-                        movePlayer(
-                          player.id,
-                          "up"
-                        )
+                        movePlayer(player.id, "up")
                       }
                     >
                       ↑
@@ -857,14 +874,10 @@ function App() {
                     <button
                       className="move-button"
                       disabled={
-                        index ===
-                        players.length - 1
+                        index === players.length - 1
                       }
                       onClick={() =>
-                        movePlayer(
-                          player.id,
-                          "down"
-                        )
+                        movePlayer(player.id, "down")
                       }
                     >
                       ↓
@@ -894,7 +907,6 @@ function App() {
             <div className="event-form">
               <label>
                 日付
-
                 <input
                   type="date"
                   value={newEventDate}
@@ -906,7 +918,6 @@ function App() {
 
               <label>
                 種別
-
                 <select
                   value={newEventType}
                   onChange={(e) =>
@@ -922,7 +933,6 @@ function App() {
 
               <label>
                 vs 相手チーム
-
                 <input
                   type="text"
                   placeholder="泉州FC"
@@ -934,8 +944,7 @@ function App() {
               </label>
 
               <label>
-                時間
-
+                活動時間
                 <input
                   type="text"
                   placeholder="19:00〜21:00"
@@ -947,8 +956,19 @@ function App() {
               </label>
 
               <label>
-                場所
+                集合時間
+                <input
+                  type="text"
+                  placeholder="18:30"
+                  value={newEventMeetingTime}
+                  onChange={(e) =>
+                    setNewEventMeetingTime(e.target.value)
+                  }
+                />
+              </label>
 
+              <label>
+                場所
                 <input
                   type="text"
                   placeholder="グラウンド名"
@@ -961,7 +981,6 @@ function App() {
 
               <label>
                 ユニフォーム
-
                 <input
                   type="text"
                   placeholder="1st 黄色"
@@ -1046,18 +1065,12 @@ function App() {
         <div className="home-actions">
           <button
             className="compact-button"
-            onClick={() =>
-              setPage("compact")
-            }
+            onClick={() => setPage("compact")}
           >
             📸 締切確認
           </button>
 
-          <button
-            onClick={() =>
-              setPage("login")
-            }
-          >
+          <button onClick={() => setPage("login")}>
             管理者ページ
           </button>
         </div>
@@ -1082,23 +1095,19 @@ function App() {
                       選手
                     </th>
 
-                    {events.map(
-                      (event, index) => (
-                        <th
-                          key={event.id}
-                          className={
-                            "event-header " +
-                            (index % 2 === 0
-                              ? "header-navy"
-                              : "header-yellow")
-                          }
-                        >
-                          <EventInfo
-                            event={event}
-                          />
-                        </th>
-                      )
-                    )}
+                    {events.map((event, index) => (
+                      <th
+                        key={event.id}
+                        className={
+                          "event-header " +
+                          (index % 2 === 0
+                            ? "header-navy"
+                            : "header-yellow")
+                        }
+                      >
+                        <EventInfo event={event} />
+                      </th>
+                    ))}
 
                     <th className="memo-header">
                       備考
@@ -1113,61 +1122,57 @@ function App() {
                         {player.name}
                       </th>
 
-                      {events.map(
-                        (event, index) => {
-                          const item =
-                            getAttendance(
-                              player.id,
-                              event.id
-                            );
+                      {events.map((event, index) => {
+                        const item = getAttendance(
+                          player.id,
+                          event.id
+                        );
 
-                          const currentStatus =
-                            item?.status || "未";
+                        const currentStatus =
+                          item?.status || "未";
 
-                          return (
-                            <td
-                              key={event.id}
-                              className={
-                                "attendance-cell " +
-                                (index % 2 === 0
-                                  ? "cell-navy"
-                                  : "cell-yellow")
+                        return (
+                          <td
+                            key={event.id}
+                            className={
+                              "attendance-cell " +
+                              (index % 2 === 0
+                                ? "cell-navy"
+                                : "cell-yellow")
+                            }
+                          >
+                            <select
+                              className={`attendance-select status-${currentStatus}`}
+                              value={currentStatus}
+                              onChange={(e) =>
+                                updateAttendance(
+                                  player.id,
+                                  event.id,
+                                  e.target.value
+                                )
                               }
                             >
-                              <select
-                                className={`attendance-select status-${currentStatus}`}
-                                value={currentStatus}
-                                onChange={(e) =>
-                                  updateAttendance(
-                                    player.id,
-                                    event.id,
-                                    e.target.value
-                                  )
-                                }
-                              >
-                                {statusOptions.map(
-                                  (status) => (
-                                    <option
-                                      key={status}
-                                      value={status}
-                                    >
-                                      {status}
-                                    </option>
-                                  )
-                                )}
-                              </select>
+                              {statusOptions.map(
+                                (status) => (
+                                  <option
+                                    key={status}
+                                    value={status}
+                                  >
+                                    {status}
+                                  </option>
+                                )
+                              )}
+                            </select>
 
-                              {currentStatus ===
-                                "△" &&
-                                item?.memo && (
-                                  <div className="attendance-memo">
-                                    {item.memo}
-                                  </div>
-                                )}
-                            </td>
-                          );
-                        }
-                      )}
+                            {currentStatus === "△" &&
+                              item?.memo && (
+                                <div className="attendance-memo">
+                                  {item.memo}
+                                </div>
+                              )}
+                          </td>
+                        );
+                      })}
 
                       <td className="player-memo-cell">
                         <input
