@@ -640,165 +640,186 @@ textarea {
 
 /* =========================
    COMPACT SCREEN
-   名前 + 出欠 + 備考
+   スクショ専用
 ========================= */
 
 .compact-page {
   background: #ffffff;
+  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .compact-header {
-  padding: 12px 14px;
+  flex-shrink: 0;
+  padding: 7px 10px;
+  min-height: 44px;
 }
 
 .compact-header h1 {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .compact-header p {
-  font-size: 10px;
+  margin-top: 1px;
+  font-size: 8px;
 }
 
 .compact-back {
-  padding: 5px 9px;
-  font-size: 11px;
+  padding: 4px 7px;
+  font-size: 9px;
 }
 
 .compact-main {
+  flex: 1;
   width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 10px;
+  min-height: 0;
+  padding: 4px 5px 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .compact-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-  padding: 8px 10px;
-  background: #f5f7fa;
-  border-radius: 8px;
-  font-size: 12px;
-}
-
-.compact-title span {
-  color: #667085;
+  flex-shrink: 0;
+  margin-bottom: 3px;
   font-size: 10px;
 }
 
+.compact-title strong {
+  font-size: 10px;
+}
+
+.compact-title span {
+  display: none;
+}
+
 .compact-table-wrapper {
+  flex: 1;
   width: 100%;
-  overflow-x: hidden;
-  border: 1px solid #d9dee7;
-  border-radius: 8px;
+  min-height: 0;
   overflow: hidden;
 }
 
 .compact-table {
   width: 100%;
+  min-width: 0;
   border-collapse: collapse;
   table-layout: fixed;
-  font-size: 11px;
+  font-size: 8px;
 }
 
 .compact-table th,
 .compact-table td {
-  border-bottom: 1px solid #e1e5ec;
-  padding: 7px 6px;
-  line-height: 1.3;
-}
-
-.compact-table tr:last-child th,
-.compact-table tr:last-child td {
-  border-bottom: none;
+  border: 1px solid #d8dde5;
+  padding: 2px 3px;
+  line-height: 1.15;
+  vertical-align: middle;
 }
 
 .compact-table thead th {
-  background: #081b3a;
-  color: #ffffff;
-  font-size: 10px;
-  font-weight: 700;
-  text-align: center;
+  background: #edf2f8;
+  font-weight: 800;
+  font-size: 8px;
+  height: 22px;
 }
 
-/* 3列：名前 / 出欠 / 備考 */
+/* 名前 */
 
 .compact-table thead th:nth-child(1) {
-  width: 28%;
-  text-align: left;
-  padding-left: 10px;
+  width: 27%;
 }
+
+.compact-table tbody th {
+  width: 27%;
+  background: #f7f8fa;
+  text-align: left;
+  padding: 2px 4px;
+  font-size: 9px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 出欠 */
 
 .compact-table thead th:nth-child(2) {
   width: 18%;
 }
 
-.compact-table thead th:nth-child(3) {
-  width: 54%;
-  text-align: left;
+.compact-table tbody td:nth-child(2) {
+  width: 18%;
+  text-align: center;
+  padding: 1px 2px;
 }
 
-.compact-table tbody th {
-  background: #f8fafc;
-  text-align: left;
-  padding-left: 10px;
-  font-size: 12px;
-  font-weight: 700;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+/* 備考 */
+
+.compact-table thead th:nth-child(3) {
+  width: 55%;
+}
+
+.compact-table tbody td:nth-child(3) {
+  width: 55%;
+}
+
+/* 選手行 */
+
+.compact-table tbody tr {
+  height: 18px;
 }
 
 .compact-table tbody td {
-  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
 }
 
-.compact-table tbody tr:nth-child(even) th,
-.compact-table tbody tr:nth-child(even) td {
-  background: #fbfcfe;
-}
-
-/* 出欠 */
+/* ステータス */
 
 .compact-status-○ {
   color: #2563eb !important;
-  font-size: 16px !important;
-  font-weight: 800 !important;
+  font-weight: 900 !important;
+  font-size: 12px !important;
 }
 
 .compact-status-× {
   color: #dc2626 !important;
-  font-size: 16px !important;
-  font-weight: 800 !important;
+  font-weight: 900 !important;
+  font-size: 12px !important;
 }
 
 .compact-status-△ {
   color: #667085 !important;
-  font-size: 16px !important;
-  font-weight: 800 !important;
+  font-weight: 900 !important;
+  font-size: 12px !important;
 }
 
 .compact-status-未 {
-  color: #c0c5cc !important;
-  font-size: 15px !important;
-  font-weight: 600 !important;
+  color: #c4c9d0 !important;
+  font-weight: 700 !important;
+  background: #fafbfc !important;
+  font-size: 10px !important;
 }
 
 .compact-warning {
   color: #b42318 !important;
   background: #fff1f0 !important;
-  font-weight: 800 !important;
+  font-weight: 900 !important;
 }
 
 /* 備考 */
 
 .compact-memo {
-  text-align: left !important;
-  color: #475467;
-  font-size: 10px !important;
+  font-size: 8px !important;
   font-weight: 400 !important;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  text-align: left !important;
+  line-height: 1.1 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* =========================
@@ -823,14 +844,24 @@ textarea {
     padding: 12px;
   }
 
-  /* 上部：運用方法と出欠ルールを横並び */
+  /* 上部3枠 */
+
   .top-info-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 7px;
+    gap: 8px;
+  }
+
+  .operation-box,
+  .rule-info-box {
+    min-height: auto;
+  }
+
+  .notice-box {
+    grid-column: 1 / -1;
+    min-height: auto;
   }
 
   .info-box {
-    min-height: auto;
     padding: 9px 10px;
   }
 
@@ -841,13 +872,13 @@ textarea {
 
   .info-text {
     font-size: 10px;
-    line-height: 1.45;
+    line-height: 1.4;
   }
 
   .icon-guide {
     margin-top: 5px;
     font-size: 9px;
-    gap: 2px;
+    gap: 1px;
   }
 
   .rule-info-box .rule-notes {
@@ -856,13 +887,8 @@ textarea {
     line-height: 1.4;
   }
 
-  /* 全体連絡だけ下で横幅いっぱい */
-  .notice-box {
-    grid-column: 1 / -1;
-  }
-
   .notice-box textarea {
-    min-height: 60px;
+    min-height: 55px;
     font-size: 10px;
   }
 
@@ -950,61 +976,103 @@ textarea {
     flex-direction: column;
   }
 
-  /* コンパクト画面 */
+  /* =========================
+     COMPACT SCREEN MOBILE
+  ========================= */
+
+  .compact-page {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .compact-header {
+    padding: 6px 9px;
+    min-height: 40px;
+  }
+
+  .compact-header h1 {
+    font-size: 14px;
+  }
+
+  .compact-header p {
+    display: none;
+  }
+
+  .compact-back {
+    padding: 3px 7px;
+    font-size: 8px;
+  }
 
   .compact-main {
-    padding: 6px;
+    padding: 3px 4px 4px;
   }
 
   .compact-title {
-    margin-bottom: 6px;
-    padding: 7px 8px;
-    font-size: 11px;
+    margin-bottom: 2px;
   }
 
-  .compact-title span {
+  .compact-title strong {
     font-size: 9px;
-  }
-
-  .compact-table {
-    font-size: 10px;
   }
 
   .compact-table th,
   .compact-table td {
-    padding: 6px 4px;
+    padding: 1px 2px;
   }
 
-  .compact-table thead th:nth-child(1) {
-    width: 30%;
-    padding-left: 7px;
+  .compact-table thead th {
+    height: 18px;
+    font-size: 7px;
   }
 
-  .compact-table thead th:nth-child(2) {
+  /* 名前 */
+
+  .compact-table thead th:nth-child(1),
+  .compact-table tbody th {
+    width: 28%;
+  }
+
+  /* 出欠 */
+
+  .compact-table thead th:nth-child(2),
+  .compact-table tbody td:nth-child(2) {
     width: 17%;
   }
 
-  .compact-table thead th:nth-child(3) {
-    width: 53%;
+  /* 備考 */
+
+  .compact-table thead th:nth-child(3),
+  .compact-table tbody td:nth-child(3) {
+    width: 55%;
+  }
+
+  /* 選手行 */
+
+  .compact-table tbody tr {
+    height: 16px;
   }
 
   .compact-table tbody th {
-    padding-left: 7px;
-    font-size: 11px;
+    padding: 1px 3px;
+    font-size: 8px;
+  }
+
+  .compact-table tbody td {
+    padding: 1px 2px;
   }
 
   .compact-status-○,
   .compact-status-×,
   .compact-status-△ {
-    font-size: 15px !important;
+    font-size: 10px !important;
   }
 
   .compact-status-未 {
-    font-size: 14px !important;
+    font-size: 8px !important;
   }
 
   .compact-memo {
-    font-size: 9px !important;
+    font-size: 7px !important;
   }
 }
 
@@ -1040,48 +1108,55 @@ textarea {
     max-width: 36px;
   }
 
-  .top-info-grid {
-    gap: 5px;
+  /* スクショ画面 */
+
+  .compact-header {
+    min-height: 36px;
+    padding: 5px 8px;
   }
 
-  .info-box {
-    padding: 8px;
+  .compact-header h1 {
+    font-size: 13px;
   }
 
-  .info-box h3 {
-    font-size: 11px;
-  }
-
-  .info-text {
-    font-size: 9px;
-  }
-
-  .icon-guide {
+  .compact-title strong {
     font-size: 8px;
   }
 
-  .compact-table thead th:nth-child(1) {
-    width: 31%;
+  .compact-table thead th:nth-child(1),
+  .compact-table tbody th {
+    width: 29%;
   }
 
-  .compact-table thead th:nth-child(2) {
+  .compact-table thead th:nth-child(2),
+  .compact-table tbody td:nth-child(2) {
     width: 16%;
   }
 
-  .compact-table thead th:nth-child(3) {
-    width: 53%;
+  .compact-table thead th:nth-child(3),
+  .compact-table tbody td:nth-child(3) {
+    width: 55%;
   }
 
-  .compact-table th,
-  .compact-table td {
-    padding: 5px 3px;
+  .compact-table tbody tr {
+    height: 15px;
   }
 
   .compact-table tbody th {
-    font-size: 10px;
+    font-size: 7px;
+  }
+
+  .compact-status-○,
+  .compact-status-×,
+  .compact-status-△ {
+    font-size: 9px !important;
+  }
+
+  .compact-status-未 {
+    font-size: 7px !important;
   }
 
   .compact-memo {
-    font-size: 8px !important;
+    font-size: 6px !important;
   }
 }
