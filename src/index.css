@@ -640,6 +640,7 @@ textarea {
 
 /* =========================
    COMPACT SCREEN
+   名前 + 出欠 + 備考
 ========================= */
 
 .compact-page {
@@ -665,109 +666,122 @@ textarea {
 
 .compact-main {
   width: 100%;
-  padding: 8px;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 10px;
 }
 
 .compact-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
-  font-size: 11px;
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  background: #f5f7fa;
+  border-radius: 8px;
+  font-size: 12px;
 }
 
 .compact-title span {
   color: #667085;
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .compact-table-wrapper {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
+  border: 1px solid #d9dee7;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .compact-table {
-  width: auto;
-  min-width: 100%;
+  width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .compact-table th,
 .compact-table td {
-  border: 1px solid #cfd5dd;
-  padding: 3px 2px;
-  text-align: center;
-  line-height: 1.25;
+  border-bottom: 1px solid #e1e5ec;
+  padding: 7px 6px;
+  line-height: 1.3;
+}
+
+.compact-table tr:last-child th,
+.compact-table tr:last-child td {
+  border-bottom: none;
 }
 
 .compact-table thead th {
-  background: #edf2f8;
+  background: #081b3a;
+  color: #ffffff;
+  font-size: 10px;
   font-weight: 700;
+  text-align: center;
 }
 
+/* 3列：名前 / 出欠 / 備考 */
+
 .compact-table thead th:nth-child(1) {
-  width: 62px;
+  width: 28%;
+  text-align: left;
+  padding-left: 10px;
 }
 
 .compact-table thead th:nth-child(2) {
-  width: 54px;
+  width: 18%;
 }
 
 .compact-table thead th:nth-child(3) {
-  width: 50px;
-}
-
-.compact-table thead th:nth-child(4) {
-  width: 90px;
+  width: 54%;
+  text-align: left;
 }
 
 .compact-table tbody th {
-  background: #f7f8fa;
+  background: #f8fafc;
   text-align: left;
-  padding-left: 4px;
-  width: 62px;
+  padding-left: 10px;
+  font-size: 12px;
+  font-weight: 700;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-.compact-event-info {
-  font-size: 8px !important;
-  font-weight: 400 !important;
-  color: #667085 !important;
-}
-
-.compact-table tbody td:nth-child(3) {
-  width: 50px;
-  padding-left: 1px;
-  padding-right: 1px;
-}
-
 .compact-table tbody td {
-  font-weight: 700;
-  font-size: 12px;
+  text-align: center;
 }
+
+.compact-table tbody tr:nth-child(even) th,
+.compact-table tbody tr:nth-child(even) td {
+  background: #fbfcfe;
+}
+
+/* 出欠 */
 
 .compact-status-○ {
   color: #2563eb !important;
+  font-size: 16px !important;
   font-weight: 800 !important;
 }
 
 .compact-status-× {
   color: #dc2626 !important;
+  font-size: 16px !important;
   font-weight: 800 !important;
 }
 
 .compact-status-△ {
   color: #667085 !important;
+  font-size: 16px !important;
   font-weight: 800 !important;
 }
 
 .compact-status-未 {
   color: #c0c5cc !important;
+  font-size: 15px !important;
   font-weight: 600 !important;
-  background: #fafbfc !important;
 }
 
 .compact-warning {
@@ -776,10 +790,13 @@ textarea {
   font-weight: 800 !important;
 }
 
+/* 備考 */
+
 .compact-memo {
-  font-size: 8px !important;
-  font-weight: 400 !important;
   text-align: left !important;
+  color: #475467;
+  font-size: 10px !important;
+  font-weight: 400 !important;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
@@ -806,31 +823,46 @@ textarea {
     padding: 12px;
   }
 
-  /* 上部3枠 */
+  /* 上部：運用方法と出欠ルールを横並び */
   .top-info-grid {
-    grid-template-columns: 1fr;
-    gap: 8px;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
   }
 
   .info-box {
     min-height: auto;
-    padding: 10px 12px;
+    padding: 9px 10px;
   }
 
   .info-box h3 {
-    font-size: 13px;
+    font-size: 12px;
+    margin-bottom: 5px;
   }
 
   .info-text {
-    font-size: 11px;
+    font-size: 10px;
+    line-height: 1.45;
   }
 
   .icon-guide {
-    font-size: 10px;
+    margin-top: 5px;
+    font-size: 9px;
+    gap: 2px;
+  }
+
+  .rule-info-box .rule-notes {
+    margin-top: 4px;
+    font-size: 8px;
+    line-height: 1.4;
+  }
+
+  /* 全体連絡だけ下で横幅いっぱい */
+  .notice-box {
+    grid-column: 1 / -1;
   }
 
   .notice-box textarea {
-    min-height: 70px;
+    min-height: 60px;
     font-size: 10px;
   }
 
@@ -918,50 +950,61 @@ textarea {
     flex-direction: column;
   }
 
+  /* コンパクト画面 */
+
   .compact-main {
-    padding: 5px;
+    padding: 6px;
   }
 
-  .compact-table {
-    min-width: 0;
-    width: 100%;
-    font-size: 8px;
-  }
-
-  .compact-table thead th:nth-child(1) {
-    width: 58px;
-  }
-
-  .compact-table thead th:nth-child(2) {
-    width: 42px;
-  }
-
-  .compact-table thead th:nth-child(3) {
-    width: 42px;
-  }
-
-  .compact-table thead th:nth-child(4) {
-    width: 80px;
-  }
-
-  .compact-table tbody td:nth-child(3) {
-    width: 42px;
-  }
-
-  .compact-table tbody td {
+  .compact-title {
+    margin-bottom: 6px;
+    padding: 7px 8px;
     font-size: 11px;
   }
 
-  .compact-event-info {
-    font-size: 7px !important;
+  .compact-title span {
+    font-size: 9px;
+  }
+
+  .compact-table {
+    font-size: 10px;
+  }
+
+  .compact-table th,
+  .compact-table td {
+    padding: 6px 4px;
+  }
+
+  .compact-table thead th:nth-child(1) {
+    width: 30%;
+    padding-left: 7px;
+  }
+
+  .compact-table thead th:nth-child(2) {
+    width: 17%;
+  }
+
+  .compact-table thead th:nth-child(3) {
+    width: 53%;
+  }
+
+  .compact-table tbody th {
+    padding-left: 7px;
+    font-size: 11px;
+  }
+
+  .compact-status-○,
+  .compact-status-×,
+  .compact-status-△ {
+    font-size: 15px !important;
   }
 
   .compact-status-未 {
-    color: #c6cbd1 !important;
+    font-size: 14px !important;
   }
 
   .compact-memo {
-    font-size: 8px !important;
+    font-size: 9px !important;
   }
 }
 
@@ -997,19 +1040,48 @@ textarea {
     max-width: 36px;
   }
 
+  .top-info-grid {
+    gap: 5px;
+  }
+
+  .info-box {
+    padding: 8px;
+  }
+
+  .info-box h3 {
+    font-size: 11px;
+  }
+
+  .info-text {
+    font-size: 9px;
+  }
+
+  .icon-guide {
+    font-size: 8px;
+  }
+
   .compact-table thead th:nth-child(1) {
-    width: 54px;
+    width: 31%;
   }
 
   .compact-table thead th:nth-child(2) {
-    width: 38px;
+    width: 16%;
   }
 
   .compact-table thead th:nth-child(3) {
-    width: 38px;
+    width: 53%;
   }
 
-  .compact-table thead th:nth-child(4) {
-    width: 72px;
+  .compact-table th,
+  .compact-table td {
+    padding: 5px 3px;
+  }
+
+  .compact-table tbody th {
+    font-size: 10px;
+  }
+
+  .compact-memo {
+    font-size: 8px !important;
   }
 }
