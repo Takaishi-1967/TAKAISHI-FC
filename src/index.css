@@ -286,9 +286,9 @@ button:hover {
 
 .player-name-header,
 .player-name {
-  width: 90px;
-  min-width: 90px;
-  max-width: 90px;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
   background: #ffffff;
   position: sticky;
   left: 0;
