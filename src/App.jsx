@@ -29,6 +29,7 @@ function App() {
 
   const [editingEventId, setEditingEventId] = useState(null);
 
+  // 選手ごとの備考
   const [playerMemos, setPlayerMemos] = useState({});
 
   useEffect(() => {
@@ -78,9 +79,17 @@ function App() {
       setAttendance(attendanceRes.data);
     }
 
-    if (playersRes.error) console.error(playersRes.error);
-    if (eventsRes.error) console.error(eventsRes.error);
-    if (attendanceRes.error) console.error(attendanceRes.error);
+    if (playersRes.error) {
+      console.error("players:", playersRes.error);
+    }
+
+    if (eventsRes.error) {
+      console.error("events:", eventsRes.error);
+    }
+
+    if (attendanceRes.error) {
+      console.error("attendance:", attendanceRes.error);
+    }
   }
 
   function loginAdmin() {
@@ -228,32 +237,39 @@ function App() {
     setPlayers(updated);
   }
 
-  async function savePlayerMemo(playerId) {
-    const memo = playerMemos[playerId] ?? "";
+  // 選手ごとの備考を保存
+  // 入力欄の「最新の値」を直接受け取って保存する
+  async function savePlayerMemo(playerId, memo) {
+    const trimmedMemo = memo.trim();
 
     const result = await supabase
       .from("players")
       .update({
-        memo: memo.trim(),
+        memo: trimmedMemo,
       })
       .eq("id", playerId);
 
     if (result.error) {
-      console.error(result.error);
+      console.error("player memo:", result.error);
       alert("備考の保存に失敗しました");
       return;
     }
 
     setPlayers((current) =>
-      current.map((item) =>
-        item.id === playerId
+      current.map((player) =>
+        player.id === playerId
           ? {
-              ...item,
-              memo: memo.trim(),
+              ...player,
+              memo: trimmedMemo,
             }
-          : item
+          : player
       )
     );
+
+    setPlayerMemos((current) => ({
+      ...current,
+      [playerId]: trimmedMemo,
+    }));
   }
 
   function startEditEvent(event) {
@@ -334,7 +350,9 @@ function App() {
       setEvents((current) =>
         current
           .map((event) =>
-            event.id === editingEventId ? result.data : event
+            event.id === editingEventId
+              ? result.data
+              : event
           )
           .sort(
             (a, b) =>
@@ -390,7 +408,11 @@ function App() {
     );
   }
 
-  async function updateAttendance(playerId, eventId, status) {
+  async function updateAttendance(
+    playerId,
+    eventId,
+    status
+  ) {
     const previous = getAttendance(playerId, eventId);
 
     let memo = previous?.memo || "";
@@ -556,9 +578,23 @@ function App() {
           vs {event.title}
         </div>
 
-        {event.time && <div>⌚️ {event.time}</div>}
-        {event.place && <div>📍 {event.place}</div>}
-        {event.uniform && <div>👕 {event.uniform}</div>}
+        {event.time && (
+          <div>
+            ⌚️ {event.time}
+          </div>
+        )}
+
+        {event.place && (
+          <div>
+            📍 {event.place}
+          </div>
+        )}
+
+        {event.uniform && (
+          <div>
+            👕 {event.uniform}
+          </div>
+        )}
 
         {!compact && (
           <div className="attendance-counts">
@@ -576,7 +612,9 @@ function App() {
   function RuleBox() {
     return (
       <div className="rule-box">
-        <div className="rule-title">出欠ルール</div>
+        <div className="rule-title">
+          出欠ルール
+        </div>
 
         <div className="rule-text">
           毎週金曜日の17:00までに、各週末の予定を登録してください。
@@ -638,18 +676,24 @@ function App() {
                         {formatDate(nextEvent.date)}
                       </div>
 
-                      <div>{nextEvent.type}</div>
+                      <div>
+                        {nextEvent.type}
+                      </div>
 
                       <div>
                         vs {nextEvent.title}
                       </div>
 
                       {nextEvent.time && (
-                        <div>⌚️ {nextEvent.time}</div>
+                        <div>
+                          ⌚️ {nextEvent.time}
+                        </div>
                       )}
 
                       {nextEvent.place && (
-                        <div>📍 {nextEvent.place}</div>
+                        <div>
+                          📍 {nextEvent.place}
+                        </div>
                       )}
                     </th>
 
@@ -801,7 +845,10 @@ function App() {
                       className="move-button"
                       disabled={index === 0}
                       onClick={() =>
-                        movePlayer(player.id, "up")
+                        movePlayer(
+                          player.id,
+                          "up"
+                        )
                       }
                     >
                       ↑
@@ -810,10 +857,14 @@ function App() {
                     <button
                       className="move-button"
                       disabled={
-                        index === players.length - 1
+                        index ===
+                        players.length - 1
                       }
                       onClick={() =>
-                        movePlayer(player.id, "down")
+                        movePlayer(
+                          player.id,
+                          "down"
+                        )
                       }
                     >
                       ↓
@@ -843,6 +894,7 @@ function App() {
             <div className="event-form">
               <label>
                 日付
+
                 <input
                   type="date"
                   value={newEventDate}
@@ -854,6 +906,7 @@ function App() {
 
               <label>
                 種別
+
                 <select
                   value={newEventType}
                   onChange={(e) =>
@@ -869,6 +922,7 @@ function App() {
 
               <label>
                 vs 相手チーム
+
                 <input
                   type="text"
                   placeholder="泉州FC"
@@ -881,6 +935,7 @@ function App() {
 
               <label>
                 時間
+
                 <input
                   type="text"
                   placeholder="19:00〜21:00"
@@ -893,6 +948,7 @@ function App() {
 
               <label>
                 場所
+
                 <input
                   type="text"
                   placeholder="グラウンド名"
@@ -905,6 +961,7 @@ function App() {
 
               <label>
                 ユニフォーム
+
                 <input
                   type="text"
                   placeholder="1st 黄色"
@@ -989,12 +1046,18 @@ function App() {
         <div className="home-actions">
           <button
             className="compact-button"
-            onClick={() => setPage("compact")}
+            onClick={() =>
+              setPage("compact")
+            }
           >
             📸 締切確認
           </button>
 
-          <button onClick={() => setPage("login")}>
+          <button
+            onClick={() =>
+              setPage("login")
+            }
+          >
             管理者ページ
           </button>
         </div>
@@ -1019,19 +1082,23 @@ function App() {
                       選手
                     </th>
 
-                    {events.map((event, index) => (
-                      <th
-                        key={event.id}
-                        className={
-                          "event-header " +
-                          (index % 2 === 0
-                            ? "header-navy"
-                            : "header-yellow")
-                        }
-                      >
-                        <EventInfo event={event} />
-                      </th>
-                    ))}
+                    {events.map(
+                      (event, index) => (
+                        <th
+                          key={event.id}
+                          className={
+                            "event-header " +
+                            (index % 2 === 0
+                              ? "header-navy"
+                              : "header-yellow")
+                          }
+                        >
+                          <EventInfo
+                            event={event}
+                          />
+                        </th>
+                      )
+                    )}
 
                     <th className="memo-header">
                       備考
@@ -1046,57 +1113,61 @@ function App() {
                         {player.name}
                       </th>
 
-                      {events.map((event, index) => {
-                        const item = getAttendance(
-                          player.id,
-                          event.id
-                        );
+                      {events.map(
+                        (event, index) => {
+                          const item =
+                            getAttendance(
+                              player.id,
+                              event.id
+                            );
 
-                        const currentStatus =
-                          item?.status || "未";
+                          const currentStatus =
+                            item?.status || "未";
 
-                        return (
-                          <td
-                            key={event.id}
-                            className={
-                              "attendance-cell " +
-                              (index % 2 === 0
-                                ? "cell-navy"
-                                : "cell-yellow")
-                            }
-                          >
-                            <select
-                              className={`attendance-select status-${currentStatus}`}
-                              value={currentStatus}
-                              onChange={(e) =>
-                                updateAttendance(
-                                  player.id,
-                                  event.id,
-                                  e.target.value
-                                )
+                          return (
+                            <td
+                              key={event.id}
+                              className={
+                                "attendance-cell " +
+                                (index % 2 === 0
+                                  ? "cell-navy"
+                                  : "cell-yellow")
                               }
                             >
-                              {statusOptions.map(
-                                (status) => (
-                                  <option
-                                    key={status}
-                                    value={status}
-                                  >
-                                    {status}
-                                  </option>
-                                )
-                              )}
-                            </select>
+                              <select
+                                className={`attendance-select status-${currentStatus}`}
+                                value={currentStatus}
+                                onChange={(e) =>
+                                  updateAttendance(
+                                    player.id,
+                                    event.id,
+                                    e.target.value
+                                  )
+                                }
+                              >
+                                {statusOptions.map(
+                                  (status) => (
+                                    <option
+                                      key={status}
+                                      value={status}
+                                    >
+                                      {status}
+                                    </option>
+                                  )
+                                )}
+                              </select>
 
-                            {currentStatus === "△" &&
-                              item?.memo && (
-                                <div className="attendance-memo">
-                                  {item.memo}
-                                </div>
-                              )}
-                          </td>
-                        );
-                      })}
+                              {currentStatus ===
+                                "△" &&
+                                item?.memo && (
+                                  <div className="attendance-memo">
+                                    {item.memo}
+                                  </div>
+                                )}
+                            </td>
+                          );
+                        }
+                      )}
 
                       <td className="player-memo-cell">
                         <input
@@ -1106,15 +1177,21 @@ function App() {
                             playerMemos[player.id] ?? ""
                           }
                           onChange={(e) => {
-                            const value = e.target.value;
+                            const value =
+                              e.target.value;
 
-                            setPlayerMemos((current) => ({
-                              ...current,
-                              [player.id]: value,
-                            }));
+                            setPlayerMemos(
+                              (current) => ({
+                                ...current,
+                                [player.id]: value,
+                              })
+                            );
                           }}
-                          onBlur={() =>
-                            savePlayerMemo(player.id)
+                          onBlur={(e) =>
+                            savePlayerMemo(
+                              player.id,
+                              e.target.value
+                            )
                           }
                         />
                       </td>
