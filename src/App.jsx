@@ -1465,7 +1465,7 @@ function App() {
 
           <section className="info-box notice-box">
             <h3>
-              全体連絡
+              全体連絡(誰でも記載可)
             </h3>
 
             <textarea
