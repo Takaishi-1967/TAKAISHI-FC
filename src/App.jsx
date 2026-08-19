@@ -29,7 +29,6 @@ function App() {
 
   const [editingEventId, setEditingEventId] = useState(null);
 
-  // 選手ごとの備考
   const [playerMemos, setPlayerMemos] = useState({});
 
   useEffect(() => {
@@ -335,9 +334,7 @@ function App() {
       setEvents((current) =>
         current
           .map((event) =>
-            event.id === editingEventId
-              ? result.data
-              : event
+            event.id === editingEventId ? result.data : event
           )
           .sort(
             (a, b) =>
@@ -393,11 +390,7 @@ function App() {
     );
   }
 
-  async function updateAttendance(
-    playerId,
-    eventId,
-    status
-  ) {
+  async function updateAttendance(playerId, eventId, status) {
     const previous = getAttendance(playerId, eventId);
 
     let memo = previous?.memo || "";
@@ -496,7 +489,6 @@ function App() {
     if (!eventDate) return null;
 
     const date = new Date(eventDate + "T00:00:00");
-
     const day = date.getDay();
 
     let daysFromFriday;
@@ -529,7 +521,6 @@ function App() {
 
   function getNextEvent() {
     const today = new Date();
-
     today.setHours(0, 0, 0, 0);
 
     const upcomingEvents = events
@@ -565,23 +556,9 @@ function App() {
           vs {event.title}
         </div>
 
-        {event.time && (
-          <div>
-            ⌚️ {event.time}
-          </div>
-        )}
-
-        {event.place && (
-          <div>
-            📍 {event.place}
-          </div>
-        )}
-
-        {event.uniform && (
-          <div>
-            👕 {event.uniform}
-          </div>
-        )}
+        {event.time && <div>⌚️ {event.time}</div>}
+        {event.place && <div>📍 {event.place}</div>}
+        {event.uniform && <div>👕 {event.uniform}</div>}
 
         {!compact && (
           <div className="attendance-counts">
@@ -599,9 +576,7 @@ function App() {
   function RuleBox() {
     return (
       <div className="rule-box">
-        <div className="rule-title">
-          出欠ルール
-        </div>
+        <div className="rule-title">出欠ルール</div>
 
         <div className="rule-text">
           毎週金曜日の17:00までに、各週末の予定を登録してください。
@@ -663,9 +638,7 @@ function App() {
                         {formatDate(nextEvent.date)}
                       </div>
 
-                      <div>
-                        {nextEvent.type}
-                      </div>
+                      <div>{nextEvent.type}</div>
 
                       <div>
                         vs {nextEvent.title}
@@ -828,10 +801,7 @@ function App() {
                       className="move-button"
                       disabled={index === 0}
                       onClick={() =>
-                        movePlayer(
-                          player.id,
-                          "up"
-                        )
+                        movePlayer(player.id, "up")
                       }
                     >
                       ↑
@@ -840,14 +810,10 @@ function App() {
                     <button
                       className="move-button"
                       disabled={
-                        index ===
-                        players.length - 1
+                        index === players.length - 1
                       }
                       onClick={() =>
-                        movePlayer(
-                          player.id,
-                          "down"
-                        )
+                        movePlayer(player.id, "down")
                       }
                     >
                       ↓
@@ -1086,6 +1052,9 @@ function App() {
                           event.id
                         );
 
+                        const currentStatus =
+                          item?.status || "未";
+
                         return (
                           <td
                             key={event.id}
@@ -1097,9 +1066,8 @@ function App() {
                             }
                           >
                             <select
-                              value={
-                                item?.status || "未"
-                              }
+                              className={`attendance-select status-${currentStatus}`}
+                              value={currentStatus}
                               onChange={(e) =>
                                 updateAttendance(
                                   player.id,
@@ -1120,8 +1088,8 @@ function App() {
                               )}
                             </select>
 
-                            {item?.status === "△" &&
-                              item.memo && (
+                            {currentStatus === "△" &&
+                              item?.memo && (
                                 <div className="attendance-memo">
                                   {item.memo}
                                 </div>
