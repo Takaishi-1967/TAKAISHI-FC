@@ -34,6 +34,9 @@ function App() {
 
   const [generalNotice, setGeneralNotice] = useState("");
 
+  // 保存完了表示
+  const [savedMessage, setSavedMessage] = useState("");
+
   useEffect(() => {
     loadData();
 
@@ -41,6 +44,14 @@ function App() {
       setIsAdmin(true);
     }
   }, []);
+
+  function showSavedMessage(message = "保存しました") {
+    setSavedMessage(message);
+
+    setTimeout(() => {
+      setSavedMessage("");
+    }, 1500);
+  }
 
   async function loadData() {
     const results = await Promise.all([
@@ -224,19 +235,6 @@ function App() {
     });
   }
 
-  /*
-    選手の並び替え
-
-    以前は2人分だけDBを更新していたため、
-    連続操作時に重く感じたり順番が崩れることがあった。
-
-    今回は
-    ① 画面上ですぐ並び替え
-    ② 全員に1,2,3...と順番を振る
-    ③ DBへまとめて保存
-
-    という形に変更。
-  */
   async function movePlayer(
     playerId,
     direction
@@ -277,10 +275,8 @@ function App() {
         })
       );
 
-    // まず画面を即時更新
     setPlayers(reorderedPlayers);
 
-    // DBへ保存
     const results = await Promise.all(
       reorderedPlayers.map((player) =>
         supabase
@@ -348,6 +344,8 @@ function App() {
       ...current,
       [playerId]: trimmedMemo,
     }));
+
+    showSavedMessage("備考を保存しました");
   }
 
   async function saveGeneralNotice(value) {
@@ -372,6 +370,7 @@ function App() {
     }
 
     setGeneralNotice(value);
+    showSavedMessage("全体連絡を保存しました");
   }
 
   function startEditEvent(event) {
@@ -490,6 +489,12 @@ function App() {
         )
       );
     }
+
+    showSavedMessage(
+      editingEventId
+        ? "予定を変更しました"
+        : "予定を追加しました"
+    );
 
     cancelEditEvent();
   }
@@ -617,6 +622,8 @@ function App() {
         },
       ];
     });
+
+    showSavedMessage("出欠を保存しました");
   }
 
   function formatDate(dateString) {
@@ -742,6 +749,54 @@ function App() {
     );
   }
 
+  function getStatusStyle(
+    status,
+    warning = false
+  ) {
+    if (warning) {
+      return {
+        color: "#b42318",
+        backgroundColor: "#fff1f0",
+        borderColor: "#f0b4ae",
+        fontWeight: "800",
+      };
+    }
+
+    if (status === "○") {
+      return {
+        color: "#1769e0",
+        backgroundColor: "#eef5ff",
+        borderColor: "#9fc2f5",
+        fontWeight: "800",
+      };
+    }
+
+    if (status === "×") {
+      return {
+        color: "#d92d20",
+        backgroundColor: "#fff1f0",
+        borderColor: "#f2aaa4",
+        fontWeight: "800",
+      };
+    }
+
+    if (status === "△") {
+      return {
+        color: "#667085",
+        backgroundColor: "#f3f4f6",
+        borderColor: "#cbd2dc",
+        fontWeight: "800",
+      };
+    }
+
+    return {
+      color: "#a0a6af",
+      backgroundColor: "#fafbfc",
+      borderColor: "#dfe3e8",
+      fontWeight: "600",
+    };
+  }
+
   function EventInfo({
     event,
     compact = false,
@@ -821,6 +876,28 @@ function App() {
 
     return (
       <div className="app compact-page">
+        {savedMessage && (
+          <div
+            style={{
+              position: "fixed",
+              top: "14px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 9999,
+              background: "#081b3a",
+              color: "#fff",
+              padding: "9px 16px",
+              borderRadius: "999px",
+              fontSize: "12px",
+              fontWeight: "700",
+              boxShadow:
+                "0 4px 14px rgba(0,0,0,0.18)",
+            }}
+          >
+            ✓ {savedMessage}
+          </div>
+        )}
+
         <header className="header compact-header">
           <div>
             <h1>TAKAISHI.FC</h1>
@@ -960,17 +1037,25 @@ function App() {
                                   ? " compact-warning"
                                   : "")
                               }
+                              style={
+                                getStatusStyle(
+                                  status,
+                                  showWarning
+                                )
+                              }
                             >
                               {showWarning &&
-                                "⚠️"}
+                                "⚠️ "}
 
                               {status}
                             </td>
 
-                           <td className="compact-memo">
-  {status === "△"
-    ? item?.memo || ""
-    : playerMemos[player.id] || player.memo || ""}
+                            <td className="compact-memo">
+                              {status === "△"
+                                ? item?.memo || ""
+                                : playerMemos[player.id] ||
+                                  player.memo ||
+                                  ""}
                             </td>
                           </tr>
                         );
@@ -1050,6 +1135,28 @@ function App() {
   ) {
     return (
       <div className="app">
+        {savedMessage && (
+          <div
+            style={{
+              position: "fixed",
+              top: "14px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 9999,
+              background: "#081b3a",
+              color: "#fff",
+              padding: "9px 16px",
+              borderRadius: "999px",
+              fontSize: "12px",
+              fontWeight: "700",
+              boxShadow:
+                "0 4px 14px rgba(0,0,0,0.18)",
+            }}
+          >
+            ✓ {savedMessage}
+          </div>
+        )}
+
         <header className="header">
           <div>
             <h1>
@@ -1282,7 +1389,7 @@ function App() {
                       e.target.value
                     )
                   }
-                />
+              />
               </label>
 
               <label>
@@ -1403,6 +1510,28 @@ function App() {
 
   return (
     <div className="app">
+      {savedMessage && (
+        <div
+          style={{
+            position: "fixed",
+            top: "14px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 9999,
+            background: "#081b3a",
+            color: "#fff",
+            padding: "9px 16px",
+            borderRadius: "999px",
+            fontSize: "12px",
+            fontWeight: "700",
+            boxShadow:
+              "0 4px 14px rgba(0,0,0,0.18)",
+          }}
+        >
+          ✓ {savedMessage}
+        </div>
+      )}
+
       <header className="header">
         <div>
           <h1>
@@ -1590,6 +1719,16 @@ function App() {
                               item?.status ||
                               "未";
 
+                            const deadlinePassed =
+                              isDeadlinePassed(
+                                event
+                              );
+
+                            const showWarning =
+                              deadlinePassed &&
+                              currentStatus ===
+                                "未";
+
                             return (
                               <td
                                 key={
@@ -1612,6 +1751,18 @@ function App() {
                                   value={
                                     currentStatus
                                   }
+                                  style={{
+                                    ...getStatusStyle(
+                                      currentStatus,
+                                      showWarning
+                                    ),
+                                    ...(showWarning
+                                      ? {
+                                          boxShadow:
+                                            "0 0 0 1px rgba(180,35,24,0.15)",
+                                        }
+                                      : {}),
+                                  }}
                                   onChange={(
                                     e
                                   ) =>
@@ -1643,6 +1794,23 @@ function App() {
                                     )
                                   )}
                                 </select>
+
+                                {showWarning && (
+                                  <div
+                                    style={{
+                                      marginTop:
+                                        "3px",
+                                      fontSize:
+                                        "8px",
+                                      fontWeight:
+                                        "700",
+                                      color:
+                                        "#b42318",
+                                    }}
+                                  >
+                                    ⚠️ 未回答
+                                  </div>
+                                )}
 
                                 {currentStatus ===
                                   "△" &&
