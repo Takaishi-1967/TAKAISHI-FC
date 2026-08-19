@@ -1426,7 +1426,7 @@ function App() {
 
             <div className="info-text">
               自分の名前の「未」ボタンをタップして、
-              都合に合わせて予定を登録してください。
+              都合に合わせて予定を登録。
             </div>
 
             <div className="icon-guide">
