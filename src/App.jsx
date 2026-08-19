@@ -1140,7 +1140,7 @@ function App() {
 
             <textarea
               value={generalNotice}
-              placeholder="ペナルティ対象者、特記事項など"
+              placeholder="特記事項など"
               onChange={(e) =>
                 setGeneralNotice(e.target.value)
               }
