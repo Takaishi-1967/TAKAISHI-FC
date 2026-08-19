@@ -21,7 +21,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -74,6 +75,82 @@ button:disabled {
 }
 
 /* =========================
+   TOP INFO
+========================= */
+
+.top-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.info-box {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 12px 14px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  min-height: 145px;
+}
+
+.info-box h3 {
+  margin: 0 0 7px;
+  color: #081b3a;
+  font-size: 14px;
+}
+
+.info-text {
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.icon-guide {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  color: #475467;
+}
+
+.rule-info-box {
+  border-left: 4px solid #f5c518;
+}
+
+.notice-box {
+  border-left: 4px solid #b42318;
+}
+
+.notice-box h3 {
+  color: #b42318;
+}
+
+.notice-box textarea {
+  width: 100%;
+  min-height: 86px;
+  resize: vertical;
+  border: 1px solid #f0b4ae;
+  border-radius: 6px;
+  padding: 7px 8px;
+  color: #b42318;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+  background: #fffafa;
+}
+
+.notice-box textarea::placeholder {
+  color: #d58a83;
+  font-weight: 500;
+}
+
+.notice-box textarea:focus {
+  outline: none;
+  border-color: #b42318;
+  box-shadow: 0 0 0 2px rgba(180, 35, 24, 0.08);
+}
+
+/* =========================
    RULE
 ========================= */
 
@@ -100,9 +177,9 @@ button:disabled {
 
 .rule-notes {
   margin-top: 6px;
-  font-size: 11px;
+  font-size: 10px;
   color: #667085;
-  line-height: 1.6;
+  line-height: 1.55;
 }
 
 /* =========================
@@ -485,7 +562,8 @@ button:hover {
 }
 
 input,
-select {
+select,
+textarea {
   border: 1px solid #cbd2dc;
   border-radius: 6px;
   padding: 8px 10px;
@@ -728,6 +806,34 @@ select {
     padding: 12px;
   }
 
+  /* 上部3枠 */
+  .top-info-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .info-box {
+    min-height: auto;
+    padding: 10px 12px;
+  }
+
+  .info-box h3 {
+    font-size: 13px;
+  }
+
+  .info-text {
+    font-size: 11px;
+  }
+
+  .icon-guide {
+    font-size: 10px;
+  }
+
+  .notice-box textarea {
+    min-height: 70px;
+    font-size: 10px;
+  }
+
   .rule-box {
     padding: 10px 12px;
   }
@@ -811,8 +917,6 @@ select {
   .event-buttons {
     flex-direction: column;
   }
-
-  /* スクショ画面 */
 
   .compact-main {
     padding: 5px;
