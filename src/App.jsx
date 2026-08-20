@@ -31,11 +31,7 @@ function App() {
   const [editingEventId, setEditingEventId] = useState(null);
 
   const [playerMemos, setPlayerMemos] = useState({});
-
   const [generalNotice, setGeneralNotice] = useState("");
-
-  // 保存完了表示
-  const [savedMessage, setSavedMessage] = useState("");
 
   useEffect(() => {
     loadData();
@@ -44,14 +40,6 @@ function App() {
       setIsAdmin(true);
     }
   }, []);
-
-  function showSavedMessage(message = "保存しました") {
-    setSavedMessage(message);
-
-    setTimeout(() => {
-      setSavedMessage("");
-    }, 1500);
-  }
 
   async function loadData() {
     const results = await Promise.all([
@@ -130,7 +118,12 @@ function App() {
     if (pin === ADMIN_PIN) {
       setIsAdmin(true);
       setPage("admin");
-      sessionStorage.setItem("takaishi_admin", "true");
+
+      sessionStorage.setItem(
+        "takaishi_admin",
+        "true"
+      );
+
       setPin("");
     } else {
       alert("暗証番号が違います");
@@ -141,7 +134,10 @@ function App() {
   function logoutAdmin() {
     setIsAdmin(false);
     setPage("home");
-    sessionStorage.removeItem("takaishi_admin");
+
+    sessionStorage.removeItem(
+      "takaishi_admin"
+    );
   }
 
   async function addPlayer() {
@@ -156,7 +152,8 @@ function App() {
       players.length > 0
         ? Math.max(
             ...players.map(
-              (player) => player.sort_order ?? 0
+              (player) =>
+                player.sort_order ?? 0
             )
           ) + 1
         : 1;
@@ -173,7 +170,11 @@ function App() {
 
     if (result.error) {
       console.error(result.error);
-      alert("選手の追加に失敗しました");
+
+      alert(
+        "選手の追加に失敗しました"
+      );
+
       return;
     }
 
@@ -212,7 +213,11 @@ function App() {
 
     if (result.error) {
       console.error(result.error);
-      alert("選手の削除に失敗しました");
+
+      alert(
+        "選手の削除に失敗しました"
+      );
+
       return;
     }
 
@@ -224,13 +229,16 @@ function App() {
 
     setAttendance((current) =>
       current.filter(
-        (item) => item.player_id !== playerId
+        (item) =>
+          item.player_id !== playerId
       )
     );
 
     setPlayerMemos((current) => {
       const updated = { ...current };
+
       delete updated[playerId];
+
       return updated;
     });
   }
@@ -325,7 +333,10 @@ function App() {
         result.error
       );
 
-      alert("備考の保存に失敗しました");
+      alert(
+        "備考の保存に失敗しました"
+      );
+
       return;
     }
 
@@ -344,8 +355,6 @@ function App() {
       ...current,
       [playerId]: trimmedMemo,
     }));
-
-    showSavedMessage("備考を保存しました");
   }
 
   async function saveGeneralNotice(value) {
@@ -370,28 +379,33 @@ function App() {
     }
 
     setGeneralNotice(value);
-    showSavedMessage("全体連絡を保存しました");
   }
 
   function startEditEvent(event) {
     setEditingEventId(event.id);
 
     setNewEventDate(event.date || "");
+
     setNewEventType(
       event.type || "練習"
     );
+
     setNewEventTitle(
       event.title || ""
     );
+
     setNewEventTime(
       event.time || ""
     );
+
     setNewEventMeetingTime(
       event.meeting_time || ""
     );
+
     setNewEventPlace(
       event.place || ""
     );
+
     setNewEventUniform(
       event.uniform || ""
     );
@@ -404,6 +418,7 @@ function App() {
 
   function cancelEditEvent() {
     setEditingEventId(null);
+
     setNewEventDate("");
     setNewEventType("練習");
     setNewEventTitle("");
@@ -423,6 +438,7 @@ function App() {
       alert(
         "相手チーム名などを入力してください"
       );
+
       return;
     }
 
@@ -490,12 +506,6 @@ function App() {
       );
     }
 
-    showSavedMessage(
-      editingEventId
-        ? "予定を変更しました"
-        : "予定を追加しました"
-    );
-
     cancelEditEvent();
   }
 
@@ -521,7 +531,11 @@ function App() {
 
     if (result.error) {
       console.error(result.error);
-      alert("予定の削除に失敗しました");
+
+      alert(
+        "予定の削除に失敗しました"
+      );
+
       return;
     }
 
@@ -533,7 +547,8 @@ function App() {
 
     setAttendance((current) =>
       current.filter(
-        (item) => item.event_id !== eventId
+        (item) =>
+          item.event_id !== eventId
       )
     );
   }
@@ -559,7 +574,8 @@ function App() {
       eventId
     );
 
-    let memo = previous?.memo || "";
+    let memo =
+      previous?.memo || "";
 
     if (status === "△") {
       memo =
@@ -574,6 +590,7 @@ function App() {
         alert(
           "⚠️ △の場合は備考を入力してください"
         );
+
         return;
       }
     }
@@ -596,9 +613,11 @@ function App() {
 
     if (result.error) {
       console.error(result.error);
+
       alert(
         "出欠の更新に失敗しました"
       );
+
       return;
     }
 
@@ -622,8 +641,6 @@ function App() {
         },
       ];
     });
-
-    showSavedMessage("出欠を保存しました");
   }
 
   function formatDate(dateString) {
@@ -749,54 +766,6 @@ function App() {
     );
   }
 
-  function getStatusStyle(
-    status,
-    warning = false
-  ) {
-    if (warning) {
-      return {
-        color: "#b42318",
-        backgroundColor: "#fff1f0",
-        borderColor: "#f0b4ae",
-        fontWeight: "800",
-      };
-    }
-
-    if (status === "○") {
-      return {
-        color: "#1769e0",
-        backgroundColor: "#eef5ff",
-        borderColor: "#9fc2f5",
-        fontWeight: "800",
-      };
-    }
-
-    if (status === "×") {
-      return {
-        color: "#d92d20",
-        backgroundColor: "#fff1f0",
-        borderColor: "#f2aaa4",
-        fontWeight: "800",
-      };
-    }
-
-    if (status === "△") {
-      return {
-        color: "#667085",
-        backgroundColor: "#f3f4f6",
-        borderColor: "#cbd2dc",
-        fontWeight: "800",
-      };
-    }
-
-    return {
-      color: "#a0a6af",
-      backgroundColor: "#fafbfc",
-      borderColor: "#dfe3e8",
-      fontWeight: "600",
-    };
-  }
-
   function EventInfo({
     event,
     compact = false,
@@ -845,15 +814,19 @@ function App() {
         {!compact && (
           <div className="attendance-counts">
             <span>👤</span>
+
             <span>
               ○:{counts["○"]}
             </span>
+
             <span>
               ×:{counts["×"]}
             </span>
+
             <span>
               △:{counts["△"]}
             </span>
+
             <span>
               未:{counts["未"]}
             </span>
@@ -869,39 +842,29 @@ function App() {
 
     const deadlinePassed =
       nextEvent
-        ? isDeadlinePassed(
-            nextEvent
-          )
+        ? isDeadlinePassed(nextEvent)
         : false;
+
+    const counts = nextEvent
+      ? getCounts(nextEvent.id)
+      : {
+          "○": 0,
+          "×": 0,
+          "△": 0,
+          "未": 0,
+        };
 
     return (
       <div className="app compact-page">
-        {savedMessage && (
-          <div
-            style={{
-              position: "fixed",
-              top: "14px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              zIndex: 9999,
-              background: "#081b3a",
-              color: "#fff",
-              padding: "9px 16px",
-              borderRadius: "999px",
-              fontSize: "12px",
-              fontWeight: "700",
-              boxShadow:
-                "0 4px 14px rgba(0,0,0,0.18)",
-            }}
-          >
-            ✓ {savedMessage}
-          </div>
-        )}
+        <header className="compact-app-header">
+          <div className="compact-brand">
+            <strong>
+              TAKAISHI.FC
+            </strong>
 
-        <header className="header compact-header">
-          <div>
-            <h1>TAKAISHI.FC</h1>
-            <p>出欠確認</p>
+            <span>
+              出欠確認
+            </span>
           </div>
 
           <button
@@ -915,14 +878,22 @@ function App() {
         </header>
 
         <main className="compact-main">
-          <div className="compact-title">
-            <strong>
-              📸 締切確認用
-            </strong>
+          <div className="compact-screen-title">
+            <div>
+              <span className="compact-title-label">
+                ATTENDANCE
+              </span>
 
-            <span>
-              直近の予定
-            </span>
+              <h2>
+                締切確認
+              </h2>
+            </div>
+
+            {deadlinePassed && (
+              <span className="deadline-badge">
+                締切後
+              </span>
+            )}
           </div>
 
           {!nextEvent ? (
@@ -931,29 +902,27 @@ function App() {
             </p>
           ) : (
             <>
-              <div className="compact-event-summary">
-                <div className="compact-event-main">
-                  <strong>
+              <section className="compact-event-card">
+                <div className="compact-event-top">
+                  <div className="compact-event-date">
                     {formatDate(
                       nextEvent.date
                     )}
-                  </strong>
+                  </div>
 
-                  <span>
+                  <div className="compact-event-type">
                     {nextEvent.type}
-                  </span>
+                  </div>
+                </div>
 
-                  <span>
-                    vs{" "}
-                    {nextEvent.title}
-                  </span>
+                <div className="compact-event-name">
+                  vs {nextEvent.title}
                 </div>
 
                 <div className="compact-event-details">
                   {nextEvent.time && (
                     <span>
-                      ⌚️{" "}
-                      {nextEvent.time}
+                      ⌚ {nextEvent.time}
                     </span>
                   )}
 
@@ -980,90 +949,127 @@ function App() {
                     </span>
                   )}
                 </div>
-              </div>
+              </section>
 
-              <div className="compact-table-wrapper">
-                <table className="compact-table">
-                  <thead>
-                    <tr>
-                      <th>
-                        選手
-                      </th>
+              <section className="compact-player-card">
+                <div className="compact-player-header">
+                  <span>
+                    選手
+                  </span>
 
-                      <th>
-                        出欠
-                      </th>
+                  <span>
+                    出欠
+                  </span>
 
-                      <th>
-                        備考
-                      </th>
-                    </tr>
-                  </thead>
+                  <span>
+                    備考
+                  </span>
+                </div>
 
-                  <tbody>
-                    {players.map(
-                      (player) => {
-                        const item =
-                          getAttendance(
-                            player.id,
-                            nextEvent.id
-                          );
+                <div className="compact-player-list">
+                  {players.map(
+                    (player) => {
+                      const item =
+                        getAttendance(
+                          player.id,
+                          nextEvent.id
+                        );
 
-                        const status =
-                          item?.status ||
-                          "未";
+                      const status =
+                        item?.status ||
+                        "未";
 
-                        const showWarning =
-                          deadlinePassed &&
-                          status === "未";
+                      const showWarning =
+                        deadlinePassed &&
+                        status === "未";
 
-                        return (
-                          <tr
-                            key={
+                      const memo =
+                        status === "△"
+                          ? item?.memo || ""
+                          : playerMemos[
                               player.id
-                            }
-                          >
-                            <th>
-                              {
-                                player.name
-                              }
-                            </th>
+                            ] ||
+                            player.memo ||
+                            "";
 
-                            <td
+                      return (
+                        <div
+                          className="compact-player-row"
+                          key={player.id}
+                        >
+                          <div className="compact-player-name">
+                            {player.name}
+                          </div>
+
+                          <div className="compact-player-status">
+                            <span
                               className={
-                                "compact-status-" +
+                                "status-pill compact-status-" +
                                 status +
                                 (showWarning
                                   ? " compact-warning"
                                   : "")
                               }
-                              style={
-                                getStatusStyle(
-                                  status,
-                                  showWarning
-                                )
-                              }
                             >
-                              {showWarning &&
-                                "⚠️ "}
+                              {showWarning
+                                ? "⚠ "
+                                : ""}
 
                               {status}
-                            </td>
+                            </span>
+                          </div>
 
-                            <td className="compact-memo">
-                              {status === "△"
-                                ? item?.memo || ""
-                                : playerMemos[player.id] ||
-                                  player.memo ||
-                                  ""}
-                            </td>
-                          </tr>
-                        );
-                      }
-                    )}
-                  </tbody>
-                </table>
-              </div>
+                          <div className="compact-player-memo">
+                            {memo}
+                          </div>
+                        </div>
+                      );
+                    }
+                  )}
+                </div>
+              </section>
+
+              <section className="compact-count-summary">
+                <div className="compact-count compact-count-ok">
+                  <span>
+                    ○
+                  </span>
+
+                  <strong>
+                    {counts["○"]}
+                  </strong>
+                </div>
+
+                <div className="compact-count compact-count-ng">
+                  <span>
+                    ×
+                  </span>
+
+                  <strong>
+                    {counts["×"]}
+                  </strong>
+                </div>
+
+                <div className="compact-count compact-count-triangle">
+                  <span>
+                    △
+                  </span>
+
+                  <strong>
+                    {counts["△"]}
+                  </strong>
+                </div>
+
+                <div className="compact-count compact-count-none">
+                  <span>
+                    未
+                  </span>
+
+                  <strong>
+                    {counts["未"]}
+                  </strong>
+                </div>
+              </section>
             </>
           )}
         </main>
@@ -1135,28 +1141,6 @@ function App() {
   ) {
     return (
       <div className="app">
-        {savedMessage && (
-          <div
-            style={{
-              position: "fixed",
-              top: "14px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              zIndex: 9999,
-              background: "#081b3a",
-              color: "#fff",
-              padding: "9px 16px",
-              borderRadius: "999px",
-              fontSize: "12px",
-              fontWeight: "700",
-              boxShadow:
-                "0 4px 14px rgba(0,0,0,0.18)",
-            }}
-          >
-            ✓ {savedMessage}
-          </div>
-        )}
-
         <header className="header">
           <div>
             <h1>
@@ -1181,9 +1165,7 @@ function App() {
 
             <button
               className="secondary-button"
-              onClick={
-                logoutAdmin
-              }
+              onClick={logoutAdmin}
             >
               ログアウト
             </button>
@@ -1198,9 +1180,7 @@ function App() {
               <input
                 type="text"
                 placeholder="選手名"
-                value={
-                  newPlayerName
-                }
+                value={newPlayerName}
                 onChange={(e) =>
                   setNewPlayerName(
                     e.target.value
@@ -1209,9 +1189,7 @@ function App() {
               />
 
               <button
-                onClick={
-                  addPlayer
-                }
+                onClick={addPlayer}
               >
                 選手を追加
               </button>
@@ -1219,28 +1197,20 @@ function App() {
 
             <div className="player-list">
               {players.map(
-                (
-                  player,
-                  index
-                ) => (
+                (player, index) => (
                   <div
                     className="player-item"
-                    key={
-                      player.id
-                    }
+                    key={player.id}
                   >
                     <span>
-                      {
-                        player.name
-                      }
+                      {player.name}
                     </span>
 
                     <div className="player-actions">
                       <button
                         className="move-button"
                         disabled={
-                          index ===
-                          0
+                          index === 0
                         }
                         onClick={() =>
                           movePlayer(
@@ -1256,8 +1226,7 @@ function App() {
                         className="move-button"
                         disabled={
                           index ===
-                          players.length -
-                            1
+                          players.length - 1
                         }
                         onClick={() =>
                           movePlayer(
@@ -1299,9 +1268,7 @@ function App() {
 
                 <input
                   type="date"
-                  value={
-                    newEventDate
-                  }
+                  value={newEventDate}
                   onChange={(e) =>
                     setNewEventDate(
                       e.target.value
@@ -1314,9 +1281,7 @@ function App() {
                 種別
 
                 <select
-                  value={
-                    newEventType
-                  }
+                  value={newEventType}
                   onChange={(e) =>
                     setNewEventType(
                       e.target.value
@@ -1347,9 +1312,7 @@ function App() {
                 <input
                   type="text"
                   placeholder="泉州FC"
-                  value={
-                    newEventTitle
-                  }
+                  value={newEventTitle}
                   onChange={(e) =>
                     setNewEventTitle(
                       e.target.value
@@ -1364,9 +1327,7 @@ function App() {
                 <input
                   type="text"
                   placeholder="19:00〜21:00"
-                  value={
-                    newEventTime
-                  }
+                  value={newEventTime}
                   onChange={(e) =>
                     setNewEventTime(
                       e.target.value
@@ -1389,7 +1350,7 @@ function App() {
                       e.target.value
                     )
                   }
-              />
+                />
               </label>
 
               <label>
@@ -1398,9 +1359,7 @@ function App() {
                 <input
                   type="text"
                   placeholder="グラウンド名"
-                  value={
-                    newEventPlace
-                  }
+                  value={newEventPlace}
                   onChange={(e) =>
                     setNewEventPlace(
                       e.target.value
@@ -1415,9 +1374,7 @@ function App() {
                 <input
                   type="text"
                   placeholder="1st 黄色"
-                  value={
-                    newEventUniform
-                  }
+                  value={newEventUniform}
                   onChange={(e) =>
                     setNewEventUniform(
                       e.target.value
@@ -1427,9 +1384,7 @@ function App() {
               </label>
 
               <button
-                onClick={
-                  saveEvent
-                }
+                onClick={saveEvent}
               >
                 {editingEventId
                   ? "変更を保存"
@@ -1450,28 +1405,19 @@ function App() {
 
             <div className="event-list">
               {events.map(
-                (
-                  event,
-                  index
-                ) => (
+                (event, index) => (
                   <div
                     className={
                       "event-item " +
-                      (index %
-                        2 ===
-                      0
+                      (index % 2 === 0
                         ? "event-navy"
                         : "event-yellow")
                     }
-                    key={
-                      event.id
-                    }
+                    key={event.id}
                   >
                     <div className="event-info">
                       <EventInfo
-                        event={
-                          event
-                        }
+                        event={event}
                       />
                     </div>
 
@@ -1510,28 +1456,6 @@ function App() {
 
   return (
     <div className="app">
-      {savedMessage && (
-        <div
-          style={{
-            position: "fixed",
-            top: "14px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 9999,
-            background: "#081b3a",
-            color: "#fff",
-            padding: "9px 16px",
-            borderRadius: "999px",
-            fontSize: "12px",
-            fontWeight: "700",
-            boxShadow:
-              "0 4px 14px rgba(0,0,0,0.18)",
-          }}
-        >
-          ✓ {savedMessage}
-        </div>
-      )}
-
       <header className="header">
         <div>
           <h1>
@@ -1596,9 +1520,7 @@ function App() {
             </h3>
 
             <textarea
-              value={
-                generalNotice
-              }
+              value={generalNotice}
               placeholder="特記事項など"
               onChange={(e) =>
                 setGeneralNotice(
@@ -1638,13 +1560,11 @@ function App() {
             出欠
           </h2>
 
-          {players.length ===
-          0 ? (
+          {players.length === 0 ? (
             <p className="empty-message">
               選手がまだ登録されていません。
             </p>
-          ) : events.length ===
-            0 ? (
+          ) : events.length === 0 ? (
             <p className="empty-message">
               予定がまだ登録されていません。
             </p>
@@ -1658,27 +1578,18 @@ function App() {
                     </th>
 
                     {events.map(
-                      (
-                        event,
-                        index
-                      ) => (
+                      (event, index) => (
                         <th
-                          key={
-                            event.id
-                          }
+                          key={event.id}
                           className={
                             "event-header " +
-                            (index %
-                              2 ===
-                            0
+                            (index % 2 === 0
                               ? "header-navy"
                               : "header-yellow")
                           }
                         >
                           <EventInfo
-                            event={
-                              event
-                            }
+                            event={event}
                           />
                         </th>
                       )
@@ -1694,14 +1605,10 @@ function App() {
                   {players.map(
                     (player) => (
                       <tr
-                        key={
-                          player.id
-                        }
+                        key={player.id}
                       >
                         <th className="player-name">
-                          {
-                            player.name
-                          }
+                          {player.name}
                         </th>
 
                         {events.map(
@@ -1719,25 +1626,12 @@ function App() {
                               item?.status ||
                               "未";
 
-                            const deadlinePassed =
-                              isDeadlinePassed(
-                                event
-                              );
-
-                            const showWarning =
-                              deadlinePassed &&
-                              currentStatus ===
-                                "未";
-
                             return (
                               <td
-                                key={
-                                  event.id
-                                }
+                                key={event.id}
                                 className={
                                   "attendance-cell " +
-                                  (index %
-                                    2 ===
+                                  (index % 2 ===
                                   0
                                     ? "cell-navy"
                                     : "cell-yellow")
@@ -1751,27 +1645,13 @@ function App() {
                                   value={
                                     currentStatus
                                   }
-                                  style={{
-                                    ...getStatusStyle(
-                                      currentStatus,
-                                      showWarning
-                                    ),
-                                    ...(showWarning
-                                      ? {
-                                          boxShadow:
-                                            "0 0 0 1px rgba(180,35,24,0.15)",
-                                        }
-                                      : {}),
-                                  }}
                                   onChange={(
                                     e
                                   ) =>
                                     updateAttendance(
                                       player.id,
                                       event.id,
-                                      e
-                                        .target
-                                        .value
+                                      e.target.value
                                     )
                                   }
                                 >
@@ -1780,45 +1660,20 @@ function App() {
                                       status
                                     ) => (
                                       <option
-                                        key={
-                                          status
-                                        }
-                                        value={
-                                          status
-                                        }
+                                        key={status}
+                                        value={status}
                                       >
-                                        {
-                                          status
-                                        }
+                                        {status}
                                       </option>
                                     )
                                   )}
                                 </select>
 
-                                {showWarning && (
-                                  <div
-                                    style={{
-                                      marginTop:
-                                        "3px",
-                                      fontSize:
-                                        "8px",
-                                      fontWeight:
-                                        "700",
-                                      color:
-                                        "#b42318",
-                                    }}
-                                  >
-                                    ⚠️ 未回答
-                                  </div>
-                                )}
-
                                 {currentStatus ===
                                   "△" &&
                                   item?.memo && (
                                     <div className="attendance-memo">
-                                      {
-                                        item.memo
-                                      }
+                                      {item.memo}
                                     </div>
                                   )}
                               </td>
@@ -1837,8 +1692,7 @@ function App() {
                             }
                             onChange={(e) => {
                               const value =
-                                e.target
-                                  .value;
+                                e.target.value;
 
                               setPlayerMemos(
                                 (
@@ -1853,8 +1707,7 @@ function App() {
                             onBlur={(e) =>
                               savePlayerMemo(
                                 player.id,
-                                e.target
-                                  .value
+                                e.target.value
                               )
                             }
                           />
