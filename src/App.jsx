@@ -1195,10 +1195,6 @@ function App() {
                       <th>
                         備考
                       </th>
-
-                      <th className="penalty-header">
-                        ⚠️ PENALTY
-                      </th>
                     </tr>
                   </thead>
 
@@ -1270,43 +1266,6 @@ function App() {
 
                             <td className="compact-memo">
                               {memo}
-                            </td>
-
-                            <td className="compact-penalty">
-                              <input
-                                type="text"
-                                value={
-                                  playerPenalties[
-                                    player.id
-                                  ] ?? ""
-                                }
-                                onChange={(
-                                  e
-                                ) => {
-                                  const value =
-                                    e.target
-                                      .value;
-
-                                  setPlayerPenalties(
-                                    (
-                                      current
-                                    ) => ({
-                                      ...current,
-                                      [player.id]:
-                                        value,
-                                    })
-                                  );
-                                }}
-                                onBlur={(
-                                  e
-                                ) => {
-                                  savePlayerPenalty(
-                                    player.id,
-                                    e.target
-                                      .value
-                                  );
-                                }}
-                              />
                             </td>
                           </tr>
                         );
