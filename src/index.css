@@ -8,17 +8,18 @@ html {
 
 body {
   margin: 0;
-  background: #f4f6fa;
-  color: #1f2937;
+  background: #f4f6f9;
+  color: #263248;
   font-family:
+    -apple-system,
+    BlinkMacSystemFont,
     "Hiragino Maru Gothic ProN",
+    "Hiragino Kaku Gothic ProN",
     "Hiragino Sans",
     "Yu Gothic",
     "Meiryo",
-    -apple-system,
-    BlinkMacSystemFont,
     sans-serif;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 button,
@@ -29,7 +30,19 @@ textarea {
 }
 
 button {
+  border: none;
   cursor: pointer;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:active {
+  transform: scale(0.98);
 }
 
 button:disabled {
@@ -46,32 +59,25 @@ button:disabled {
 ========================= */
 
 .header {
-  background: linear-gradient(
-    135deg,
-    #071a38,
-    #0c2b59
-  );
+  background: #081b3a;
   color: #ffffff;
   padding: 18px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow:
-    0 2px 10px rgba(8, 27, 58, 0.12);
 }
 
 .header h1 {
   margin: 0;
   font-size: 22px;
-  letter-spacing: 0.05em;
-  font-weight: 800;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .header p {
-  margin: 4px 0 0;
+  margin: 3px 0 0;
   font-size: 12px;
-  opacity: 0.8;
-  font-weight: 500;
+  opacity: 0.78;
 }
 
 /* =========================
@@ -99,8 +105,7 @@ button:disabled {
   background: #ffffff;
   border-radius: 14px;
   padding: 13px 15px;
-  box-shadow:
-    0 3px 12px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 2px 10px rgba(8, 27, 58, 0.06);
   min-height: 145px;
 }
 
@@ -108,19 +113,19 @@ button:disabled {
   margin: 0 0 8px;
   color: #081b3a;
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .info-text {
   font-size: 12px;
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
 .icon-guide {
-  margin-top: 9px;
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   font-size: 11px;
   color: #667085;
 }
@@ -130,7 +135,7 @@ button:disabled {
 }
 
 .notice-box {
-  border-left: 4px solid #e05a47;
+  border-left: 4px solid #e35d5b;
 }
 
 .notice-box h3 {
@@ -141,8 +146,8 @@ button:disabled {
   width: 100%;
   min-height: 86px;
   resize: vertical;
-  border: 1px solid #f0b4ae;
-  border-radius: 9px;
+  border: 1px solid #f1c5c1;
+  border-radius: 10px;
   padding: 8px 9px;
   color: #b42318;
   font-size: 11px;
@@ -153,14 +158,13 @@ button:disabled {
 
 .notice-box textarea::placeholder {
   color: #d58a83;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .notice-box textarea:focus {
   outline: none;
   border-color: #b42318;
-  box-shadow:
-    0 0 0 3px rgba(180, 35, 24, 0.08);
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.08);
 }
 
 /* =========================
@@ -171,29 +175,28 @@ button:disabled {
   background: #ffffff;
   border-left: 4px solid #f5c518;
   border-radius: 14px;
-  padding: 13px 15px;
+  padding: 12px 14px;
   margin-bottom: 14px;
-  box-shadow:
-    0 3px 12px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 2px 10px rgba(8, 27, 58, 0.06);
 }
 
 .rule-title {
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 700;
   color: #081b3a;
   margin-bottom: 5px;
 }
 
 .rule-text {
   font-size: 13px;
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
 .rule-notes {
-  margin-top: 7px;
+  margin-top: 6px;
   font-size: 10px;
   color: #667085;
-  line-height: 1.6;
+  line-height: 1.55;
 }
 
 /* =========================
@@ -201,26 +204,12 @@ button:disabled {
 ========================= */
 
 button {
-  border: none;
-  border-radius: 9px;
   background: #081b3a;
   color: #ffffff;
-  padding: 8px 13px;
+  border-radius: 10px;
+  padding: 7px 12px;
   font-size: 13px;
-  font-weight: 700;
-  transition:
-    transform 0.15s ease,
-    opacity 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-button:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-button:active {
-  transform: translateY(0);
+  font-weight: 600;
 }
 
 .secondary-button {
@@ -229,20 +218,20 @@ button:active {
 }
 
 .delete-button {
-  background: #d94841;
-  padding: 6px 10px;
+  background: #d94d4a;
+  padding: 5px 9px;
   font-size: 11px;
 }
 
 .edit-button {
-  background: #667085;
-  padding: 6px 10px;
+  background: #56657c;
+  padding: 5px 9px;
   font-size: 11px;
 }
 
 .move-button {
-  width: 31px;
-  height: 29px;
+  width: 30px;
+  height: 28px;
   padding: 0;
   font-size: 14px;
   background: #e9edf3;
@@ -256,8 +245,8 @@ button:active {
 .home-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
-  margin-bottom: 11px;
+  gap: 7px;
+  margin-bottom: 10px;
 }
 
 .home-actions button {
@@ -266,7 +255,7 @@ button:active {
 }
 
 .compact-button {
-  background: #42526e;
+  background: #475467;
 }
 
 /* =========================
@@ -276,17 +265,16 @@ button:active {
 .section {
   background: #ffffff;
   border-radius: 16px;
-  padding: 17px;
-  box-shadow:
-    0 4px 16px rgba(15, 23, 42, 0.06);
+  padding: 16px;
+  box-shadow: 0 3px 14px rgba(8, 27, 58, 0.06);
   margin-bottom: 16px;
 }
 
 .section h2 {
-  margin: 0 0 15px;
+  margin: 0 0 14px;
   color: #081b3a;
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 /* =========================
@@ -311,14 +299,14 @@ button:active {
 
 .player-name-header,
 .player-name {
-  width: 118px;
-  min-width: 118px;
-  max-width: 118px;
+  width: 125px;
+  min-width: 125px;
+  max-width: 125px;
   background: #ffffff;
   position: sticky;
   left: 0;
   z-index: 2;
-  border-right: 1px solid #dce2eb;
+  border-right: 1px solid #dce2ea;
 }
 
 .event-header,
@@ -336,25 +324,25 @@ button:active {
 }
 
 .attendance-table th {
-  border-bottom: 1px solid #dce2eb;
-  border-right: 1px solid #dce2eb;
-  padding: 8px 5px;
+  border-bottom: 1px solid #dce2ea;
+  border-right: 1px solid #dce2ea;
+  padding: 7px 5px;
   vertical-align: top;
   text-align: center;
 }
 
 .attendance-table td {
-  border-bottom: 1px solid #e5e9f0;
+  border-bottom: 1px solid #e5e9ef;
 }
 
 .event-header {
-  line-height: 1.4;
+  line-height: 1.35;
   font-weight: 700;
   word-break: break-word;
 }
 
 .event-header > div {
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
 
 .event-date {
@@ -363,7 +351,7 @@ button:active {
 
 .event-type {
   font-size: 9px;
-  color: #667085;
+  color: #7a8494;
 }
 
 .event-vs {
@@ -371,29 +359,28 @@ button:active {
 }
 
 .header-navy {
-  background: #eef3fa;
+  background: #edf3fa;
 }
 
 .header-yellow {
-  background: #fff9e6;
+  background: #fff9df;
 }
 
 .cell-navy {
-  background: #f8faff;
+  background: #f8fafd;
 }
 
 .cell-yellow {
-  background: #fffdf6;
+  background: #fffdf4;
 }
 
 .player-name {
-  padding: 9px 8px;
+  padding: 8px 8px;
   text-align: left;
-  font-weight: 800;
+  font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.4;
 }
 
 /* =========================
@@ -401,22 +388,22 @@ button:active {
 ========================= */
 
 .attendance-cell {
-  padding: 7px 4px;
+  padding: 6px 4px;
   text-align: center;
-  border-right: 1px solid #e5e9f0;
-  border-bottom: 1px solid #e5e9f0;
+  border-right: 1px solid #e5e9ef;
+  border-bottom: 1px solid #e5e9ef;
   vertical-align: top;
 }
 
 .attendance-cell select {
-  width: 44px;
-  min-width: 44px;
-  max-width: 44px;
-  height: 30px;
+  width: 42px;
+  min-width: 42px;
+  max-width: 42px;
+  height: 28px;
   padding: 2px 0;
-  font-size: 13px;
-  border: 1px solid #d3dae5;
-  border-radius: 9px;
+  font-size: 12px;
+  border: 1px solid #d1d8e2;
+  border-radius: 8px;
   background: #ffffff;
   text-align: center;
   text-align-last: center;
@@ -426,30 +413,30 @@ button:active {
 }
 
 .attendance-cell select.status-○ {
-  color: #1877d2;
+  color: #1d63d8;
   font-weight: 800;
-  border-color: #9bc9f5;
-  background: #f0f8ff;
+  border-color: #b9d1ff;
+  background: #f3f7ff;
 }
 
 .attendance-cell select.status-× {
   color: #dc2626;
   font-weight: 800;
-  border-color: #f4b3b3;
-  background: #fff4f4;
+  border-color: #ffc9c9;
+  background: #fff6f6;
 }
 
 .attendance-cell select.status-△ {
-  color: #b7791f;
+  color: #a16207;
   font-weight: 800;
-  border-color: #f1d08c;
+  border-color: #f6d99a;
   background: #fffaf0;
 }
 
 .attendance-cell select.status-未 {
-  color: #98a2b3;
-  font-weight: 700;
-  border-color: #e1e6ed;
+  color: #aab2bd;
+  font-weight: 600;
+  border-color: #e1e5ea;
   background: #fafbfc;
 }
 
@@ -462,7 +449,7 @@ button:active {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   font-size: 8px;
   font-weight: 600;
   color: #667085;
@@ -478,9 +465,9 @@ button:active {
 ========================= */
 
 .attendance-memo {
-  margin-top: 5px;
+  margin-top: 4px;
   font-size: 9px;
-  line-height: 1.4;
+  line-height: 1.3;
   color: #475467;
   overflow-wrap: anywhere;
 }
@@ -490,9 +477,9 @@ button:active {
 ========================= */
 
 .player-memo-cell {
-  padding: 6px;
-  border-right: 1px solid #e5e9f0;
-  border-bottom: 1px solid #e5e9f0;
+  padding: 5px;
+  border-right: 1px solid #e5e9ef;
+  border-bottom: 1px solid #e5e9ef;
   vertical-align: top;
   text-align: left;
 }
@@ -500,24 +487,23 @@ button:active {
 .player-memo-cell input {
   width: 100%;
   min-width: 0;
-  border: 1px solid #d3dae5;
+  border: 1px solid #d1d8e2;
   border-radius: 8px;
-  padding: 6px 7px;
+  padding: 5px 6px;
   background: #ffffff;
-  color: #344054;
+  color: #263248;
   font-size: 10px;
   line-height: 1.3;
 }
 
 .player-memo-cell input::placeholder {
-  color: #98a2b3;
+  color: #a0a8b5;
 }
 
 .player-memo-cell input:focus {
   outline: none;
   border-color: #081b3a;
-  box-shadow:
-    0 0 0 3px rgba(8, 27, 58, 0.08);
+  box-shadow: 0 0 0 3px rgba(8, 27, 58, 0.07);
 }
 
 /* =========================
@@ -544,7 +530,7 @@ button:active {
 .player-list {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 6px;
 }
 
 .player-item {
@@ -561,8 +547,7 @@ button:active {
   min-width: 0;
   overflow-wrap: anywhere;
   word-break: break-word;
-  line-height: 1.4;
-  font-weight: 700;
+  line-height: 1.35;
 }
 
 .player-actions {
@@ -578,8 +563,7 @@ button:active {
 
 .event-form {
   display: grid;
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -588,8 +572,7 @@ button:active {
   flex-direction: column;
   gap: 5px;
   font-size: 12px;
-  color: #475467;
-  font-weight: 600;
+  color: #667085;
 }
 
 .event-form button {
@@ -599,19 +582,10 @@ button:active {
 input,
 select,
 textarea {
-  border: 1px solid #d3dae5;
-  border-radius: 9px;
-  padding: 9px 10px;
+  border: 1px solid #d1d8e2;
+  border-radius: 10px;
+  padding: 8px 10px;
   background: #ffffff;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  border-color: #7285a6;
-  box-shadow:
-    0 0 0 3px rgba(8, 27, 58, 0.06);
 }
 
 /* =========================
@@ -622,7 +596,7 @@ textarea:focus {
   margin-top: 18px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
 }
 
 .event-item {
@@ -630,16 +604,16 @@ textarea:focus {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  padding: 11px;
+  padding: 10px;
   border-radius: 12px;
 }
 
 .event-navy {
-  background: #eef3fa;
+  background: #edf3fa;
 }
 
 .event-yellow {
-  background: #fff9e5;
+  background: #fff9df;
 }
 
 .event-info {
@@ -678,7 +652,7 @@ textarea:focus {
 ========================= */
 
 .empty-message {
-  color: #667085;
+  color: #7a8494;
   font-size: 13px;
 }
 
@@ -687,12 +661,11 @@ textarea:focus {
 ========================= */
 
 .compact-page {
-  min-height: 100vh;
-  background: #f3f6fb;
+  background: #f4f6f9;
 }
 
 .compact-header {
-  padding: 11px 14px;
+  padding: 12px 14px;
 }
 
 .compact-header h1 {
@@ -701,89 +674,118 @@ textarea:focus {
 
 .compact-header p {
   font-size: 10px;
-  margin-top: 2px;
 }
 
 .compact-back {
   padding: 6px 10px;
-  font-size: 10px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 11px;
+  border-radius: 9px;
 }
 
 .compact-main {
   width: 100%;
-  max-width: 620px;
+  max-width: 520px;
   margin: 0 auto;
   padding: 8px;
 }
+
+/* 上部タイトル */
 
 .compact-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 2px 7px;
+  margin: 0 2px 6px;
   font-size: 11px;
 }
 
 .compact-title strong {
-  color: #081b3a;
-  font-weight: 800;
+  font-size: 11px;
 }
 
 .compact-title span {
-  color: #98a2b3;
+  color: #8a94a3;
   font-size: 9px;
 }
 
 /* =========================
-   COMPACT EVENT SUMMARY
+   COMPACT EVENT CARD
 ========================= */
 
 .compact-event-summary {
   background: #ffffff;
-  border-radius: 14px;
-  padding: 9px 11px;
-  margin-bottom: 7px;
-  box-shadow:
-    0 3px 10px rgba(15, 23, 42, 0.05);
+  border: 1px solid #dce2ea;
+  border-radius: 12px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 8px rgba(8, 27, 58, 0.05);
 }
 
 .compact-event-main {
   display: flex;
   align-items: center;
-  gap: 6px;
   flex-wrap: wrap;
-  color: #172033;
-  font-size: 11px;
+  gap: 3px 7px;
+  color: #081b3a;
+  line-height: 1.35;
 }
 
 .compact-event-main strong {
-  color: #081b3a;
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 12px;
 }
 
-.compact-event-main span:nth-child(2) {
-  padding: 2px 6px;
-  border-radius: 999px;
-  background: #eef3fa;
-  color: #50627f;
-  font-size: 8px;
+.compact-event-main span {
+  font-size: 10px;
+}
+
+.compact-event-main span:last-child {
   font-weight: 700;
 }
 
-.compact-event-main span:nth-child(3) {
-  font-weight: 800;
-}
-
 .compact-event-details {
-  margin-top: 5px;
   display: flex;
   flex-wrap: wrap;
-  gap: 3px 8px;
+  gap: 2px 8px;
+  margin-top: 4px;
   color: #667085;
   font-size: 8px;
+  line-height: 1.4;
+}
+
+/* =========================
+   COMPACT COUNTS
+========================= */
+
+.compact-counts {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  margin: 2px 2px 5px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #667085;
+  white-space: nowrap;
+}
+
+.compact-counts span {
+  white-space: nowrap;
+}
+
+.compact-count-ok {
+  color: #1d63d8;
+}
+
+.compact-count-no {
+  color: #dc2626;
+}
+
+.compact-count-triangle {
+  color: #a16207;
+}
+
+.compact-count-none {
+  color: #8d97a6;
 }
 
 /* =========================
@@ -792,69 +794,87 @@ textarea:focus {
 
 .compact-table-wrapper {
   width: 100%;
-  background: #ffffff;
-  border-radius: 14px;
   overflow: hidden;
-  box-shadow:
-    0 3px 12px rgba(15, 23, 42, 0.06);
+  background: #ffffff;
+  border: 1px solid #dce2ea;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(8, 27, 58, 0.05);
 }
 
 .compact-table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
+  border-collapse: collapse;
   table-layout: fixed;
   font-size: 10px;
 }
 
 .compact-table th,
 .compact-table td {
-  border-bottom: 1px solid #edf0f4;
-  padding: 5px 4px;
-  text-align: center;
+  border-bottom: 1px solid #e8ecf1;
+  padding: 5px 6px;
   line-height: 1.25;
 }
 
+.compact-table tr:last-child th,
+.compact-table tr:last-child td {
+  border-bottom: none;
+}
+
 .compact-table thead th {
-  background: #f6f8fb;
+  background: #f5f7fa;
   color: #667085;
   font-size: 8px;
-  font-weight: 800;
+  font-weight: 700;
+  text-align: center;
+  padding: 5px 4px;
 }
+
+/* 氏名 */
 
 .compact-table thead th:nth-child(1) {
-  width: 45%;
+  width: 34%;
   text-align: left;
-  padding-left: 10px;
-}
-
-.compact-table thead th:nth-child(2) {
-  width: 20%;
-}
-
-.compact-table thead th:nth-child(3) {
-  width: 35%;
-  text-align: left;
-}
-
-.compact-table tbody tr:last-child th,
-.compact-table tbody tr:last-child td {
-  border-bottom: none;
+  padding-left: 8px;
 }
 
 .compact-table tbody th {
   background: #ffffff;
+  color: #263248;
   text-align: left;
-  padding-left: 10px;
-  font-weight: 800;
-  color: #344054;
+  padding-left: 8px;
+  font-size: 10px;
+  font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.compact-table tbody td {
+/* 回答 */
+
+.compact-table thead th:nth-child(2) {
+  width: 15%;
+}
+
+.compact-table tbody td:nth-child(2) {
+  width: 15%;
+  text-align: center;
+  font-size: 14px;
   font-weight: 800;
+  padding: 4px 2px;
+}
+
+/* 備考 */
+
+.compact-table thead th:nth-child(3) {
+  width: 51%;
+  text-align: left;
+  padding-left: 8px;
+}
+
+.compact-table tbody td:nth-child(3) {
+  width: 51%;
+  text-align: left;
+  padding: 5px 8px;
 }
 
 /* =========================
@@ -862,33 +882,28 @@ textarea:focus {
 ========================= */
 
 .compact-status-○ {
-  color: #1474d4 !important;
-  font-size: 14px !important;
-  font-weight: 900 !important;
+  color: #1d63d8 !important;
+  font-weight: 800 !important;
 }
 
 .compact-status-× {
   color: #dc2626 !important;
-  font-size: 14px !important;
-  font-weight: 900 !important;
+  font-weight: 800 !important;
 }
 
 .compact-status-△ {
-  color: #c0841b !important;
-  font-size: 14px !important;
-  font-weight: 900 !important;
+  color: #b77908 !important;
+  font-weight: 800 !important;
 }
 
 .compact-status-未 {
-  color: #b0b8c4 !important;
-  font-size: 12px !important;
+  color: #aeb6c2 !important;
   font-weight: 700 !important;
 }
 
 .compact-warning {
-  color: #d92d20 !important;
-  background: #fff5f4 !important;
-  font-size: 12px !important;
+  color: #dc2626 !important;
+  background: #fff6f5 !important;
 }
 
 /* =========================
@@ -897,12 +912,10 @@ textarea:focus {
 
 .compact-memo {
   color: #667085;
-  font-size: 8px !important;
-  font-weight: 500 !important;
-  text-align: left !important;
+  font-size: 9px !important;
+  font-weight: 400 !important;
   overflow-wrap: anywhere;
   word-break: break-word;
-  line-height: 1.3;
 }
 
 /* =========================
@@ -927,6 +940,8 @@ textarea:focus {
     padding: 12px;
     border-radius: 14px;
   }
+
+  /* 上部3枠 */
 
   .top-info-grid {
     grid-template-columns: 1fr 1fr;
@@ -972,18 +987,20 @@ textarea:focus {
     font-size: 10px;
   }
 
+  /* 通常出欠表 */
+
   .player-name-header,
   .player-name {
-    width: 110px;
-    min-width: 110px;
-    max-width: 110px;
+    width: 125px;
+    min-width: 125px;
+    max-width: 125px;
   }
 
   .event-header,
   .attendance-cell {
-    width: 86px;
-    min-width: 86px;
-    max-width: 86px;
+    width: 88px;
+    min-width: 88px;
+    max-width: 88px;
   }
 
   .memo-header,
@@ -1007,21 +1024,24 @@ textarea:focus {
   }
 
   .attendance-cell select {
-    width: 40px;
-    min-width: 40px;
-    max-width: 40px;
-    height: 28px;
-    font-size: 12px;
+    width: 38px;
+    min-width: 38px;
+    max-width: 38px;
+    height: 26px;
+    padding: 2px 0;
+    font-size: 11px;
   }
 
   .player-name {
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .player-memo-cell input {
     padding: 5px;
     font-size: 9px;
   }
+
+  /* 管理画面 */
 
   .event-form {
     grid-template-columns: 1fr;
@@ -1043,57 +1063,81 @@ textarea:focus {
     flex-direction: column;
   }
 
-  /* Compact */
+  /* スクショ画面 */
 
   .compact-main {
     padding: 6px;
   }
 
   .compact-event-summary {
-    padding: 8px 10px;
-    margin-bottom: 6px;
-  }
-
-  .compact-event-main {
-    gap: 5px;
-    font-size: 10px;
+    padding: 7px 9px;
+    margin-bottom: 5px;
+    border-radius: 11px;
   }
 
   .compact-event-main strong {
-    font-size: 12px;
+    font-size: 11px;
+  }
+
+  .compact-event-main span {
+    font-size: 9px;
   }
 
   .compact-event-details {
+    margin-top: 3px;
+    gap: 1px 6px;
     font-size: 7px;
-    gap: 2px 6px;
+  }
+
+  .compact-counts {
+    margin-bottom: 4px;
+    font-size: 8px;
+    gap: 3px;
+  }
+
+  .compact-table-wrapper {
+    border-radius: 11px;
   }
 
   .compact-table th,
   .compact-table td {
-    padding: 5px 3px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .compact-table thead th {
+    font-size: 7px;
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
 
   .compact-table thead th:nth-child(1) {
-    padding-left: 8px;
+    width: 34%;
+  }
+
+  .compact-table thead th:nth-child(2) {
+    width: 14%;
+  }
+
+  .compact-table thead th:nth-child(3) {
+    width: 52%;
   }
 
   .compact-table tbody th {
-    padding-left: 8px;
-    font-size: 10px;
+    font-size: 9px;
   }
 
-  .compact-status-○,
-  .compact-status-×,
-  .compact-status-△ {
-    font-size: 13px !important;
+  .compact-table tbody td:nth-child(2) {
+    width: 14%;
+    font-size: 13px;
   }
 
-  .compact-status-未 {
-    font-size: 11px !important;
+  .compact-table tbody td:nth-child(3) {
+    width: 52%;
   }
 
   .compact-memo {
-    font-size: 7px !important;
+    font-size: 8px !important;
   }
 }
 
@@ -1102,52 +1146,42 @@ textarea:focus {
 ========================= */
 
 @media (max-width: 380px) {
-  .top-info-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .notice-box {
-    grid-column: auto;
-  }
-
   .player-name-header,
   .player-name {
-    width: 102px;
-    min-width: 102px;
-    max-width: 102px;
+    width: 118px;
+    min-width: 118px;
+    max-width: 118px;
   }
 
   .event-header,
   .attendance-cell {
-    width: 80px;
-    min-width: 80px;
-    max-width: 80px;
-  }
-
-  .memo-header,
-  .player-memo-cell {
     width: 82px;
     min-width: 82px;
     max-width: 82px;
   }
 
-  .attendance-cell select {
-    width: 38px;
-    min-width: 38px;
-    max-width: 38px;
+  .memo-header,
+  .player-memo-cell {
+    width: 78px;
+    min-width: 78px;
+    max-width: 78px;
   }
 
-  .compact-event-main strong {
-    font-size: 11px;
+  .attendance-cell select {
+    width: 36px;
+    min-width: 36px;
+    max-width: 36px;
   }
 
   .compact-table tbody th {
-    font-size: 9px;
+    font-size: 8px;
   }
 
-  .compact-table th,
-  .compact-table td {
-    padding-top: 4px;
-    padding-bottom: 4px;
+  .compact-table tbody td:nth-child(2) {
+    font-size: 12px;
+  }
+
+  .compact-memo {
+    font-size: 7px !important;
   }
 }
