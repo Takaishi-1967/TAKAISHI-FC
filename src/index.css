@@ -38,6 +38,16 @@ button:disabled {
   cursor: default;
 }
 
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================
+   APP
+========================= */
+
 .app {
   min-height: 100vh;
 }
@@ -89,7 +99,9 @@ button:disabled {
   background: #ffffff;
   border-radius: 14px;
   padding: 12px 14px;
-  box-shadow: 0 2px 10px rgba(8, 27, 58, 0.06);
+  box-shadow:
+    0 2px 10px
+    rgba(8, 27, 58, 0.06);
   min-height: 145px;
 }
 
@@ -118,6 +130,15 @@ button:disabled {
   border-left: 4px solid #f5c518;
 }
 
+/* ★ ルール下の3行 */
+.rule-notes {
+  margin-top: 7px;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #667085;
+  font-weight: 600;
+}
+
 .notice-box {
   border-left: 4px solid #e26a63;
 }
@@ -138,6 +159,9 @@ button:disabled {
   font-weight: 600;
   line-height: 1.5;
   background: #fffafa;
+
+  /* 日本語入力対策 */
+  ime-mode: active;
 }
 
 .notice-box textarea::placeholder {
@@ -148,7 +172,9 @@ button:disabled {
 .notice-box textarea:focus {
   outline: none;
   border-color: #e26a63;
-  box-shadow: 0 0 0 3px rgba(226, 106, 99, 0.1);
+  box-shadow:
+    0 0 0 3px
+    rgba(226, 106, 99, 0.1);
 }
 
 /* =========================
@@ -229,7 +255,9 @@ button:active {
   background: #ffffff;
   border-radius: 16px;
   padding: 16px;
-  box-shadow: 0 2px 12px rgba(8, 27, 58, 0.06);
+  box-shadow:
+    0 2px 12px
+    rgba(8, 27, 58, 0.06);
   margin-bottom: 16px;
 }
 
@@ -338,7 +366,7 @@ button:active {
 }
 
 .player-name {
-  padding: 8px 8px;
+  padding: 8px;
   text-align: left;
   font-weight: 700;
   white-space: nowrap;
@@ -457,6 +485,11 @@ button:active {
   background: #ffffff;
   color: #172033;
   font-size: 10px;
+
+  /* ★ IME入力時の安定化 */
+  -webkit-user-select: text;
+  user-select: text;
+  touch-action: manipulation;
 }
 
 .player-memo-cell input::placeholder {
@@ -466,7 +499,9 @@ button:active {
 .player-memo-cell input:focus {
   outline: none;
   border-color: #081b3a;
-  box-shadow: 0 0 0 3px rgba(8, 27, 58, 0.08);
+  box-shadow:
+    0 0 0 3px
+    rgba(8, 27, 58, 0.08);
 }
 
 /* =========================
@@ -526,7 +561,11 @@ button:active {
 
 .event-form {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
   gap: 10px;
 }
 
@@ -680,7 +719,9 @@ textarea {
   border-radius: 14px;
   padding: 8px 10px;
   margin-bottom: 6px;
-  box-shadow: 0 2px 8px rgba(8, 27, 58, 0.05);
+  box-shadow:
+    0 2px 8px
+    rgba(8, 27, 58, 0.05);
 }
 
 .compact-event-main {
@@ -730,23 +771,9 @@ textarea {
   border-radius: 10px;
   font-size: 10px;
   font-weight: 800;
-  box-shadow: 0 1px 5px rgba(8, 27, 58, 0.04);
-}
-
-.compact-counts .count-ok {
-  color: #2563eb;
-}
-
-.compact-counts .count-no {
-  color: #dc2626;
-}
-
-.compact-counts .count-triangle {
-  color: #c27a00;
-}
-
-.compact-counts .count-unanswered {
-  color: #98a2b3;
+  box-shadow:
+    0 1px 5px
+    rgba(8, 27, 58, 0.04);
 }
 
 /* =========================
@@ -766,7 +793,9 @@ textarea {
   border: 1px solid #dce2ea;
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(8, 27, 58, 0.05);
+  box-shadow:
+    0 2px 8px
+    rgba(8, 27, 58, 0.05);
   font-size: 10px;
 }
 
@@ -876,18 +905,7 @@ textarea {
   padding: 3px 4px !important;
 }
 
-.penalty-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  margin-bottom: 2px;
-  font-size: 6px;
-  font-weight: 800;
-  color: #d36b63;
-  letter-spacing: 0.03em;
-}
-
-.penalty-input {
+.compact-penalty input {
   width: 100%;
   min-width: 0;
   padding: 3px 4px;
@@ -897,16 +915,20 @@ textarea {
   color: #b42318;
   font-size: 8px;
   line-height: 1.2;
+
+  /* ★ 日本語入力対策 */
+  -webkit-user-select: text;
+  user-select: text;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.penalty-input::placeholder {
-  color: #d9a19c;
-}
-
-.penalty-input:focus {
+.compact-penalty input:focus {
   outline: none;
   border-color: #df8a83;
-  box-shadow: 0 0 0 2px rgba(223, 138, 131, 0.1);
+  box-shadow:
+    0 0 0 2px
+    rgba(223, 138, 131, 0.1);
 }
 
 /* =========================
@@ -915,183 +937,331 @@ textarea {
 
 @media (max-width: 600px) {
   .header {
-    padding: 14px;
+    padding: 12px;
   }
 
   .header h1 {
-    font-size: 20px;
+    font-size: 19px;
+  }
+
+  .header p {
+    font-size: 10px;
   }
 
   .main {
-    width: calc(100% - 16px);
-    padding-top: 12px;
+    width: calc(100% - 12px);
+    padding-top: 8px;
+    padding-bottom: 20px;
   }
 
   .section {
-    padding: 12px;
-    border-radius: 14px;
+    padding: 10px;
+    border-radius: 13px;
+    margin-bottom: 10px;
   }
+
+  .section h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  /* -------------------------
+     上部3ボックス
+  ------------------------- */
 
   .top-info-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 6px;
+    margin-bottom: 8px;
   }
 
   .info-box {
-    min-height: auto;
-    padding: 10px 12px;
+    min-height: 0;
+    padding: 8px 9px;
+    border-radius: 11px;
+  }
+
+  .info-box h3 {
+    font-size: 11px;
+    margin-bottom: 5px;
+  }
+
+  .info-text {
+    font-size: 9px;
+    line-height: 1.45;
+  }
+
+  .icon-guide {
+    margin-top: 5px;
+    gap: 2px;
+    font-size: 8px;
+  }
+
+  /* ★ ルール下3行をさらに小さく */
+  .rule-notes {
+    margin-top: 5px;
+    font-size: 8px;
+    line-height: 1.4;
+    font-weight: 600;
   }
 
   .notice-box {
     grid-column: 1 / -1;
   }
 
-  .info-box h3 {
-    font-size: 13px;
-  }
-
-  .info-text {
-    font-size: 11px;
-  }
-
-  .icon-guide {
-    font-size: 10px;
-  }
-
   .notice-box textarea {
-    min-height: 70px;
-    font-size: 10px;
+    min-height: 48px;
+    max-height: 70px;
+    font-size: 9px;
+    padding: 6px;
+    border-radius: 8px;
   }
+
+  /* -------------------------
+     HOME BUTTON
+  ------------------------- */
+
+  .home-actions {
+    gap: 5px;
+    margin-bottom: 7px;
+  }
+
+  .home-actions button {
+    font-size: 9px;
+    padding: 6px 9px;
+    border-radius: 8px;
+  }
+
+  /* -------------------------
+     ATTENDANCE TABLE
+  ------------------------- */
 
   .player-name-header,
   .player-name {
-    width: 125px;
-    min-width: 125px;
-    max-width: 125px;
+    width: 115px;
+    min-width: 115px;
+    max-width: 115px;
   }
 
   .event-header,
   .attendance-cell {
-    width: 88px;
-    min-width: 88px;
-    max-width: 88px;
+    width: 82px;
+    min-width: 82px;
+    max-width: 82px;
   }
 
   .memo-header,
   .player-memo-cell {
-    width: 100px;
-    min-width: 100px;
-    max-width: 100px;
+    width: 90px;
+    min-width: 90px;
+    max-width: 90px;
   }
 
   .event-header {
-    font-size: 10px;
+    font-size: 9px;
   }
 
   .attendance-table {
-    font-size: 10px;
+    font-size: 9px;
   }
 
   .attendance-counts {
-    font-size: 7px;
+    font-size: 6px;
     gap: 2px;
   }
 
+  .attendance-cell {
+    padding: 4px 3px;
+  }
+
   .attendance-cell select {
-    width: 40px;
-    min-width: 40px;
-    max-width: 40px;
-    height: 28px;
-    font-size: 12px;
+    width: 38px;
+    min-width: 38px;
+    max-width: 38px;
+    height: 27px;
+    font-size: 11px;
+    border-radius: 8px;
   }
 
   .player-name {
-    font-size: 11px;
+    padding: 6px;
+    font-size: 10px;
+  }
+
+  .player-memo-cell {
+    padding: 4px;
   }
 
   .player-memo-cell input {
     padding: 5px;
-    font-size: 9px;
+    font-size: 8px;
+    border-radius: 7px;
   }
+
+  /* -------------------------
+     ADMIN
+  ------------------------- */
+
+  .admin-top {
+    margin-bottom: 9px;
+  }
+
+  .player-add {
+    gap: 5px;
+    margin-bottom: 8px;
+  }
+
+  .player-add input {
+    min-width: 0;
+  }
+
+  .player-list {
+    gap: 4px;
+  }
+
+  .player-item {
+    padding: 7px 8px;
+    border-radius: 9px;
+  }
+
+  .player-actions {
+    gap: 3px;
+  }
+
+  .move-button {
+    width: 27px;
+    height: 26px;
+  }
+
+  .delete-button,
+  .edit-button {
+    padding: 5px 7px;
+    font-size: 10px;
+  }
+
+  /* -------------------------
+     EVENT FORM
+  ------------------------- */
 
   .event-form {
     grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .event-form label {
+    gap: 3px;
+    font-size: 10px;
+  }
+
+  .event-form input,
+  .event-form select {
+    padding: 7px 8px;
+    font-size: 11px;
   }
 
   .event-form button {
     grid-column: auto;
   }
 
+  .event-list {
+    margin-top: 10px;
+    gap: 5px;
+  }
+
   .event-item {
-    align-items: flex-start;
+    padding: 8px;
+    border-radius: 9px;
   }
 
   .event-info {
-    font-size: 10px;
+    font-size: 9px;
+    gap: 3px 6px;
   }
 
   .event-buttons {
     flex-direction: column;
+    gap: 3px;
   }
 
-  /* COMPACT */
+  /* -------------------------
+     COMPACT
+  ------------------------- */
 
   .compact-header {
-    padding: 10px 12px;
+    padding: 9px 10px;
   }
 
   .compact-header h1 {
-    font-size: 17px;
+    font-size: 16px;
+  }
+
+  .compact-header p {
+    font-size: 9px;
   }
 
   .compact-back {
-    padding: 9px 15px;
-    font-size: 12px;
+    padding: 7px 12px;
+    font-size: 11px;
+    border-radius: 9px;
   }
 
   .compact-main {
-    padding: 5px;
+    padding: 4px;
+  }
+
+  .compact-title {
+    margin-bottom: 4px;
+    font-size: 9px;
+  }
+
+  .compact-title span {
+    font-size: 7px;
   }
 
   .compact-event-summary {
-    border-radius: 12px;
-    padding: 7px 8px;
-    margin-bottom: 5px;
+    border-radius: 10px;
+    padding: 6px 7px;
+    margin-bottom: 4px;
   }
 
   .compact-event-main {
-    font-size: 10px;
-    gap: 3px 6px;
+    font-size: 9px;
+    gap: 2px 5px;
   }
 
   .compact-event-main strong {
-    font-size: 11px;
+    font-size: 10px;
+  }
+
+  .compact-event-main span:nth-child(2) {
+    font-size: 8px;
   }
 
   .compact-event-details {
-    margin-top: 4px;
-    font-size: 8px;
-    gap: 2px 6px;
+    margin-top: 3px;
+    font-size: 7px;
+    gap: 2px 5px;
   }
 
   .compact-counts {
-    margin-bottom: 5px;
-    padding: 4px 7px;
-    font-size: 9px;
+    margin-bottom: 4px;
+    padding: 3px 6px;
+    font-size: 8px;
+    gap: 3px;
   }
 
   .compact-table {
-    font-size: 9px;
-    border-radius: 11px;
+    font-size: 8px;
+    border-radius: 9px;
   }
 
   .compact-table th,
   .compact-table td {
-    padding: 3px 3px;
+    padding: 3px 2px;
   }
 
   .compact-table thead th {
-    font-size: 8px;
+    font-size: 7px;
   }
 
   .compact-table thead th:nth-child(1) {
@@ -1112,28 +1282,23 @@ textarea {
 
   .compact-table tbody th {
     width: 31%;
-    padding-left: 5px;
-    font-size: 9px;
+    padding-left: 4px;
+    font-size: 8px;
   }
 
   .compact-table tbody td {
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .compact-memo {
-    font-size: 7px !important;
+    font-size: 6px !important;
   }
 
   .compact-penalty {
-    padding: 2px 3px !important;
+    padding: 2px !important;
   }
 
-  .penalty-label {
-    margin-bottom: 1px;
-    font-size: 5px;
-  }
-
-  .penalty-input {
+  .compact-penalty input {
     padding: 2px 3px;
     border-radius: 5px;
     font-size: 7px;
@@ -1145,18 +1310,47 @@ textarea {
 ========================= */
 
 @media (max-width: 380px) {
+  .main {
+    width: calc(100% - 8px);
+  }
+
+  .top-info-grid {
+    gap: 5px;
+  }
+
+  .info-box {
+    padding: 7px 8px;
+  }
+
+  .info-box h3 {
+    font-size: 10px;
+  }
+
+  .info-text {
+    font-size: 8px;
+  }
+
+  .rule-notes {
+    font-size: 7px;
+    line-height: 1.35;
+  }
+
+  .icon-guide {
+    font-size: 7px;
+  }
+
   .player-name-header,
   .player-name {
-    width: 115px;
-    min-width: 115px;
-    max-width: 115px;
+    width: 108px;
+    min-width: 108px;
+    max-width: 108px;
   }
 
   .event-header,
   .attendance-cell {
-    width: 82px;
-    min-width: 82px;
-    max-width: 82px;
+    width: 78px;
+    min-width: 78px;
+    max-width: 78px;
   }
 
   .memo-header,
@@ -1167,9 +1361,9 @@ textarea {
   }
 
   .attendance-cell select {
-    width: 38px;
-    min-width: 38px;
-    max-width: 38px;
+    width: 36px;
+    min-width: 36px;
+    max-width: 36px;
   }
 
   .compact-table thead th:nth-child(1) {
@@ -1193,14 +1387,14 @@ textarea {
   }
 
   .compact-table tbody td {
-    font-size: 10px;
+    font-size: 9px;
   }
 
-  .penalty-label {
-    font-size: 4px;
+  .compact-memo {
+    font-size: 6px !important;
   }
 
-  .penalty-input {
+  .compact-penalty input {
     font-size: 6px;
   }
 }
