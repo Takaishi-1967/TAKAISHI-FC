@@ -4,105 +4,58 @@ import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-const supabase = createClient(
-  supabaseUrl,
-  supabaseKey
-);
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const ADMIN_PIN = "196700";
-
-const statusOptions = [
-  "未",
-  "○",
-  "×",
-  "△",
-];
+const statusOptions = ["未", "○", "×", "△"];
 
 function App() {
-  const [players, setPlayers] =
-    useState([]);
+  const [players, setPlayers] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [attendance, setAttendance] = useState([]);
 
-  const [events, setEvents] =
-    useState([]);
+  const [page, setPage] = useState("home");
+  const [pin, setPin] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const [attendance, setAttendance] =
-    useState([]);
+  const [newPlayerName, setNewPlayerName] = useState("");
 
-  const [page, setPage] =
-    useState("home");
-
-  const [pin, setPin] =
+  const [newEventDate, setNewEventDate] = useState("");
+  const [newEventType, setNewEventType] = useState("練習");
+  const [newEventTitle, setNewEventTitle] = useState("");
+  const [newEventTime, setNewEventTime] = useState("");
+  const [newEventMeetingTime, setNewEventMeetingTime] =
     useState("");
+  const [newEventPlace, setNewEventPlace] = useState("");
+  const [newEventUniform, setNewEventUniform] = useState("");
 
-  const [isAdmin, setIsAdmin] =
-    useState(false);
+  const [editingEventId, setEditingEventId] = useState(null);
 
-  const [
-    newPlayerName,
-    setNewPlayerName,
-  ] = useState("");
+  const [playerMemos, setPlayerMemos] = useState({});
+  const [playerPenalties, setPlayerPenalties] = useState({});
 
-  const [
-    newEventDate,
-    setNewEventDate,
-  ] = useState("");
+  const [generalNotice, setGeneralNotice] = useState("");
 
-  const [
-    newEventType,
-    setNewEventType,
-  ] = useState("練習");
-
-  const [
-    newEventTitle,
-    setNewEventTitle,
-  ] = useState("");
-
-  const [
-    newEventTime,
-    setNewEventTime,
-  ] = useState("");
-
-  const [
-    newEventMeetingTime,
-    setNewEventMeetingTime,
-  ] = useState("");
-
-  const [
-    newEventPlace,
-    setNewEventPlace,
-  ] = useState("");
-
-  const [
-    newEventUniform,
-    setNewEventUniform,
-  ] = useState("");
-
-  const [
-    editingEventId,
-    setEditingEventId,
-  ] = useState(null);
-
-  const [
-    playerMemos,
-    setPlayerMemos,
-  ] = useState({});
-
-  const [
-    generalNotice,
-    setGeneralNotice,
-  ] = useState("");
+  const [saveMessage, setSaveMessage] = useState("");
 
   useEffect(() => {
     loadData();
 
     if (
-      sessionStorage.getItem(
-        "takaishi_admin"
-      ) === "true"
+      sessionStorage.getItem("takaishi_admin") ===
+      "true"
     ) {
       setIsAdmin(true);
     }
   }, []);
+
+  function showSaveMessage(message = "保存しました") {
+    setSaveMessage(message);
+
+    setTimeout(() => {
+      setSaveMessage("");
+    }, 1800);
+  }
 
   async function loadData() {
     const results = await Promise.all([
@@ -142,15 +95,18 @@ function App() {
       setPlayers(playersRes.data);
 
       const memoData = {};
+      const penaltyData = {};
 
-      playersRes.data.forEach(
-        (player) => {
-          memoData[player.id] =
-            player.memo || "";
-        }
-      );
+      playersRes.data.forEach((player) => {
+        memoData[player.id] =
+          player.memo || "";
+
+        penaltyData[player.id] =
+          player.penalty || "";
+      });
 
       setPlayerMemos(memoData);
+      setPlayerPenalties(penaltyData);
     }
 
     if (eventsRes.data) {
@@ -158,15 +114,12 @@ function App() {
     }
 
     if (attendanceRes.data) {
-      setAttendance(
-        attendanceRes.data
-      );
+      setAttendance(attendanceRes.data);
     }
 
     if (settingsRes.data) {
       setGeneralNotice(
-        settingsRes.data
-          .general_notice || ""
+        settingsRes.data.general_notice || ""
       );
     }
 
@@ -211,10 +164,7 @@ function App() {
 
       setPin("");
     } else {
-      alert(
-        "暗証番号が違います"
-      );
-
+      alert("暗証番号が違います");
       setPin("");
     }
   }
@@ -236,7 +186,6 @@ function App() {
       alert(
         "選手名を入力してください"
       );
-
       return;
     }
 
@@ -245,8 +194,7 @@ function App() {
         ? Math.max(
             ...players.map(
               (player) =>
-                player.sort_order ??
-                0
+                player.sort_order ?? 0
             )
           ) + 1
         : 1;
@@ -257,14 +205,13 @@ function App() {
         name,
         sort_order: nextOrder,
         memo: "",
+        penalty: "",
       })
       .select()
       .single();
 
     if (result.error) {
-      console.error(
-        result.error
-      );
+      console.error(result.error);
 
       alert(
         "選手の追加に失敗しました"
@@ -283,12 +230,19 @@ function App() {
       [result.data.id]: "",
     }));
 
+    setPlayerPenalties((current) => ({
+      ...current,
+      [result.data.id]: "",
+    }));
+
     setNewPlayerName("");
+
+    showSaveMessage(
+      "選手を追加しました"
+    );
   }
 
-  async function deletePlayer(
-    playerId
-  ) {
+  async function deletePlayer(playerId) {
     const player =
       players.find(
         (item) =>
@@ -312,9 +266,7 @@ function App() {
       .eq("id", playerId);
 
     if (result.error) {
-      console.error(
-        result.error
-      );
+      console.error(result.error);
 
       alert(
         "選手の削除に失敗しました"
@@ -333,12 +285,21 @@ function App() {
     setAttendance((current) =>
       current.filter(
         (item) =>
-          item.player_id !==
-          playerId
+          item.player_id !== playerId
       )
     );
 
     setPlayerMemos((current) => {
+      const updated = {
+        ...current,
+      };
+
+      delete updated[playerId];
+
+      return updated;
+    });
+
+    setPlayerPenalties((current) => {
       const updated = {
         ...current,
       };
@@ -387,7 +348,10 @@ function App() {
 
     const reorderedPlayers =
       updatedPlayers.map(
-        (player, playerIndex) => ({
+        (
+          player,
+          playerIndex
+        ) => ({
           ...player,
           sort_order:
             playerIndex + 1,
@@ -398,21 +362,22 @@ function App() {
       reorderedPlayers
     );
 
-    const results = await Promise.all(
-      reorderedPlayers.map(
-        (player) =>
-          supabase
-            .from("players")
-            .update({
-              sort_order:
-                player.sort_order,
-            })
-            .eq(
-              "id",
-              player.id
-            )
-      )
-    );
+    const results =
+      await Promise.all(
+        reorderedPlayers.map(
+          (player) =>
+            supabase
+              .from("players")
+              .update({
+                sort_order:
+                  player.sort_order,
+              })
+              .eq(
+                "id",
+                player.id
+              )
+        )
+      );
 
     const failed =
       results.find(
@@ -441,12 +406,16 @@ function App() {
     const trimmedMemo =
       memo.trim();
 
-    const result = await supabase
-      .from("players")
-      .update({
-        memo: trimmedMemo,
-      })
-      .eq("id", playerId);
+    const result =
+      await supabase
+        .from("players")
+        .update({
+          memo: trimmedMemo,
+        })
+        .eq(
+          "id",
+          playerId
+        );
 
     if (result.error) {
       console.error(
@@ -462,31 +431,93 @@ function App() {
     }
 
     setPlayers((current) =>
-      current.map((player) =>
-        player.id === playerId
-          ? {
-              ...player,
-              memo: trimmedMemo,
-            }
-          : player
+      current.map(
+        (player) =>
+          player.id === playerId
+            ? {
+                ...player,
+                memo: trimmedMemo,
+              }
+            : player
       )
     );
 
     setPlayerMemos((current) => ({
       ...current,
-      [playerId]: trimmedMemo,
+      [playerId]:
+        trimmedMemo,
     }));
+
+    showSaveMessage();
+  }
+
+  async function savePlayerPenalty(
+    playerId,
+    penalty
+  ) {
+    const trimmedPenalty =
+      penalty.trim();
+
+    const result =
+      await supabase
+        .from("players")
+        .update({
+          penalty:
+            trimmedPenalty,
+        })
+        .eq(
+          "id",
+          playerId
+        );
+
+    if (result.error) {
+      console.error(
+        "player penalty:",
+        result.error
+      );
+
+      alert(
+        "ペナルティの保存に失敗しました"
+      );
+
+      return;
+    }
+
+    setPlayers((current) =>
+      current.map(
+        (player) =>
+          player.id === playerId
+            ? {
+                ...player,
+                penalty:
+                  trimmedPenalty,
+              }
+            : player
+      )
+    );
+
+    setPlayerPenalties(
+      (current) => ({
+        ...current,
+        [playerId]:
+          trimmedPenalty,
+      })
+    );
+
+    showSaveMessage();
   }
 
   async function saveGeneralNotice(
     value
   ) {
-    const result = await supabase
-      .from("site_settings")
-      .update({
-        general_notice: value,
-      })
-      .eq("id", 1);
+    const result =
+      await supabase
+        .from("site_settings")
+        .update({
+          general_notice:
+            value,
+        })
+        .eq("id", 1);
 
     if (result.error) {
       console.error(
@@ -502,11 +533,11 @@ function App() {
     }
 
     setGeneralNotice(value);
+
+    showSaveMessage();
   }
 
-  function startEditEvent(
-    event
-  ) {
+  function startEditEvent(event) {
     setEditingEventId(
       event.id
     );
@@ -547,7 +578,6 @@ function App() {
 
   function cancelEditEvent() {
     setEditingEventId(null);
-
     setNewEventDate("");
     setNewEventType("練習");
     setNewEventTitle("");
@@ -566,9 +596,7 @@ function App() {
       return;
     }
 
-    if (
-      !newEventTitle.trim()
-    ) {
+    if (!newEventTitle.trim()) {
       alert(
         "相手チーム名などを入力してください"
       );
@@ -594,21 +622,23 @@ function App() {
     let result;
 
     if (editingEventId) {
-      result = await supabase
-        .from("events")
-        .update(data)
-        .eq(
-          "id",
-          editingEventId
-        )
-        .select()
-        .single();
+      result =
+        await supabase
+          .from("events")
+          .update(data)
+          .eq(
+            "id",
+            editingEventId
+          )
+          .select()
+          .single();
     } else {
-      result = await supabase
-        .from("events")
-        .insert(data)
-        .select()
-        .single();
+      result =
+        await supabase
+          .from("events")
+          .insert(data)
+          .select()
+          .single();
     }
 
     if (result.error) {
@@ -628,16 +658,21 @@ function App() {
     if (editingEventId) {
       setEvents((current) =>
         current
-          .map((event) =>
-            event.id ===
-            editingEventId
-              ? result.data
-              : event
+          .map(
+            (event) =>
+              event.id ===
+              editingEventId
+                ? result.data
+                : event
           )
           .sort(
             (a, b) =>
-              new Date(a.date) -
-              new Date(b.date)
+              new Date(
+                a.date
+              ) -
+              new Date(
+                b.date
+              )
           )
       );
     } else {
@@ -647,18 +682,26 @@ function App() {
           result.data,
         ].sort(
           (a, b) =>
-            new Date(a.date) -
-            new Date(b.date)
+            new Date(
+              a.date
+            ) -
+            new Date(
+              b.date
+            )
         )
       );
     }
 
     cancelEditEvent();
+
+    showSaveMessage(
+      editingEventId
+        ? "変更を保存しました"
+        : "予定を追加しました"
+    );
   }
 
-  async function deleteEvent(
-    eventId
-  ) {
+  async function deleteEvent(eventId) {
     const event =
       events.find(
         (item) =>
@@ -676,10 +719,14 @@ function App() {
       return;
     }
 
-    const result = await supabase
-      .from("events")
-      .delete()
-      .eq("id", eventId);
+    const result =
+      await supabase
+        .from("events")
+        .delete()
+        .eq(
+          "id",
+          eventId
+        );
 
     if (result.error) {
       console.error(
@@ -716,7 +763,8 @@ function App() {
       (item) =>
         item.player_id ===
           playerId &&
-        item.event_id === eventId
+        item.event_id ===
+          eventId
     );
   }
 
@@ -752,22 +800,26 @@ function App() {
       }
     }
 
-    const result = await supabase
-      .from("attendance")
-      .upsert(
-        {
-          player_id: playerId,
-          event_id: eventId,
-          status,
-          memo:
-            memo || null,
-          late_change: false,
-        },
-        {
-          onConflict:
-            "player_id,event_id",
-        }
-      );
+    const result =
+      await supabase
+        .from("attendance")
+        .upsert(
+          {
+            player_id:
+              playerId,
+            event_id:
+              eventId,
+            status,
+            memo:
+              memo || null,
+            late_change:
+              false,
+          },
+          {
+            onConflict:
+              "player_id,event_id",
+          }
+        );
 
     if (result.error) {
       console.error(
@@ -781,41 +833,49 @@ function App() {
       return;
     }
 
-    setAttendance((current) => {
-      const filtered =
-        current.filter(
-          (item) =>
-            !(
-              item.player_id ===
-                playerId &&
-              item.event_id ===
-                eventId
-            )
-        );
+    setAttendance(
+      (current) => {
+        const filtered =
+          current.filter(
+            (item) =>
+              !(
+                item.player_id ===
+                  playerId &&
+                item.event_id ===
+                  eventId
+              )
+          );
 
-      return [
-        ...filtered,
-        {
-          player_id: playerId,
-          event_id: eventId,
-          status,
-          memo:
-            memo || null,
-          late_change: false,
-        },
-      ];
-    });
+        return [
+          ...filtered,
+          {
+            player_id:
+              playerId,
+            event_id:
+              eventId,
+            status,
+            memo:
+              memo || null,
+            late_change:
+              false,
+          },
+        ];
+      }
+    );
+
+    showSaveMessage(
+      "出欠を保存しました"
+    );
   }
 
-  function formatDate(
-    dateString
-  ) {
+  function formatDate(dateString) {
     if (!dateString) return "";
 
-    const date = new Date(
-      dateString +
-        "T00:00:00"
-    );
+    const date =
+      new Date(
+        dateString +
+          "T00:00:00"
+      );
 
     return date.toLocaleDateString(
       "ja-JP",
@@ -844,7 +904,8 @@ function App() {
           );
 
         const status =
-          item?.status || "未";
+          item?.status ||
+          "未";
 
         if (
           result[status] !==
@@ -858,15 +919,14 @@ function App() {
     return result;
   }
 
-  function getDeadline(
-    eventDate
-  ) {
+  function getDeadline(eventDate) {
     if (!eventDate) return null;
 
-    const date = new Date(
-      eventDate +
-        "T00:00:00"
-    );
+    const date =
+      new Date(
+        eventDate +
+          "T00:00:00"
+      );
 
     const day =
       date.getDay();
@@ -903,11 +963,11 @@ function App() {
     return date;
   }
 
-  function isDeadlinePassed(
-    event
-  ) {
+  function isDeadlinePassed(event) {
     const deadline =
-      getDeadline(event.date);
+      getDeadline(
+        event.date
+      );
 
     if (!deadline) {
       return false;
@@ -931,25 +991,33 @@ function App() {
 
     const upcomingEvents =
       events
-        .filter((event) => {
-          const eventDate =
-            new Date(
-              event.date +
-                "T00:00:00"
-            );
+        .filter(
+          (event) => {
+            const eventDate =
+              new Date(
+                event.date +
+                  "T00:00:00"
+              );
 
-          return (
-            eventDate >= today
-          );
-        })
+            return (
+              eventDate >=
+              today
+            );
+          }
+        )
         .sort(
           (a, b) =>
-            new Date(a.date) -
-            new Date(b.date)
+            new Date(
+              a.date
+            ) -
+            new Date(
+              b.date
+            )
         );
 
     return (
-      upcomingEvents[0] || null
+      upcomingEvents[0] ||
+      null
     );
   }
 
@@ -985,7 +1053,9 @@ function App() {
         {event.meeting_time && (
           <div>
             ⌛{" "}
-            {event.meeting_time}
+            {
+              event.meeting_time
+            }
           </div>
         )}
 
@@ -1039,47 +1109,49 @@ function App() {
 
     const counts =
       nextEvent
-        ? getCounts(nextEvent.id)
+        ? getCounts(
+            nextEvent.id
+          )
         : null;
 
     return (
       <div className="app compact-page">
-        <header className="compact-header">
-          <div className="compact-header-title">
-            <div>
-              <h1>
-                TAKAISHI.FC
-              </h1>
+        <header className="header compact-header">
+          <div>
+            <h1>
+              TAKAISHI.FC
+            </h1>
 
-              <p>
-                出欠確認
-              </p>
-            </div>
-
-            <button
-              className="compact-back"
-              onClick={() =>
-                setPage("home")
-              }
-            >
-              戻る
-            </button>
+            <p>
+              出欠確認
+            </p>
           </div>
+
+          <button
+            className="compact-back"
+            onClick={() =>
+              setPage("home")
+            }
+          >
+            戻る
+          </button>
         </header>
 
         <main className="compact-main">
-          <div className="compact-top-row">
-            <strong className="compact-screen-title">
-              📸 締切確認
-            </strong>
+          <div className="compact-title-row">
+            <div className="compact-title">
+              <strong>
+                📸 締切確認
+              </strong>
 
-            {counts && (
-              <div className="compact-count-summary">
-                👤
-                ○:{counts["○"]}
-                ×:{counts["×"]}
-                △:{counts["△"]}
-                未:{counts["未"]}
+              <span>
+                直近の予定
+              </span>
+            </div>
+
+            {saveMessage && (
+              <div className="save-message compact-save-message">
+                ✓ {saveMessage}
               </div>
             )}
           </div>
@@ -1090,29 +1162,33 @@ function App() {
             </p>
           ) : (
             <>
-              <div className="compact-event-card">
-                <div className="compact-event-date">
-                  {formatDate(
-                    nextEvent.date
-                  )}
-                </div>
+              <div className="compact-event-summary">
+                <div className="compact-event-main">
+                  <strong>
+                    {formatDate(
+                      nextEvent.date
+                    )}
+                  </strong>
 
-                <div className="compact-event-title">
                   <span>
                     {nextEvent.type}
                   </span>
 
-                  <strong>
+                  <span>
                     vs{" "}
-                    {nextEvent.title}
-                  </strong>
+                    {
+                      nextEvent.title
+                    }
+                  </span>
                 </div>
 
-                <div className="compact-event-meta">
+                <div className="compact-event-details">
                   {nextEvent.time && (
                     <span>
                       ⌚️{" "}
-                      {nextEvent.time}
+                      {
+                        nextEvent.time
+                      }
                     </span>
                   )}
 
@@ -1128,40 +1204,80 @@ function App() {
                   {nextEvent.place && (
                     <span>
                       📍{" "}
-                      {nextEvent.place}
+                      {
+                        nextEvent.place
+                      }
                     </span>
                   )}
 
                   {nextEvent.uniform && (
                     <span>
                       👕{" "}
-                      {nextEvent.uniform}
+                      {
+                        nextEvent.uniform
+                      }
                     </span>
                   )}
                 </div>
+              </div>
+
+              <div className="compact-counts">
+                <span>
+                  👤
+                </span>
+
+                <span>
+                  ○:
+                  {counts["○"]}
+                </span>
+
+                <span>
+                  ×:
+                  {counts["×"]}
+                </span>
+
+                <span>
+                  △:
+                  {counts["△"]}
+                </span>
+
+                <span>
+                  未:
+                  {counts["未"]}
+                </span>
               </div>
 
               <div className="compact-table-wrapper">
                 <table className="compact-table">
                   <thead>
                     <tr>
-                      <th className="compact-name-head">
-                        氏名
+                      <th>
+                        選手
                       </th>
 
-                      <th className="compact-status-head">
+                      <th>
                         回答
                       </th>
 
-                      <th className="compact-memo-head">
+                      <th>
                         備考
+                      </th>
+
+                      <th className="compact-penalty-header">
+                        ⚠️
+                        <span>
+                          PENALTY
+                        </span>
                       </th>
                     </tr>
                   </thead>
 
                   <tbody>
                     {players.map(
-                      (player) => {
+                      (
+                        player,
+                        index
+                      ) => {
                         const item =
                           getAttendance(
                             player.id,
@@ -1176,48 +1292,90 @@ function App() {
                           deadlinePassed &&
                           status === "未";
 
-                        const memo =
-                          status === "△"
-                            ? item?.memo ||
-                              ""
-                            : playerMemos[
-                                player.id
-                              ] ||
-                              player.memo ||
-                              "";
+                        const rowClass =
+                          index % 2 === 1
+                            ? "compact-row-alt"
+                            : "";
 
                         return (
                           <tr
                             key={
                               player.id
                             }
+                            className={
+                              rowClass
+                            }
                           >
-                            <td className="compact-player-name">
+                            <th>
                               {
                                 player.name
                               }
-                            </td>
+                            </th>
 
                             <td
                               className={
-                                "compact-answer compact-status-" +
+                                "compact-status-" +
                                 status +
                                 (showWarning
                                   ? " compact-warning"
                                   : "")
                               }
                             >
-                              {showWarning && (
-                                <span className="compact-warning-icon">
-                                  ⚠️
-                                </span>
-                              )}
+                              {showWarning &&
+                                "⚠️"}
 
                               {status}
                             </td>
 
                             <td className="compact-memo">
-                              {memo}
+                              {status ===
+                              "△"
+                                ? item?.memo ||
+                                  ""
+                                : playerMemos[
+                                    player.id
+                                  ] ||
+                                  player.memo ||
+                                  ""}
+                            </td>
+
+                            <td className="compact-penalty-cell">
+                              <input
+                                type="text"
+                                placeholder=""
+                                value={
+                                  playerPenalties[
+                                    player.id
+                                  ] ??
+                                  ""
+                                }
+                                onChange={(
+                                  e
+                                ) => {
+                                  const value =
+                                    e.target
+                                      .value;
+
+                                  setPlayerPenalties(
+                                    (
+                                      current
+                                    ) => ({
+                                      ...current,
+                                      [player.id]:
+                                        value,
+                                    })
+                                  );
+                                }}
+                                onBlur={(
+                                  e
+                                ) =>
+                                  savePlayerPenalty(
+                                    player.id,
+                                    e.target
+                                      .value
+                                  )
+                                }
+                              />
                             </td>
                           </tr>
                         );
@@ -1268,7 +1426,9 @@ function App() {
             />
 
             <button
-              onClick={loginAdmin}
+              onClick={
+                loginAdmin
+              }
             >
               ログイン
             </button>
@@ -1379,8 +1539,7 @@ function App() {
                       <button
                         className="move-button"
                         disabled={
-                          index ===
-                          0
+                          index === 0
                         }
                         onClick={() =>
                           movePlayer(
@@ -1597,8 +1756,7 @@ function App() {
                   <div
                     className={
                       "event-item " +
-                      (index %
-                        2 ===
+                      (index % 2 ===
                       0
                         ? "event-navy"
                         : "event-yellow")
@@ -1663,6 +1821,12 @@ function App() {
       </header>
 
       <main className="main">
+        {saveMessage && (
+          <div className="save-message">
+            ✓ {saveMessage}
+          </div>
+        )}
+
         <div className="top-info-grid">
           <section className="info-box operation-box">
             <h3>
@@ -1756,13 +1920,11 @@ function App() {
             出欠
           </h2>
 
-          {players.length ===
-          0 ? (
+          {players.length === 0 ? (
             <p className="empty-message">
               選手がまだ登録されていません。
             </p>
-          ) : events.length ===
-            0 ? (
+          ) : events.length === 0 ? (
             <p className="empty-message">
               予定がまだ登録されていません。
             </p>
@@ -1865,8 +2027,7 @@ function App() {
                                     updateAttendance(
                                       player.id,
                                       event.id,
-                                      e
-                                        .target
+                                      e.target
                                         .value
                                     )
                                   }
