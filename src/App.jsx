@@ -4,58 +4,94 @@ import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(
+  supabaseUrl,
+  supabaseKey
+);
 
 const ADMIN_PIN = "196700";
-const statusOptions = ["未", "○", "×", "△"];
+
+const statusOptions = [
+  "未",
+  "○",
+  "×",
+  "△",
+];
 
 function App() {
   const [players, setPlayers] = useState([]);
   const [events, setEvents] = useState([]);
-  const [attendance, setAttendance] = useState([]);
+  const [attendance, setAttendance] =
+    useState([]);
 
-  const [page, setPage] = useState("home");
-  const [pin, setPin] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [page, setPage] =
+    useState("home");
 
-  const [newPlayerName, setNewPlayerName] = useState("");
-
-  const [newEventDate, setNewEventDate] = useState("");
-  const [newEventType, setNewEventType] = useState("練習");
-  const [newEventTitle, setNewEventTitle] = useState("");
-  const [newEventTime, setNewEventTime] = useState("");
-  const [newEventMeetingTime, setNewEventMeetingTime] =
+  const [pin, setPin] =
     useState("");
-  const [newEventPlace, setNewEventPlace] = useState("");
-  const [newEventUniform, setNewEventUniform] = useState("");
 
-  const [editingEventId, setEditingEventId] = useState(null);
+  const [isAdmin, setIsAdmin] =
+    useState(false);
 
-  const [playerMemos, setPlayerMemos] = useState({});
-  const [playerPenalties, setPlayerPenalties] = useState({});
+  const [newPlayerName, setNewPlayerName] =
+    useState("");
 
-  const [generalNotice, setGeneralNotice] = useState("");
+  const [newEventDate, setNewEventDate] =
+    useState("");
 
-  const [saveMessage, setSaveMessage] = useState("");
+  const [newEventType, setNewEventType] =
+    useState("練習");
+
+  const [newEventTitle, setNewEventTitle] =
+    useState("");
+
+  const [newEventTime, setNewEventTime] =
+    useState("");
+
+  const [
+    newEventMeetingTime,
+    setNewEventMeetingTime,
+  ] = useState("");
+
+  const [newEventPlace, setNewEventPlace] =
+    useState("");
+
+  const [
+    newEventUniform,
+    setNewEventUniform,
+  ] = useState("");
+
+  const [
+    editingEventId,
+    setEditingEventId,
+  ] = useState(null);
+
+  const [
+    playerMemos,
+    setPlayerMemos,
+  ] = useState({});
+
+  const [
+    playerPenalties,
+    setPlayerPenalties,
+  ] = useState({});
+
+  const [
+    generalNotice,
+    setGeneralNotice,
+  ] = useState("");
 
   useEffect(() => {
     loadData();
 
     if (
-      sessionStorage.getItem("takaishi_admin") ===
-      "true"
+      sessionStorage.getItem(
+        "takaishi_admin"
+      ) === "true"
     ) {
       setIsAdmin(true);
     }
   }, []);
-
-  function showSaveMessage(message = "保存しました") {
-    setSaveMessage(message);
-
-    setTimeout(() => {
-      setSaveMessage("");
-    }, 1800);
-  }
 
   async function loadData() {
     const results = await Promise.all([
@@ -97,16 +133,21 @@ function App() {
       const memoData = {};
       const penaltyData = {};
 
-      playersRes.data.forEach((player) => {
-        memoData[player.id] =
-          player.memo || "";
+      playersRes.data.forEach(
+        (player) => {
+          memoData[player.id] =
+            player.memo || "";
 
-        penaltyData[player.id] =
-          player.penalty || "";
-      });
+          penaltyData[player.id] =
+            player.penalty || "";
+        }
+      );
 
       setPlayerMemos(memoData);
-      setPlayerPenalties(penaltyData);
+
+      setPlayerPenalties(
+        penaltyData
+      );
     }
 
     if (eventsRes.data) {
@@ -114,12 +155,15 @@ function App() {
     }
 
     if (attendanceRes.data) {
-      setAttendance(attendanceRes.data);
+      setAttendance(
+        attendanceRes.data
+      );
     }
 
     if (settingsRes.data) {
       setGeneralNotice(
-        settingsRes.data.general_notice || ""
+        settingsRes.data
+          .general_notice || ""
       );
     }
 
@@ -155,6 +199,7 @@ function App() {
   function loginAdmin() {
     if (pin === ADMIN_PIN) {
       setIsAdmin(true);
+
       setPage("admin");
 
       sessionStorage.setItem(
@@ -164,13 +209,17 @@ function App() {
 
       setPin("");
     } else {
-      alert("暗証番号が違います");
+      alert(
+        "暗証番号が違います"
+      );
+
       setPin("");
     }
   }
 
   function logoutAdmin() {
     setIsAdmin(false);
+
     setPage("home");
 
     sessionStorage.removeItem(
@@ -186,6 +235,7 @@ function App() {
       alert(
         "選手名を入力してください"
       );
+
       return;
     }
 
@@ -199,16 +249,17 @@ function App() {
           ) + 1
         : 1;
 
-    const result = await supabase
-      .from("players")
-      .insert({
-        name,
-        sort_order: nextOrder,
-        memo: "",
-        penalty: "",
-      })
-      .select()
-      .single();
+    const result =
+      await supabase
+        .from("players")
+        .insert({
+          name,
+          sort_order: nextOrder,
+          memo: "",
+          penalty: "",
+        })
+        .select()
+        .single();
 
     if (result.error) {
       console.error(result.error);
@@ -230,24 +281,23 @@ function App() {
       [result.data.id]: "",
     }));
 
-    setPlayerPenalties((current) => ({
-      ...current,
-      [result.data.id]: "",
-    }));
+    setPlayerPenalties(
+      (current) => ({
+        ...current,
+        [result.data.id]: "",
+      })
+    );
 
     setNewPlayerName("");
-
-    showSaveMessage(
-      "選手を追加しました"
-    );
   }
 
-  async function deletePlayer(playerId) {
-    const player =
-      players.find(
-        (item) =>
-          item.id === playerId
-      );
+  async function deletePlayer(
+    playerId
+  ) {
+    const player = players.find(
+      (item) =>
+        item.id === playerId
+    );
 
     if (!player) return;
 
@@ -260,10 +310,11 @@ function App() {
       return;
     }
 
-    const result = await supabase
-      .from("players")
-      .delete()
-      .eq("id", playerId);
+    const result =
+      await supabase
+        .from("players")
+        .delete()
+        .eq("id", playerId);
 
     if (result.error) {
       console.error(result.error);
@@ -289,25 +340,29 @@ function App() {
       )
     );
 
-    setPlayerMemos((current) => {
-      const updated = {
-        ...current,
-      };
+    setPlayerMemos(
+      (current) => {
+        const updated = {
+          ...current,
+        };
 
-      delete updated[playerId];
+        delete updated[playerId];
 
-      return updated;
-    });
+        return updated;
+      }
+    );
 
-    setPlayerPenalties((current) => {
-      const updated = {
-        ...current,
-      };
+    setPlayerPenalties(
+      (current) => {
+        const updated = {
+          ...current,
+        };
 
-      delete updated[playerId];
+        delete updated[playerId];
 
-      return updated;
-    });
+        return updated;
+      }
+    );
   }
 
   async function movePlayer(
@@ -412,10 +467,7 @@ function App() {
         .update({
           memo: trimmedMemo,
         })
-        .eq(
-          "id",
-          playerId
-        );
+        .eq("id", playerId);
 
     if (result.error) {
       console.error(
@@ -442,13 +494,13 @@ function App() {
       )
     );
 
-    setPlayerMemos((current) => ({
-      ...current,
-      [playerId]:
-        trimmedMemo,
-    }));
-
-    showSaveMessage();
+    setPlayerMemos(
+      (current) => ({
+        ...current,
+        [playerId]:
+          trimmedMemo,
+      })
+    );
   }
 
   async function savePlayerPenalty(
@@ -465,10 +517,7 @@ function App() {
           penalty:
             trimmedPenalty,
         })
-        .eq(
-          "id",
-          playerId
-        );
+        .eq("id", playerId);
 
     if (result.error) {
       console.error(
@@ -503,8 +552,6 @@ function App() {
           trimmedPenalty,
       })
     );
-
-    showSaveMessage();
   }
 
   async function saveGeneralNotice(
@@ -533,14 +580,10 @@ function App() {
     }
 
     setGeneralNotice(value);
-
-    showSaveMessage();
   }
 
   function startEditEvent(event) {
-    setEditingEventId(
-      event.id
-    );
+    setEditingEventId(event.id);
 
     setNewEventDate(
       event.date || ""
@@ -578,12 +621,19 @@ function App() {
 
   function cancelEditEvent() {
     setEditingEventId(null);
+
     setNewEventDate("");
+
     setNewEventType("練習");
+
     setNewEventTitle("");
+
     setNewEventTime("");
+
     setNewEventMeetingTime("");
+
     setNewEventPlace("");
+
     setNewEventUniform("");
   }
 
@@ -596,7 +646,9 @@ function App() {
       return;
     }
 
-    if (!newEventTitle.trim()) {
+    if (
+      !newEventTitle.trim()
+    ) {
       alert(
         "相手チーム名などを入力してください"
       );
@@ -658,21 +710,16 @@ function App() {
     if (editingEventId) {
       setEvents((current) =>
         current
-          .map(
-            (event) =>
-              event.id ===
-              editingEventId
-                ? result.data
-                : event
+          .map((event) =>
+            event.id ===
+            editingEventId
+              ? result.data
+              : event
           )
           .sort(
             (a, b) =>
-              new Date(
-                a.date
-              ) -
-              new Date(
-                b.date
-              )
+              new Date(a.date) -
+              new Date(b.date)
           )
       );
     } else {
@@ -682,31 +729,22 @@ function App() {
           result.data,
         ].sort(
           (a, b) =>
-            new Date(
-              a.date
-            ) -
-            new Date(
-              b.date
-            )
+            new Date(a.date) -
+            new Date(b.date)
         )
       );
     }
 
     cancelEditEvent();
-
-    showSaveMessage(
-      editingEventId
-        ? "変更を保存しました"
-        : "予定を追加しました"
-    );
   }
 
-  async function deleteEvent(eventId) {
-    const event =
-      events.find(
-        (item) =>
-          item.id === eventId
-      );
+  async function deleteEvent(
+    eventId
+  ) {
+    const event = events.find(
+      (item) =>
+        item.id === eventId
+    );
 
     if (!event) return;
 
@@ -723,10 +761,7 @@ function App() {
       await supabase
         .from("events")
         .delete()
-        .eq(
-          "id",
-          eventId
-        );
+        .eq("id", eventId);
 
     if (result.error) {
       console.error(
@@ -812,8 +847,7 @@ function App() {
             status,
             memo:
               memo || null,
-            late_change:
-              false,
+            late_change: false,
           },
           {
             onConflict:
@@ -856,26 +890,24 @@ function App() {
             status,
             memo:
               memo || null,
-            late_change:
-              false,
+            late_change: false,
           },
         ];
       }
     );
-
-    showSaveMessage(
-      "出欠を保存しました"
-    );
   }
 
-  function formatDate(dateString) {
-    if (!dateString) return "";
+  function formatDate(
+    dateString
+  ) {
+    if (!dateString) {
+      return "";
+    }
 
-    const date =
-      new Date(
-        dateString +
-          "T00:00:00"
-      );
+    const date = new Date(
+      dateString +
+        "T00:00:00"
+    );
 
     return date.toLocaleDateString(
       "ja-JP",
@@ -904,8 +936,7 @@ function App() {
           );
 
         const status =
-          item?.status ||
-          "未";
+          item?.status || "未";
 
         if (
           result[status] !==
@@ -919,14 +950,17 @@ function App() {
     return result;
   }
 
-  function getDeadline(eventDate) {
-    if (!eventDate) return null;
+  function getDeadline(
+    eventDate
+  ) {
+    if (!eventDate) {
+      return null;
+    }
 
-    const date =
-      new Date(
-        eventDate +
-          "T00:00:00"
-      );
+    const date = new Date(
+      eventDate +
+        "T00:00:00"
+    );
 
     const day =
       date.getDay();
@@ -963,11 +997,11 @@ function App() {
     return date;
   }
 
-  function isDeadlinePassed(event) {
+  function isDeadlinePassed(
+    event
+  ) {
     const deadline =
-      getDeadline(
-        event.date
-      );
+      getDeadline(event.date);
 
     if (!deadline) {
       return false;
@@ -979,8 +1013,7 @@ function App() {
   }
 
   function getNextEvent() {
-    const today =
-      new Date();
+    const today = new Date();
 
     today.setHours(
       0,
@@ -991,28 +1024,21 @@ function App() {
 
     const upcomingEvents =
       events
-        .filter(
-          (event) => {
-            const eventDate =
-              new Date(
-                event.date +
-                  "T00:00:00"
-              );
-
-            return (
-              eventDate >=
-              today
+        .filter((event) => {
+          const eventDate =
+            new Date(
+              event.date +
+                "T00:00:00"
             );
-          }
-        )
+
+          return (
+            eventDate >= today
+          );
+        })
         .sort(
           (a, b) =>
-            new Date(
-              a.date
-            ) -
-            new Date(
-              b.date
-            )
+            new Date(a.date) -
+            new Date(b.date)
         );
 
     return (
@@ -1053,9 +1079,7 @@ function App() {
         {event.meeting_time && (
           <div>
             ⌛{" "}
-            {
-              event.meeting_time
-            }
+            {event.meeting_time}
           </div>
         )}
 
@@ -1112,7 +1136,12 @@ function App() {
         ? getCounts(
             nextEvent.id
           )
-        : null;
+        : {
+            "○": 0,
+            "×": 0,
+            "△": 0,
+            "未": 0,
+          };
 
     return (
       <div className="app compact-page">
@@ -1138,21 +1167,19 @@ function App() {
         </header>
 
         <main className="compact-main">
-          <div className="compact-title-row">
-            <div className="compact-title">
-              <strong>
-                📸 締切確認
-              </strong>
+          <div className="compact-title">
+            <strong>
+              📸 締切確認用
+            </strong>
 
-              <span>
-                直近の予定
+            {nextEvent && (
+              <span className="compact-counts">
+                👤
+                ○:{counts["○"]}
+                ×:{counts["×"]}
+                △:{counts["△"]}
+                未:{counts["未"]}
               </span>
-            </div>
-
-            {saveMessage && (
-              <div className="save-message compact-save-message">
-                ✓ {saveMessage}
-              </div>
             )}
           </div>
 
@@ -1176,9 +1203,7 @@ function App() {
 
                   <span>
                     vs{" "}
-                    {
-                      nextEvent.title
-                    }
+                    {nextEvent.title}
                   </span>
                 </div>
 
@@ -1186,9 +1211,7 @@ function App() {
                   {nextEvent.time && (
                     <span>
                       ⌚️{" "}
-                      {
-                        nextEvent.time
-                      }
+                      {nextEvent.time}
                     </span>
                   )}
 
@@ -1204,47 +1227,17 @@ function App() {
                   {nextEvent.place && (
                     <span>
                       📍{" "}
-                      {
-                        nextEvent.place
-                      }
+                      {nextEvent.place}
                     </span>
                   )}
 
                   {nextEvent.uniform && (
                     <span>
                       👕{" "}
-                      {
-                        nextEvent.uniform
-                      }
+                      {nextEvent.uniform}
                     </span>
                   )}
                 </div>
-              </div>
-
-              <div className="compact-counts">
-                <span>
-                  👤
-                </span>
-
-                <span>
-                  ○:
-                  {counts["○"]}
-                </span>
-
-                <span>
-                  ×:
-                  {counts["×"]}
-                </span>
-
-                <span>
-                  △:
-                  {counts["△"]}
-                </span>
-
-                <span>
-                  未:
-                  {counts["未"]}
-                </span>
               </div>
 
               <div className="compact-table-wrapper">
@@ -1252,7 +1245,7 @@ function App() {
                   <thead>
                     <tr>
                       <th>
-                        選手
+                        氏名
                       </th>
 
                       <th>
@@ -1263,11 +1256,8 @@ function App() {
                         備考
                       </th>
 
-                      <th className="compact-penalty-header">
-                        ⚠️
-                        <span>
-                          PENALTY
-                        </span>
+                      <th className="penalty-header">
+                        ⚠️ PENALTY
                       </th>
                     </tr>
                   </thead>
@@ -1292,10 +1282,14 @@ function App() {
                           deadlinePassed &&
                           status === "未";
 
-                        const rowClass =
-                          index % 2 === 1
-                            ? "compact-row-alt"
-                            : "";
+                        const memo =
+                          status === "△"
+                            ? item?.memo || ""
+                            : playerMemos[
+                                player.id
+                              ] ||
+                              player.memo ||
+                              "";
 
                         return (
                           <tr
@@ -1303,7 +1297,9 @@ function App() {
                               player.id
                             }
                             className={
-                              rowClass
+                              index % 2 === 1
+                                ? "compact-row-alt"
+                                : ""
                             }
                           >
                             <th>
@@ -1328,26 +1324,17 @@ function App() {
                             </td>
 
                             <td className="compact-memo">
-                              {status ===
-                              "△"
-                                ? item?.memo ||
-                                  ""
-                                : playerMemos[
-                                    player.id
-                                  ] ||
-                                  player.memo ||
-                                  ""}
+                              {memo}
                             </td>
 
-                            <td className="compact-penalty-cell">
+                            <td className="compact-penalty">
                               <input
                                 type="text"
                                 placeholder=""
                                 value={
                                   playerPenalties[
                                     player.id
-                                  ] ??
-                                  ""
+                                  ] ?? ""
                                 }
                                 onChange={(
                                   e
@@ -1426,9 +1413,7 @@ function App() {
             />
 
             <button
-              onClick={
-                loginAdmin
-              }
+              onClick={loginAdmin}
             >
               ログイン
             </button>
@@ -1539,7 +1524,8 @@ function App() {
                       <button
                         className="move-button"
                         disabled={
-                          index === 0
+                          index ===
+                          0
                         }
                         onClick={() =>
                           movePlayer(
@@ -1821,12 +1807,6 @@ function App() {
       </header>
 
       <main className="main">
-        {saveMessage && (
-          <div className="save-message">
-            ✓ {saveMessage}
-          </div>
-        )}
-
         <div className="top-info-grid">
           <section className="info-box operation-box">
             <h3>
@@ -1920,11 +1900,13 @@ function App() {
             出欠
           </h2>
 
-          {players.length === 0 ? (
+          {players.length ===
+          0 ? (
             <p className="empty-message">
               選手がまだ登録されていません。
             </p>
-          ) : events.length === 0 ? (
+          ) : events.length ===
+            0 ? (
             <p className="empty-message">
               予定がまだ登録されていません。
             </p>
@@ -1948,8 +1930,7 @@ function App() {
                           }
                           className={
                             "event-header " +
-                            (index %
-                              2 ===
+                            (index % 2 ===
                             0
                               ? "header-navy"
                               : "header-yellow")
@@ -2006,8 +1987,7 @@ function App() {
                                 }
                                 className={
                                   "attendance-cell " +
-                                  (index %
-                                    2 ===
+                                  (index % 2 ===
                                   0
                                     ? "cell-navy"
                                     : "cell-yellow")
