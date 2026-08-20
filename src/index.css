@@ -8,16 +8,17 @@ html {
 
 body {
   margin: 0;
-  background: #f5f7fa;
-  color: #172033;
+  background: #f4f6fa;
+  color: #1f2937;
   font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Hiragino Kaku Gothic ProN",
+    "Hiragino Maru Gothic ProN",
     "Hiragino Sans",
     "Yu Gothic",
+    "Meiryo",
+    -apple-system,
+    BlinkMacSystemFont,
     sans-serif;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 button,
@@ -45,26 +46,32 @@ button:disabled {
 ========================= */
 
 .header {
-  background: #081b3a;
+  background: linear-gradient(
+    135deg,
+    #071a38,
+    #0c2b59
+  );
   color: #ffffff;
-  padding: 16px 20px;
+  padding: 18px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow:
+    0 2px 10px rgba(8, 27, 58, 0.12);
 }
 
 .header h1 {
   margin: 0;
-  font-size: 21px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  font-weight: 800;
 }
 
 .header p {
-  margin: 3px 0 0;
-  font-size: 11px;
-  font-weight: 400;
-  opacity: 0.72;
+  margin: 4px 0 0;
+  font-size: 12px;
+  opacity: 0.8;
+  font-weight: 500;
 }
 
 /* =========================
@@ -74,7 +81,7 @@ button:disabled {
 .main {
   width: min(1200px, calc(100% - 24px));
   margin: 0 auto;
-  padding: 16px 0 36px;
+  padding: 18px 0 40px;
 }
 
 /* =========================
@@ -84,37 +91,37 @@ button:disabled {
 .top-info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 9px;
-  margin-bottom: 12px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .info-box {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 11px 13px;
-  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.045);
-  min-height: 132px;
+  border-radius: 14px;
+  padding: 13px 15px;
+  box-shadow:
+    0 3px 12px rgba(15, 23, 42, 0.06);
+  min-height: 145px;
 }
 
 .info-box h3 {
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   color: #081b3a;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
 }
 
 .info-text {
-  font-size: 11px;
-  line-height: 1.5;
-  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.65;
 }
 
 .icon-guide {
-  margin-top: 7px;
+  margin-top: 9px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  font-size: 10px;
+  gap: 4px;
+  font-size: 11px;
   color: #667085;
 }
 
@@ -123,7 +130,7 @@ button:disabled {
 }
 
 .notice-box {
-  border-left: 4px solid #b42318;
+  border-left: 4px solid #e05a47;
 }
 
 .notice-box h3 {
@@ -132,27 +139,28 @@ button:disabled {
 
 .notice-box textarea {
   width: 100%;
-  min-height: 78px;
+  min-height: 86px;
   resize: vertical;
   border: 1px solid #f0b4ae;
-  border-radius: 8px;
-  padding: 7px 8px;
+  border-radius: 9px;
+  padding: 8px 9px;
   color: #b42318;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
-  line-height: 1.45;
+  line-height: 1.5;
   background: #fffafa;
 }
 
 .notice-box textarea::placeholder {
   color: #d58a83;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .notice-box textarea:focus {
   outline: none;
   border-color: #b42318;
-  box-shadow: 0 0 0 2px rgba(180, 35, 24, 0.08);
+  box-shadow:
+    0 0 0 3px rgba(180, 35, 24, 0.08);
 }
 
 /* =========================
@@ -162,30 +170,30 @@ button:disabled {
 .rule-box {
   background: #ffffff;
   border-left: 4px solid #f5c518;
-  border-radius: 10px;
-  padding: 11px 13px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.045);
+  border-radius: 14px;
+  padding: 13px 15px;
+  margin-bottom: 14px;
+  box-shadow:
+    0 3px 12px rgba(15, 23, 42, 0.06);
 }
 
 .rule-title {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   color: #081b3a;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .rule-text {
-  font-size: 12px;
-  line-height: 1.5;
-  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.65;
 }
 
 .rule-notes {
-  margin-top: 5px;
-  font-size: 9px;
+  margin-top: 7px;
+  font-size: 10px;
   color: #667085;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* =========================
@@ -194,42 +202,51 @@ button:disabled {
 
 button {
   border: none;
-  border-radius: 8px;
+  border-radius: 9px;
   background: #081b3a;
   color: #ffffff;
-  padding: 7px 12px;
-  font-size: 12px;
-  font-weight: 500;
+  padding: 8px 13px;
+  font-size: 13px;
+  font-weight: 700;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 button:hover {
-  opacity: 0.88;
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
 }
 
 .secondary-button {
-  background: #e9edf2;
-  color: #172033;
+  background: #e9edf3;
+  color: #344054;
 }
 
 .delete-button {
-  background: #b42318;
-  padding: 5px 9px;
-  font-size: 10px;
+  background: #d94841;
+  padding: 6px 10px;
+  font-size: 11px;
 }
 
 .edit-button {
-  background: #475467;
-  padding: 5px 9px;
-  font-size: 10px;
+  background: #667085;
+  padding: 6px 10px;
+  font-size: 11px;
 }
 
 .move-button {
-  width: 29px;
-  height: 27px;
+  width: 31px;
+  height: 29px;
   padding: 0;
-  font-size: 13px;
-  background: #e9edf2;
-  color: #172033;
+  font-size: 14px;
+  background: #e9edf3;
+  color: #344054;
 }
 
 /* =========================
@@ -239,17 +256,17 @@ button:hover {
 .home-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 6px;
-  margin-bottom: 9px;
+  gap: 8px;
+  margin-bottom: 11px;
 }
 
 .home-actions button {
-  font-size: 10px;
-  padding: 6px 9px;
+  font-size: 11px;
+  padding: 7px 11px;
 }
 
 .compact-button {
-  background: #475467;
+  background: #42526e;
 }
 
 /* =========================
@@ -258,17 +275,18 @@ button:hover {
 
 .section {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.045);
-  margin-bottom: 14px;
+  border-radius: 16px;
+  padding: 17px;
+  box-shadow:
+    0 4px 16px rgba(15, 23, 42, 0.06);
+  margin-bottom: 16px;
 }
 
 .section h2 {
-  margin: 0 0 12px;
+  margin: 0 0 15px;
   color: #081b3a;
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
 }
 
 /* =========================
@@ -279,7 +297,7 @@ button:hover {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 3px;
+  padding-bottom: 4px;
 }
 
 .attendance-table {
@@ -288,30 +306,26 @@ button:hover {
   table-layout: fixed;
   width: max-content;
   min-width: 100%;
-  font-size: 11px;
+  font-size: 12px;
 }
 
-/*
-   選手名をしっかり広げる
-   6〜7文字程度なら極力改行させない
-*/
 .player-name-header,
 .player-name {
-  width: 110px;
-  min-width: 110px;
-  max-width: 110px;
+  width: 118px;
+  min-width: 118px;
+  max-width: 118px;
   background: #ffffff;
   position: sticky;
   left: 0;
   z-index: 2;
-  border-right: 1px solid #d9dee7;
+  border-right: 1px solid #dce2eb;
 }
 
 .event-header,
 .attendance-cell {
-  width: 104px;
-  min-width: 104px;
-  max-width: 104px;
+  width: 108px;
+  min-width: 108px;
+  max-width: 108px;
 }
 
 .memo-header,
@@ -322,29 +336,29 @@ button:hover {
 }
 
 .attendance-table th {
-  border-bottom: 1px solid #d9dee7;
-  border-right: 1px solid #d9dee7;
-  padding: 7px 5px;
+  border-bottom: 1px solid #dce2eb;
+  border-right: 1px solid #dce2eb;
+  padding: 8px 5px;
   vertical-align: top;
   text-align: center;
 }
 
 .attendance-table td {
-  border-bottom: 1px solid #e1e5ec;
+  border-bottom: 1px solid #e5e9f0;
 }
 
 .event-header {
-  line-height: 1.35;
-  font-weight: 600;
+  line-height: 1.4;
+  font-weight: 700;
   word-break: break-word;
 }
 
 .event-header > div {
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 
 .event-date {
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .event-type {
@@ -353,33 +367,33 @@ button:hover {
 }
 
 .event-vs {
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .header-navy {
-  background: #edf2f8;
+  background: #eef3fa;
 }
 
 .header-yellow {
-  background: #fff9df;
+  background: #fff9e6;
 }
 
 .cell-navy {
-  background: #f7f9fc;
+  background: #f8faff;
 }
 
 .cell-yellow {
-  background: #fffdf4;
+  background: #fffdf6;
 }
 
 .player-name {
-  padding: 8px 7px;
+  padding: 9px 8px;
   text-align: left;
-  font-weight: 600;
+  font-weight: 800;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.3;
+  line-height: 1.4;
 }
 
 /* =========================
@@ -387,22 +401,22 @@ button:hover {
 ========================= */
 
 .attendance-cell {
-  padding: 5px 4px;
+  padding: 7px 4px;
   text-align: center;
-  border-right: 1px solid #e1e5ec;
-  border-bottom: 1px solid #e1e5ec;
+  border-right: 1px solid #e5e9f0;
+  border-bottom: 1px solid #e5e9f0;
   vertical-align: top;
 }
 
 .attendance-cell select {
-  width: 42px;
-  min-width: 42px;
-  max-width: 42px;
-  height: 28px;
+  width: 44px;
+  min-width: 44px;
+  max-width: 44px;
+  height: 30px;
   padding: 2px 0;
-  font-size: 12px;
-  border: 1px solid #cbd2dc;
-  border-radius: 7px;
+  font-size: 13px;
+  border: 1px solid #d3dae5;
+  border-radius: 9px;
   background: #ffffff;
   text-align: center;
   text-align-last: center;
@@ -412,24 +426,30 @@ button:hover {
 }
 
 .attendance-cell select.status-○ {
-  color: #2563eb;
-  font-weight: 700;
+  color: #1877d2;
+  font-weight: 800;
+  border-color: #9bc9f5;
+  background: #f0f8ff;
 }
 
 .attendance-cell select.status-× {
   color: #dc2626;
-  font-weight: 700;
+  font-weight: 800;
+  border-color: #f4b3b3;
+  background: #fff4f4;
 }
 
 .attendance-cell select.status-△ {
-  color: #667085;
-  font-weight: 700;
+  color: #b7791f;
+  font-weight: 800;
+  border-color: #f1d08c;
+  background: #fffaf0;
 }
 
 .attendance-cell select.status-未 {
-  color: #b8bec7;
-  font-weight: 500;
-  border-color: #e1e5ea;
+  color: #98a2b3;
+  font-weight: 700;
+  border-color: #e1e6ed;
   background: #fafbfc;
 }
 
@@ -438,13 +458,13 @@ button:hover {
 ========================= */
 
 .attendance-counts {
-  margin-top: 5px;
+  margin-top: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
   font-size: 8px;
-  font-weight: 400;
+  font-weight: 600;
   color: #667085;
   white-space: nowrap;
 }
@@ -458,9 +478,9 @@ button:hover {
 ========================= */
 
 .attendance-memo {
-  margin-top: 4px;
+  margin-top: 5px;
   font-size: 9px;
-  line-height: 1.3;
+  line-height: 1.4;
   color: #475467;
   overflow-wrap: anywhere;
 }
@@ -470,9 +490,9 @@ button:hover {
 ========================= */
 
 .player-memo-cell {
-  padding: 5px;
-  border-right: 1px solid #e1e5ec;
-  border-bottom: 1px solid #e1e5ec;
+  padding: 6px;
+  border-right: 1px solid #e5e9f0;
+  border-bottom: 1px solid #e5e9f0;
   vertical-align: top;
   text-align: left;
 }
@@ -480,11 +500,11 @@ button:hover {
 .player-memo-cell input {
   width: 100%;
   min-width: 0;
-  border: 1px solid #cbd2dc;
-  border-radius: 7px;
-  padding: 5px 6px;
+  border: 1px solid #d3dae5;
+  border-radius: 8px;
+  padding: 6px 7px;
   background: #ffffff;
-  color: #172033;
+  color: #344054;
   font-size: 10px;
   line-height: 1.3;
 }
@@ -496,7 +516,8 @@ button:hover {
 .player-memo-cell input:focus {
   outline: none;
   border-color: #081b3a;
-  box-shadow: 0 0 0 2px rgba(8, 27, 58, 0.08);
+  box-shadow:
+    0 0 0 3px rgba(8, 27, 58, 0.08);
 }
 
 /* =========================
@@ -507,13 +528,13 @@ button:hover {
   display: flex;
   justify-content: space-between;
   gap: 8px;
-  margin-bottom: 13px;
+  margin-bottom: 14px;
 }
 
 .player-add {
   display: flex;
   gap: 8px;
-  margin-bottom: 11px;
+  margin-bottom: 12px;
 }
 
 .player-add input {
@@ -523,7 +544,7 @@ button:hover {
 .player-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
 }
 
 .player-item {
@@ -531,15 +552,17 @@ button:hover {
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  padding: 8px 10px;
-  background: #f7f8fa;
-  border-radius: 8px;
+  padding: 9px 11px;
+  background: #f7f9fc;
+  border-radius: 11px;
 }
 
 .player-item > span {
   min-width: 0;
   overflow-wrap: anywhere;
-  line-height: 1.3;
+  word-break: break-word;
+  line-height: 1.4;
+  font-weight: 700;
 }
 
 .player-actions {
@@ -555,16 +578,18 @@ button:hover {
 
 .event-form {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 9px;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .event-form label {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: 11px;
+  gap: 5px;
+  font-size: 12px;
   color: #475467;
+  font-weight: 600;
 }
 
 .event-form button {
@@ -574,10 +599,19 @@ button:hover {
 input,
 select,
 textarea {
-  border: 1px solid #cbd2dc;
-  border-radius: 7px;
-  padding: 8px 9px;
+  border: 1px solid #d3dae5;
+  border-radius: 9px;
+  padding: 9px 10px;
   background: #ffffff;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #7285a6;
+  box-shadow:
+    0 0 0 3px rgba(8, 27, 58, 0.06);
 }
 
 /* =========================
@@ -585,10 +619,10 @@ textarea {
 ========================= */
 
 .event-list {
-  margin-top: 16px;
+  margin-top: 18px;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 8px;
 }
 
 .event-item {
@@ -596,24 +630,24 @@ textarea {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  padding: 9px;
-  border-radius: 8px;
+  padding: 11px;
+  border-radius: 12px;
 }
 
 .event-navy {
-  background: #edf2f8;
+  background: #eef3fa;
 }
 
 .event-yellow {
-  background: #fff9df;
+  background: #fff9e5;
 }
 
 .event-info {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 8px;
+  gap: 4px 9px;
   align-items: center;
-  font-size: 11px;
+  font-size: 12px;
   min-width: 0;
 }
 
@@ -632,7 +666,7 @@ textarea {
   margin: 40px auto;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 10px;
 }
 
 .login-section button {
@@ -645,89 +679,162 @@ textarea {
 
 .empty-message {
   color: #667085;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 /* =========================
-   COMPACT / SCREENSHOT
+   COMPACT SCREEN
 ========================= */
 
 .compact-page {
-  background: #f5f7fa;
   min-height: 100vh;
+  background: #f3f6fb;
 }
 
 .compact-header {
-  padding: 10px 12px;
+  padding: 11px 14px;
 }
 
 .compact-header h1 {
-  font-size: 17px;
+  font-size: 18px;
 }
 
 .compact-header p {
-  font-size: 9px;
+  font-size: 10px;
+  margin-top: 2px;
 }
 
 .compact-back {
-  padding: 5px 8px;
+  padding: 6px 10px;
   font-size: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .compact-main {
   width: 100%;
-  max-width: 520px;
+  max-width: 620px;
   margin: 0 auto;
-  padding: 6px;
+  padding: 8px;
 }
 
 .compact-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
-  padding: 0 2px;
-  font-size: 10px;
-}
-
-.compact-title strong {
+  margin: 0 2px 7px;
   font-size: 11px;
 }
 
+.compact-title strong {
+  color: #081b3a;
+  font-weight: 800;
+}
+
 .compact-title span {
+  color: #98a2b3;
+  font-size: 9px;
+}
+
+/* =========================
+   COMPACT EVENT SUMMARY
+========================= */
+
+.compact-event-summary {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 9px 11px;
+  margin-bottom: 7px;
+  box-shadow:
+    0 3px 10px rgba(15, 23, 42, 0.05);
+}
+
+.compact-event-main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  color: #172033;
+  font-size: 11px;
+}
+
+.compact-event-main strong {
+  color: #081b3a;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.compact-event-main span:nth-child(2) {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #eef3fa;
+  color: #50627f;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.compact-event-main span:nth-child(3) {
+  font-weight: 800;
+}
+
+.compact-event-details {
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 8px;
   color: #667085;
   font-size: 8px;
 }
 
+/* =========================
+   COMPACT TABLE
+========================= */
+
 .compact-table-wrapper {
   width: 100%;
-  overflow: hidden;
   background: #ffffff;
-  border-radius: 9px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.055);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 3px 12px rgba(15, 23, 42, 0.06);
 }
 
 .compact-table {
   width: 100%;
-  min-width: 0;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   table-layout: fixed;
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .compact-table th,
 .compact-table td {
-  border-bottom: 1px solid #e5e7eb;
-  border-right: 1px solid #e5e7eb;
-  padding: 3px 3px;
+  border-bottom: 1px solid #edf0f4;
+  padding: 5px 4px;
   text-align: center;
-  line-height: 1.15;
-  vertical-align: middle;
+  line-height: 1.25;
 }
 
-.compact-table th:last-child,
-.compact-table td:last-child {
-  border-right: none;
+.compact-table thead th {
+  background: #f6f8fb;
+  color: #667085;
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.compact-table thead th:nth-child(1) {
+  width: 45%;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.compact-table thead th:nth-child(2) {
+  width: 20%;
+}
+
+.compact-table thead th:nth-child(3) {
+  width: 35%;
+  text-align: left;
 }
 
 .compact-table tbody tr:last-child th,
@@ -735,44 +842,19 @@ textarea {
   border-bottom: none;
 }
 
-/*
-  スクショ画面は
-  選手 / 出欠 / 備考
-  の3列だけ
-*/
-.compact-table thead th:nth-child(1) {
-  width: 38%;
-}
-
-.compact-table thead th:nth-child(2) {
-  width: 17%;
-}
-
-.compact-table thead th:nth-child(3) {
-  width: 45%;
-}
-
-.compact-table thead th {
-  background: #f2f4f7;
-  color: #344054;
-  font-size: 8px;
-  font-weight: 600;
-}
-
 .compact-table tbody th {
   background: #ffffff;
   text-align: left;
-  padding-left: 7px;
-  font-size: 10px;
-  font-weight: 600;
-  color: #172033;
+  padding-left: 10px;
+  font-weight: 800;
+  color: #344054;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.compact-table tbody td:nth-child(2) {
-  padding: 2px;
+.compact-table tbody td {
+  font-weight: 800;
 }
 
 /* =========================
@@ -780,46 +862,47 @@ textarea {
 ========================= */
 
 .compact-status-○ {
-  color: #2563eb !important;
-  background: #f2f7ff !important;
+  color: #1474d4 !important;
   font-size: 14px !important;
-  font-weight: 800 !important;
+  font-weight: 900 !important;
 }
 
 .compact-status-× {
   color: #dc2626 !important;
-  background: #fff3f2 !important;
   font-size: 14px !important;
-  font-weight: 800 !important;
+  font-weight: 900 !important;
 }
 
 .compact-status-△ {
-  color: #667085 !important;
-  background: #f5f6f8 !important;
+  color: #c0841b !important;
   font-size: 14px !important;
-  font-weight: 800 !important;
+  font-weight: 900 !important;
 }
 
 .compact-status-未 {
-  color: #c2c7ce !important;
-  background: #fafbfc !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
+  color: #b0b8c4 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
 }
 
 .compact-warning {
-  color: #b42318 !important;
-  background: #fff1f0 !important;
-  font-weight: 800 !important;
+  color: #d92d20 !important;
+  background: #fff5f4 !important;
+  font-size: 12px !important;
 }
 
+/* =========================
+   COMPACT MEMO
+========================= */
+
 .compact-memo {
+  color: #667085;
   font-size: 8px !important;
-  font-weight: 400 !important;
-  color: #475467 !important;
+  font-weight: 500 !important;
   text-align: left !important;
   overflow-wrap: anywhere;
   word-break: break-word;
+  line-height: 1.3;
 }
 
 /* =========================
@@ -828,83 +911,67 @@ textarea {
 
 @media (max-width: 600px) {
   .header {
-    padding: 13px;
+    padding: 14px;
   }
 
   .header h1 {
-    font-size: 19px;
+    font-size: 20px;
   }
 
   .main {
-    width: calc(100% - 12px);
-    padding-top: 9px;
+    width: calc(100% - 16px);
+    padding-top: 12px;
   }
 
   .section {
-    padding: 11px;
-    border-radius: 10px;
+    padding: 12px;
+    border-radius: 14px;
   }
 
-  /*
-    運用方法・ルールを横並び
-  */
   .top-info-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 6px;
+    gap: 8px;
   }
 
-  .info-box {
-    min-height: 0;
-    padding: 9px 9px;
-    border-radius: 9px;
-  }
-
-  .info-box h3 {
-    font-size: 11px;
-    margin-bottom: 4px;
-  }
-
-  .info-text {
-    font-size: 9px;
-    line-height: 1.4;
-  }
-
-  .icon-guide {
-    margin-top: 5px;
-    font-size: 8px;
-    gap: 1px;
-  }
-
-  .rule-notes {
-    margin-top: 4px;
-    font-size: 7.5px;
-    line-height: 1.35;
-  }
-
-  /*
-    全体連絡は3段目
-  */
   .notice-box {
     grid-column: 1 / -1;
   }
 
+  .info-box {
+    min-height: auto;
+    padding: 11px 12px;
+    border-radius: 12px;
+  }
+
+  .info-box h3 {
+    font-size: 13px;
+  }
+
+  .info-text {
+    font-size: 11px;
+  }
+
+  .icon-guide {
+    font-size: 10px;
+  }
+
   .notice-box textarea {
-    min-height: 54px;
-    font-size: 9px;
+    min-height: 65px;
+    font-size: 10px;
   }
 
-  .home-actions {
-    margin-bottom: 7px;
+  .rule-box {
+    padding: 10px 12px;
   }
 
-  .home-actions button {
-    font-size: 9px;
-    padding: 5px 8px;
+  .rule-text {
+    font-size: 12px;
   }
 
-  /*
-    名前列を広めに
-  */
+  .rule-notes {
+    font-size: 10px;
+  }
+
   .player-name-header,
   .player-name {
     width: 110px;
@@ -914,48 +981,46 @@ textarea {
 
   .event-header,
   .attendance-cell {
-    width: 82px;
-    min-width: 82px;
-    max-width: 82px;
+    width: 86px;
+    min-width: 86px;
+    max-width: 86px;
   }
 
   .memo-header,
   .player-memo-cell {
-    width: 95px;
-    min-width: 95px;
-    max-width: 95px;
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
   }
 
   .event-header {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .attendance-table {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .attendance-counts {
-    font-size: 6.5px;
-    gap: 1px;
+    font-size: 7px;
+    gap: 2px;
   }
 
   .attendance-cell select {
-    width: 36px;
-    min-width: 36px;
-    max-width: 36px;
-    height: 25px;
-    font-size: 10px;
-    border-radius: 6px;
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    height: 28px;
+    font-size: 12px;
   }
 
   .player-name {
-    font-size: 10px;
-    white-space: nowrap;
+    font-size: 11px;
   }
 
   .player-memo-cell input {
-    padding: 4px;
-    font-size: 8px;
+    padding: 5px;
+    font-size: 9px;
   }
 
   .event-form {
@@ -971,49 +1036,50 @@ textarea {
   }
 
   .event-info {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .event-buttons {
     flex-direction: column;
   }
 
-  /*
-    スクショ画面
-  */
+  /* Compact */
+
   .compact-main {
-    max-width: 100%;
-    padding: 4px;
+    padding: 6px;
   }
 
-  .compact-title {
-    margin-bottom: 4px;
+  .compact-event-summary {
+    padding: 8px 10px;
+    margin-bottom: 6px;
   }
 
-  .compact-table-wrapper {
-    border-radius: 7px;
+  .compact-event-main {
+    gap: 5px;
+    font-size: 10px;
+  }
+
+  .compact-event-main strong {
+    font-size: 12px;
+  }
+
+  .compact-event-details {
+    font-size: 7px;
+    gap: 2px 6px;
   }
 
   .compact-table th,
   .compact-table td {
-    padding: 2px 3px;
+    padding: 5px 3px;
   }
 
   .compact-table thead th:nth-child(1) {
-    width: 38%;
-  }
-
-  .compact-table thead th:nth-child(2) {
-    width: 17%;
-  }
-
-  .compact-table thead th:nth-child(3) {
-    width: 45%;
+    padding-left: 8px;
   }
 
   .compact-table tbody th {
-    font-size: 9px;
-    padding-left: 6px;
+    padding-left: 8px;
+    font-size: 10px;
   }
 
   .compact-status-○,
@@ -1023,7 +1089,7 @@ textarea {
   }
 
   .compact-status-未 {
-    font-size: 12px !important;
+    font-size: 11px !important;
   }
 
   .compact-memo {
@@ -1036,42 +1102,26 @@ textarea {
 ========================= */
 
 @media (max-width: 380px) {
-  .main {
-    width: calc(100% - 8px);
-  }
-
   .top-info-grid {
-    gap: 5px;
+    grid-template-columns: 1fr;
   }
 
-  .info-box {
-    padding: 8px;
-  }
-
-  .info-text {
-    font-size: 8px;
-  }
-
-  .icon-guide {
-    font-size: 7px;
-  }
-
-  .rule-notes {
-    font-size: 7px;
+  .notice-box {
+    grid-column: auto;
   }
 
   .player-name-header,
   .player-name {
-    width: 105px;
-    min-width: 105px;
-    max-width: 105px;
+    width: 102px;
+    min-width: 102px;
+    max-width: 102px;
   }
 
   .event-header,
   .attendance-cell {
-    width: 78px;
-    min-width: 78px;
-    max-width: 78px;
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
   }
 
   .memo-header,
@@ -1081,21 +1131,23 @@ textarea {
     max-width: 82px;
   }
 
+  .attendance-cell select {
+    width: 38px;
+    min-width: 38px;
+    max-width: 38px;
+  }
+
+  .compact-event-main strong {
+    font-size: 11px;
+  }
+
   .compact-table tbody th {
-    font-size: 8.5px;
+    font-size: 9px;
   }
 
-  .compact-status-○,
-  .compact-status-×,
-  .compact-status-△ {
-    font-size: 12px !important;
-  }
-
-  .compact-status-未 {
-    font-size: 11px !important;
-  }
-
-  .compact-memo {
-    font-size: 6.5px !important;
+  .compact-table th,
+  .compact-table td {
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
 }
