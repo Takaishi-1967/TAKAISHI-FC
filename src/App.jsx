@@ -21,17 +21,12 @@ const statusOptions = [
 function App() {
   const [players, setPlayers] = useState([]);
   const [events, setEvents] = useState([]);
-  const [attendance, setAttendance] =
-    useState([]);
+  const [attendance, setAttendance] = useState([]);
 
-  const [page, setPage] =
-    useState("home");
+  const [page, setPage] = useState("home");
 
-  const [pin, setPin] =
-    useState("");
-
-  const [isAdmin, setIsAdmin] =
-    useState(false);
+  const [pin, setPin] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const [newPlayerName, setNewPlayerName] =
     useState("");
@@ -61,25 +56,26 @@ function App() {
     setNewEventUniform,
   ] = useState("");
 
-  const [
-    editingEventId,
-    setEditingEventId,
-  ] = useState(null);
+  const [editingEventId, setEditingEventId] =
+    useState(null);
 
-  const [
-    playerMemos,
-    setPlayerMemos,
-  ] = useState({});
+  const [playerMemos, setPlayerMemos] =
+    useState({});
 
-  const [
-    playerPenalties,
-    setPlayerPenalties,
-  ] = useState({});
+  const [playerPenalties, setPlayerPenalties] =
+    useState({});
 
-  const [
-    generalNotice,
-    setGeneralNotice,
-  ] = useState("");
+  const [generalNotice, setGeneralNotice] =
+    useState("");
+
+  /*
+   * 日本語入力用
+   *
+   * IME入力中に保存処理や不要な再描画が
+   * 入らないようにするための状態。
+   */
+  const [isComposing, setIsComposing] =
+    useState(false);
 
   useEffect(() => {
     loadData();
@@ -144,10 +140,7 @@ function App() {
       );
 
       setPlayerMemos(memoData);
-
-      setPlayerPenalties(
-        penaltyData
-      );
+      setPlayerPenalties(penaltyData);
     }
 
     if (eventsRes.data) {
@@ -199,7 +192,6 @@ function App() {
   function loginAdmin() {
     if (pin === ADMIN_PIN) {
       setIsAdmin(true);
-
       setPage("admin");
 
       sessionStorage.setItem(
@@ -219,7 +211,6 @@ function App() {
 
   function logoutAdmin() {
     setIsAdmin(false);
-
     setPage("home");
 
     sessionStorage.removeItem(
@@ -336,7 +327,8 @@ function App() {
     setAttendance((current) =>
       current.filter(
         (item) =>
-          item.player_id !== playerId
+          item.player_id !==
+          playerId
       )
     );
 
@@ -621,19 +613,12 @@ function App() {
 
   function cancelEditEvent() {
     setEditingEventId(null);
-
     setNewEventDate("");
-
     setNewEventType("練習");
-
     setNewEventTitle("");
-
     setNewEventTime("");
-
     setNewEventMeetingTime("");
-
     setNewEventPlace("");
-
     setNewEventUniform("");
   }
 
@@ -1227,14 +1212,18 @@ function App() {
                   {nextEvent.place && (
                     <span>
                       📍{" "}
-                      {nextEvent.place}
+                      {
+                        nextEvent.place
+                      }
                     </span>
                   )}
 
                   {nextEvent.uniform && (
                     <span>
                       👕{" "}
-                      {nextEvent.uniform}
+                      {
+                        nextEvent.uniform
+                      }
                     </span>
                   )}
                 </div>
@@ -1280,11 +1269,14 @@ function App() {
 
                         const showWarning =
                           deadlinePassed &&
-                          status === "未";
+                          status ===
+                            "未";
 
                         const memo =
-                          status === "△"
-                            ? item?.memo || ""
+                          status ===
+                          "△"
+                            ? item?.memo ||
+                              ""
                             : playerMemos[
                                 player.id
                               ] ||
@@ -1297,7 +1289,9 @@ function App() {
                               player.id
                             }
                             className={
-                              index % 2 === 1
+                              index %
+                                2 ===
+                              1
                                 ? "compact-row-alt"
                                 : ""
                             }
@@ -1330,11 +1324,11 @@ function App() {
                             <td className="compact-penalty">
                               <input
                                 type="text"
-                                placeholder=""
                                 value={
                                   playerPenalties[
                                     player.id
-                                  ] ?? ""
+                                  ] ??
+                                  ""
                                 }
                                 onChange={(
                                   e
@@ -1353,14 +1347,28 @@ function App() {
                                     })
                                   );
                                 }}
+                                onCompositionStart={() =>
+                                  setIsComposing(
+                                    true
+                                  )
+                                }
+                                onCompositionEnd={() =>
+                                  setIsComposing(
+                                    false
+                                  )
+                                }
                                 onBlur={(
                                   e
-                                ) =>
-                                  savePlayerPenalty(
-                                    player.id,
-                                    e.target
-                                      .value
-                                  )
+                                ) => {
+                                  if (
+                                    !isComposing
+                                  ) {
+                                    savePlayerPenalty(
+                                      player.id,
+                                      e.target
+                                        .value
+                                    );
+                                  }
                                 }
                               />
                             </td>
@@ -1867,11 +1875,25 @@ function App() {
                   e.target.value
                 )
               }
-              onBlur={(e) =>
-                saveGeneralNotice(
-                  e.target.value
+              onCompositionStart={() =>
+                setIsComposing(
+                  true
                 )
               }
+              onCompositionEnd={() =>
+                setIsComposing(
+                  false
+                )
+              }
+              onBlur={(e) => {
+                if (
+                  !isComposing
+                ) {
+                  saveGeneralNotice(
+                    e.target.value
+                  );
+                }
+              }}
             />
           </section>
         </div>
@@ -1930,7 +1952,8 @@ function App() {
                           }
                           className={
                             "event-header " +
-                            (index % 2 ===
+                            (index %
+                              2 ===
                             0
                               ? "header-navy"
                               : "header-yellow")
@@ -1987,7 +2010,8 @@ function App() {
                                 }
                                 className={
                                   "attendance-cell " +
-                                  (index % 2 ===
+                                  (index %
+                                    2 ===
                                   0
                                     ? "cell-navy"
                                     : "cell-yellow")
@@ -2007,7 +2031,8 @@ function App() {
                                     updateAttendance(
                                       player.id,
                                       event.id,
-                                      e.target
+                                      e
+                                        .target
                                         .value
                                     )
                                   }
@@ -2070,13 +2095,27 @@ function App() {
                                 })
                               );
                             }}
-                            onBlur={(e) =>
-                              savePlayerMemo(
-                                player.id,
-                                e.target
-                                  .value
+                            onCompositionStart={() =>
+                              setIsComposing(
+                                true
                               )
                             }
+                            onCompositionEnd={() =>
+                              setIsComposing(
+                                false
+                              )
+                            }
+                            onBlur={(e) => {
+                              if (
+                                !isComposing
+                              ) {
+                                savePlayerMemo(
+                                  player.id,
+                                  e.target
+                                    .value
+                                );
+                              }
+                            }}
                           />
                         </td>
                       </tr>
