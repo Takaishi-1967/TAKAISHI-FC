@@ -42,16 +42,19 @@ function App() {
   const [editingEventId, setEditingEventId] = useState(null);
 
   const [playerMemos, setPlayerMemos] = useState({});
-  const [playerPenalties, setPlayerPenalties] = useState({});
+  const [playerPenalties, setPlayerPenalties] =
+    useState({});
 
-  const [generalNotice, setGeneralNotice] = useState("");
+  const [generalNotice, setGeneralNotice] =
+    useState("");
 
   useEffect(() => {
     loadData();
 
     if (
-      sessionStorage.getItem("takaishi_admin") ===
-      "true"
+      sessionStorage.getItem(
+        "takaishi_admin"
+      ) === "true"
     ) {
       setIsAdmin(true);
     }
@@ -98,7 +101,9 @@ function App() {
       const penaltyData = {};
 
       playersRes.data.forEach((player) => {
-        memoData[player.id] = player.memo || "";
+        memoData[player.id] =
+          player.memo || "";
+
         penaltyData[player.id] =
           player.penalty || "";
       });
@@ -112,21 +117,30 @@ function App() {
     }
 
     if (attendanceRes.data) {
-      setAttendance(attendanceRes.data);
+      setAttendance(
+        attendanceRes.data
+      );
     }
 
     if (settingsRes.data) {
       setGeneralNotice(
-        settingsRes.data.general_notice || ""
+        settingsRes.data.general_notice ||
+          ""
       );
     }
 
     if (playersRes.error) {
-      console.error("players:", playersRes.error);
+      console.error(
+        "players:",
+        playersRes.error
+      );
     }
 
     if (eventsRes.error) {
-      console.error("events:", eventsRes.error);
+      console.error(
+        "events:",
+        eventsRes.error
+      );
     }
 
     if (attendanceRes.error) {
@@ -156,7 +170,10 @@ function App() {
 
       setPin("");
     } else {
-      alert("暗証番号が違います");
+      alert(
+        "暗証番号が違います"
+      );
+
       setPin("");
     }
   }
@@ -171,10 +188,14 @@ function App() {
   }
 
   async function addPlayer() {
-    const name = newPlayerName.trim();
+    const name =
+      newPlayerName.trim();
 
     if (!name) {
-      alert("選手名を入力してください");
+      alert(
+        "選手名を入力してください"
+      );
+
       return;
     }
 
@@ -188,21 +209,27 @@ function App() {
           ) + 1
         : 1;
 
-    const result = await supabase
-      .from("players")
-      .insert({
-        name,
-        sort_order: nextOrder,
-        memo: "",
-        penalty: "",
-      })
-      .select()
-      .single();
+    const result =
+      await supabase
+        .from("players")
+        .insert({
+          name,
+          sort_order: nextOrder,
+          memo: "",
+          penalty: "",
+        })
+        .select()
+        .single();
 
     if (result.error) {
-      console.error(result.error);
+      console.error(
+        result.error
+      );
 
-      alert("選手の追加に失敗しました");
+      alert(
+        "選手の追加に失敗しました"
+      );
+
       return;
     }
 
@@ -224,55 +251,75 @@ function App() {
     setNewPlayerName("");
   }
 
-  async function deletePlayer(playerId) {
+  async function deletePlayer(
+    playerId
+  ) {
     const player = players.find(
-      (item) => item.id === playerId
+      (item) =>
+        item.id === playerId
     );
 
     if (!player) return;
 
     if (
       !window.confirm(
-        player.name + "を削除しますか？"
+        player.name +
+          "を削除しますか？"
       )
     ) {
       return;
     }
 
-    const result = await supabase
-      .from("players")
-      .delete()
-      .eq("id", playerId);
+    const result =
+      await supabase
+        .from("players")
+        .delete()
+        .eq("id", playerId);
 
     if (result.error) {
-      console.error(result.error);
+      console.error(
+        result.error
+      );
 
-      alert("選手の削除に失敗しました");
+      alert(
+        "選手の削除に失敗しました"
+      );
+
       return;
     }
 
     setPlayers((current) =>
       current.filter(
-        (item) => item.id !== playerId
+        (item) =>
+          item.id !== playerId
       )
     );
 
     setAttendance((current) =>
       current.filter(
         (item) =>
-          item.player_id !== playerId
+          item.player_id !==
+          playerId
       )
     );
 
     setPlayerMemos((current) => {
-      const updated = { ...current };
+      const updated = {
+        ...current,
+      };
+
       delete updated[playerId];
+
       return updated;
     });
 
     setPlayerPenalties((current) => {
-      const updated = { ...current };
+      const updated = {
+        ...current,
+      };
+
       delete updated[playerId];
+
       return updated;
     });
   }
@@ -281,9 +328,11 @@ function App() {
     playerId,
     direction
   ) {
-    const index = players.findIndex(
-      (player) => player.id === playerId
-    );
+    const index =
+      players.findIndex(
+        (player) =>
+          player.id === playerId
+      );
 
     if (index < 0) return;
 
@@ -299,7 +348,9 @@ function App() {
       return;
     }
 
-    const updatedPlayers = [...players];
+    const updatedPlayers = [
+      ...players,
+    ];
 
     [
       updatedPlayers[index],
@@ -311,28 +362,42 @@ function App() {
 
     const reorderedPlayers =
       updatedPlayers.map(
-        (player, playerIndex) => ({
+        (
+          player,
+          playerIndex
+        ) => ({
           ...player,
-          sort_order: playerIndex + 1,
+          sort_order:
+            playerIndex + 1,
         })
       );
 
-    setPlayers(reorderedPlayers);
-
-    const results = await Promise.all(
-      reorderedPlayers.map((player) =>
-        supabase
-          .from("players")
-          .update({
-            sort_order: player.sort_order,
-          })
-          .eq("id", player.id)
-      )
+    setPlayers(
+      reorderedPlayers
     );
 
-    const failed = results.find(
-      (result) => result.error
-    );
+    const results =
+      await Promise.all(
+        reorderedPlayers.map(
+          (player) =>
+            supabase
+              .from("players")
+              .update({
+                sort_order:
+                  player.sort_order,
+              })
+              .eq(
+                "id",
+                player.id
+              )
+        )
+      );
+
+    const failed =
+      results.find(
+        (result) =>
+          result.error
+      );
 
     if (failed) {
       console.error(
@@ -352,14 +417,16 @@ function App() {
     playerId,
     memo
   ) {
-    const trimmedMemo = memo.trim();
+    const trimmedMemo =
+      memo.trim();
 
-    const result = await supabase
-      .from("players")
-      .update({
-        memo: trimmedMemo,
-      })
-      .eq("id", playerId);
+    const result =
+      await supabase
+        .from("players")
+        .update({
+          memo: trimmedMemo,
+        })
+        .eq("id", playerId);
 
     if (result.error) {
       console.error(
@@ -375,20 +442,16 @@ function App() {
     }
 
     setPlayers((current) =>
-      current.map((player) =>
-        player.id === playerId
-          ? {
-              ...player,
-              memo: trimmedMemo,
-            }
-          : player
+      current.map(
+        (player) =>
+          player.id === playerId
+            ? {
+                ...player,
+                memo: trimmedMemo,
+              }
+            : player
       )
     );
-
-    setPlayerMemos((current) => ({
-      ...current,
-      [playerId]: trimmedMemo,
-    }));
   }
 
   async function savePlayerPenalty(
@@ -398,12 +461,14 @@ function App() {
     const trimmedPenalty =
       penalty.trim();
 
-    const result = await supabase
-      .from("players")
-      .update({
-        penalty: trimmedPenalty,
-      })
-      .eq("id", playerId);
+    const result =
+      await supabase
+        .from("players")
+        .update({
+          penalty:
+            trimmedPenalty,
+        })
+        .eq("id", playerId);
 
     if (result.error) {
       console.error(
@@ -419,29 +484,30 @@ function App() {
     }
 
     setPlayers((current) =>
-      current.map((player) =>
-        player.id === playerId
-          ? {
-              ...player,
-              penalty: trimmedPenalty,
-            }
-          : player
+      current.map(
+        (player) =>
+          player.id === playerId
+            ? {
+                ...player,
+                penalty:
+                  trimmedPenalty,
+              }
+            : player
       )
     );
-
-    setPlayerPenalties((current) => ({
-      ...current,
-      [playerId]: trimmedPenalty,
-    }));
   }
 
-  async function saveGeneralNotice(value) {
-    const result = await supabase
-      .from("site_settings")
-      .update({
-        general_notice: value,
-      })
-      .eq("id", 1);
+  async function saveGeneralNotice(
+    value
+  ) {
+    const result =
+      await supabase
+        .from("site_settings")
+        .update({
+          general_notice:
+            value,
+        })
+        .eq("id", 1);
 
     if (result.error) {
       console.error(
@@ -462,15 +528,33 @@ function App() {
   function startEditEvent(event) {
     setEditingEventId(event.id);
 
-    setNewEventDate(event.date || "");
-    setNewEventType(event.type || "練習");
-    setNewEventTitle(event.title || "");
-    setNewEventTime(event.time || "");
+    setNewEventDate(
+      event.date || ""
+    );
+
+    setNewEventType(
+      event.type || "練習"
+    );
+
+    setNewEventTitle(
+      event.title || ""
+    );
+
+    setNewEventTime(
+      event.time || ""
+    );
+
     setNewEventMeetingTime(
       event.meeting_time || ""
     );
-    setNewEventPlace(event.place || "");
-    setNewEventUniform(event.uniform || "");
+
+    setNewEventPlace(
+      event.place || ""
+    );
+
+    setNewEventUniform(
+      event.uniform || ""
+    );
 
     window.scrollTo({
       top: 0,
@@ -491,47 +575,64 @@ function App() {
 
   async function saveEvent() {
     if (!newEventDate) {
-      alert("日付を入力してください");
+      alert(
+        "日付を入力してください"
+      );
+
       return;
     }
 
-    if (!newEventTitle.trim()) {
+    if (
+      !newEventTitle.trim()
+    ) {
       alert(
         "相手チーム名などを入力してください"
       );
+
       return;
     }
 
     const data = {
       date: newEventDate,
       type: newEventType,
-      title: newEventTitle.trim(),
-      time: newEventTime.trim(),
+      title:
+        newEventTitle.trim(),
+      time:
+        newEventTime.trim(),
       meeting_time:
         newEventMeetingTime.trim(),
-      place: newEventPlace.trim(),
-      uniform: newEventUniform.trim(),
+      place:
+        newEventPlace.trim(),
+      uniform:
+        newEventUniform.trim(),
     };
 
     let result;
 
     if (editingEventId) {
-      result = await supabase
-        .from("events")
-        .update(data)
-        .eq("id", editingEventId)
-        .select()
-        .single();
+      result =
+        await supabase
+          .from("events")
+          .update(data)
+          .eq(
+            "id",
+            editingEventId
+          )
+          .select()
+          .single();
     } else {
-      result = await supabase
-        .from("events")
-        .insert(data)
-        .select()
-        .single();
+      result =
+        await supabase
+          .from("events")
+          .insert(data)
+          .select()
+          .single();
     }
 
     if (result.error) {
-      console.error(result.error);
+      console.error(
+        result.error
+      );
 
       alert(
         editingEventId
@@ -546,7 +647,8 @@ function App() {
       setEvents((current) =>
         current
           .map((event) =>
-            event.id === editingEventId
+            event.id ===
+            editingEventId
               ? result.data
               : event
           )
@@ -558,7 +660,10 @@ function App() {
       );
     } else {
       setEvents((current) =>
-        [...current, result.data].sort(
+        [
+          ...current,
+          result.data,
+        ].sort(
           (a, b) =>
             new Date(a.date) -
             new Date(b.date)
@@ -569,36 +674,47 @@ function App() {
     cancelEditEvent();
   }
 
-  async function deleteEvent(eventId) {
+  async function deleteEvent(
+    eventId
+  ) {
     const event = events.find(
-      (item) => item.id === eventId
+      (item) =>
+        item.id === eventId
     );
 
     if (!event) return;
 
     if (
       !window.confirm(
-        event.title + "を削除しますか？"
+        event.title +
+          "を削除しますか？"
       )
     ) {
       return;
     }
 
-    const result = await supabase
-      .from("events")
-      .delete()
-      .eq("id", eventId);
+    const result =
+      await supabase
+        .from("events")
+        .delete()
+        .eq("id", eventId);
 
     if (result.error) {
-      console.error(result.error);
+      console.error(
+        result.error
+      );
 
-      alert("予定の削除に失敗しました");
+      alert(
+        "予定の削除に失敗しました"
+      );
+
       return;
     }
 
     setEvents((current) =>
       current.filter(
-        (item) => item.id !== eventId
+        (item) =>
+          item.id !== eventId
       )
     );
 
@@ -616,8 +732,10 @@ function App() {
   ) {
     return attendance.find(
       (item) =>
-        item.player_id === playerId &&
-        item.event_id === eventId
+        item.player_id ===
+          playerId &&
+        item.event_id ===
+          eventId
     );
   }
 
@@ -626,12 +744,14 @@ function App() {
     eventId,
     status
   ) {
-    const previous = getAttendance(
-      playerId,
-      eventId
-    );
+    const previous =
+      getAttendance(
+        playerId,
+        eventId
+      );
 
-    let memo = previous?.memo || "";
+    let memo =
+      previous?.memo || "";
 
     if (status === "△") {
       memo =
@@ -651,24 +771,30 @@ function App() {
       }
     }
 
-    const result = await supabase
-      .from("attendance")
-      .upsert(
-        {
-          player_id: playerId,
-          event_id: eventId,
-          status,
-          memo: memo || null,
-          late_change: false,
-        },
-        {
-          onConflict:
-            "player_id,event_id",
-        }
-      );
+    const result =
+      await supabase
+        .from("attendance")
+        .upsert(
+          {
+            player_id:
+              playerId,
+            event_id:
+              eventId,
+            status,
+            memo:
+              memo || null,
+            late_change: false,
+          },
+          {
+            onConflict:
+              "player_id,event_id",
+          }
+        );
 
     if (result.error) {
-      console.error(result.error);
+      console.error(
+        result.error
+      );
 
       alert(
         "出欠の更新に失敗しました"
@@ -677,35 +803,46 @@ function App() {
       return;
     }
 
-    setAttendance((current) => {
-      const filtered = current.filter(
-        (item) =>
-          !(
-            item.player_id === playerId &&
-            item.event_id === eventId
-          )
-      );
+    setAttendance(
+      (current) => {
+        const filtered =
+          current.filter(
+            (item) =>
+              !(
+                item.player_id ===
+                  playerId &&
+                item.event_id ===
+                  eventId
+              )
+          );
 
-      return [
-        ...filtered,
-        {
-          player_id: playerId,
-          event_id: eventId,
-          status,
-          memo: memo || null,
-          late_change: false,
-        },
-      ];
-    });
+        return [
+          ...filtered,
+          {
+            player_id:
+              playerId,
+            event_id:
+              eventId,
+            status,
+            memo:
+              memo || null,
+            late_change: false,
+          },
+        ];
+      }
+    );
   }
 
-  function formatDate(dateString) {
+  function formatDate(
+    dateString
+  ) {
     if (!dateString) {
       return "";
     }
 
     const date = new Date(
-      dateString + "T00:00:00"
+      dateString +
+        "T00:00:00"
     );
 
     return date.toLocaleDateString(
@@ -726,35 +863,43 @@ function App() {
       "未": 0,
     };
 
-    players.forEach((player) => {
-      const item = getAttendance(
-        player.id,
-        eventId
-      );
+    players.forEach(
+      (player) => {
+        const item =
+          getAttendance(
+            player.id,
+            eventId
+          );
 
-      const status =
-        item?.status || "未";
+        const status =
+          item?.status || "未";
 
-      if (
-        result[status] !== undefined
-      ) {
-        result[status]++;
+        if (
+          result[status] !==
+          undefined
+        ) {
+          result[status]++;
+        }
       }
-    });
+    );
 
     return result;
   }
 
-  function getDeadline(eventDate) {
+  function getDeadline(
+    eventDate
+  ) {
     if (!eventDate) {
       return null;
     }
 
     const date = new Date(
-      eventDate + "T00:00:00"
+      eventDate +
+        "T00:00:00"
     );
 
-    const day = date.getDay();
+    const day =
+      date.getDay();
 
     let daysFromFriday;
 
@@ -766,7 +911,9 @@ function App() {
       daysFromFriday =
         (day + 2) % 7;
 
-      if (daysFromFriday === 0) {
+      if (
+        daysFromFriday === 0
+      ) {
         daysFromFriday = 7;
       }
     }
@@ -786,16 +933,19 @@ function App() {
     return date;
   }
 
-  function isDeadlinePassed(event) {
-    const deadline = getDeadline(
-      event.date
-    );
+  function isDeadlinePassed(
+    event
+  ) {
+    const deadline =
+      getDeadline(event.date);
 
     if (!deadline) {
       return false;
     }
 
-    return new Date() >= deadline;
+    return (
+      new Date() >= deadline
+    );
   }
 
   function getNextEvent() {
@@ -808,35 +958,44 @@ function App() {
       0
     );
 
-    const upcomingEvents = events
-      .filter((event) => {
-        const eventDate = new Date(
-          event.date + "T00:00:00"
+    const upcomingEvents =
+      events
+        .filter((event) => {
+          const eventDate =
+            new Date(
+              event.date +
+                "T00:00:00"
+            );
+
+          return (
+            eventDate >= today
+          );
+        })
+        .sort(
+          (a, b) =>
+            new Date(a.date) -
+            new Date(b.date)
         );
 
-        return eventDate >= today;
-      })
-      .sort(
-        (a, b) =>
-          new Date(a.date) -
-          new Date(b.date)
-      );
-
-    return upcomingEvents[0] || null;
+    return (
+      upcomingEvents[0] ||
+      null
+    );
   }
 
   function EventInfo({
     event,
     compact = false,
   }) {
-    const counts = getCounts(
-      event.id
-    );
+    const counts =
+      getCounts(event.id);
 
     return (
       <>
         <div className="event-date">
-          {formatDate(event.date)}
+          {formatDate(
+            event.date
+          )}
         </div>
 
         <div className="event-type">
@@ -855,7 +1014,8 @@ function App() {
 
         {event.meeting_time && (
           <div>
-            ⌛ {event.meeting_time}
+            ⌛{" "}
+            {event.meeting_time}
           </div>
         )}
 
@@ -897,28 +1057,39 @@ function App() {
   }
 
   function CompactPage() {
-    const nextEvent = getNextEvent();
+    const nextEvent =
+      getNextEvent();
 
-    const deadlinePassed = nextEvent
-      ? isDeadlinePassed(nextEvent)
-      : false;
+    const deadlinePassed =
+      nextEvent
+        ? isDeadlinePassed(
+            nextEvent
+          )
+        : false;
 
-    const counts = nextEvent
-      ? getCounts(nextEvent.id)
-      : {
-          "○": 0,
-          "×": 0,
-          "△": 0,
-          "未": 0,
-        };
+    const counts =
+      nextEvent
+        ? getCounts(
+            nextEvent.id
+          )
+        : {
+            "○": 0,
+            "×": 0,
+            "△": 0,
+            "未": 0,
+          };
 
     return (
       <div className="app compact-page">
         <header className="header compact-header">
           <div>
-            <h1>TAKAISHI.FC</h1>
+            <h1>
+              TAKAISHI.FC
+            </h1>
 
-            <p>出欠確認</p>
+            <p>
+              出欠確認
+            </p>
           </div>
 
           <button
@@ -939,10 +1110,11 @@ function App() {
 
             {nextEvent && (
               <span className="compact-counts">
-                👤 ○:{counts["○"]} ×:
-                {counts["×"]} △:
-                {counts["△"]} 未:
-                {counts["未"]}
+                👤
+                ○:{counts["○"]}
+                ×:{counts["×"]}
+                △:{counts["△"]}
+                未:{counts["未"]}
               </span>
             )}
           </div>
@@ -1012,9 +1184,18 @@ function App() {
                 <table className="compact-table">
                   <thead>
                     <tr>
-                      <th>氏名</th>
-                      <th>回答</th>
-                      <th>備考</th>
+                      <th>
+                        氏名
+                      </th>
+
+                      <th>
+                        回答
+                      </th>
+
+                      <th>
+                        備考
+                      </th>
+
                       <th className="penalty-header">
                         ⚠️ PENALTY
                       </th>
@@ -1059,7 +1240,8 @@ function App() {
                               player.id
                             }
                             className={
-                              index % 2 ===
+                              index %
+                                2 ===
                               1
                                 ? "compact-row-alt"
                                 : ""
@@ -1093,12 +1275,11 @@ function App() {
                             <td className="compact-penalty">
                               <input
                                 type="text"
-                                defaultValue={
+                                value={
                                   playerPenalties[
                                     player.id
                                   ] ?? ""
                                 }
-                                placeholder="例：500円"
                                 onChange={(
                                   e
                                 ) => {
@@ -1146,7 +1327,9 @@ function App() {
       <div className="app">
         <header className="header">
           <div>
-            <h1>TAKAISHI.FC</h1>
+            <h1>
+              TAKAISHI.FC
+            </h1>
 
             <p>
               管理者ログイン
@@ -1167,7 +1350,9 @@ function App() {
               placeholder="6桁の暗証番号"
               value={pin}
               onChange={(e) =>
-                setPin(e.target.value)
+                setPin(
+                  e.target.value
+                )
               }
             />
 
@@ -1203,7 +1388,9 @@ function App() {
       <div className="app">
         <header className="header">
           <div>
-            <h1>TAKAISHI.FC</h1>
+            <h1>
+              TAKAISHI.FC
+            </h1>
 
             <p>
               管理者ページ
@@ -1223,7 +1410,9 @@ function App() {
 
             <button
               className="secondary-button"
-              onClick={logoutAdmin}
+              onClick={
+                logoutAdmin
+              }
             >
               ログアウト
             </button>
@@ -1249,7 +1438,9 @@ function App() {
               />
 
               <button
-                onClick={addPlayer}
+                onClick={
+                  addPlayer
+                }
               >
                 選手を追加
               </button>
@@ -1465,7 +1656,9 @@ function App() {
               </label>
 
               <button
-                onClick={saveEvent}
+                onClick={
+                  saveEvent
+                }
               >
                 {editingEventId
                   ? "変更を保存"
@@ -1504,7 +1697,9 @@ function App() {
                   >
                     <div className="event-info">
                       <EventInfo
-                        event={event}
+                        event={
+                          event
+                        }
                       />
                     </div>
 
@@ -1545,9 +1740,13 @@ function App() {
     <div className="app">
       <header className="header">
         <div>
-          <h1>TAKAISHI.FC</h1>
+          <h1>
+            TAKAISHI.FC
+          </h1>
 
-          <p>出欠確認</p>
+          <p>
+            出欠確認
+          </p>
         </div>
       </header>
 
@@ -1603,10 +1802,15 @@ function App() {
             </h3>
 
             <textarea
-              defaultValue={
+              value={
                 generalNotice
               }
               placeholder="特記事項など"
+              onChange={(e) =>
+                setGeneralNotice(
+                  e.target.value
+                )
+              }
               onBlur={(e) => {
                 saveGeneralNotice(
                   e.target.value
@@ -1636,13 +1840,17 @@ function App() {
         </div>
 
         <section className="section">
-          <h2>出欠</h2>
+          <h2>
+            出欠
+          </h2>
 
-          {players.length === 0 ? (
+          {players.length ===
+          0 ? (
             <p className="empty-message">
               選手がまだ登録されていません。
             </p>
-          ) : events.length === 0 ? (
+          ) : events.length ===
+            0 ? (
             <p className="empty-message">
               予定がまだ登録されていません。
             </p>
@@ -1674,7 +1882,9 @@ function App() {
                           }
                         >
                           <EventInfo
-                            event={event}
+                            event={
+                              event
+                            }
                           />
                         </th>
                       )
@@ -1787,7 +1997,7 @@ function App() {
                           <input
                             type="text"
                             placeholder="備考"
-                            defaultValue={
+                            value={
                               playerMemos[
                                 player.id
                               ] ?? ""
