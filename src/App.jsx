@@ -48,6 +48,9 @@ function App() {
   const [generalNotice, setGeneralNotice] =
     useState("");
 
+  const [penaltyNotice, setPenaltyNotice] =
+    useState("");
+
   useEffect(() => {
     loadData();
 
@@ -125,6 +128,11 @@ function App() {
     if (settingsRes.data) {
       setGeneralNotice(
         settingsRes.data.general_notice ||
+          ""
+      );
+
+      setPenaltyNotice(
+        settingsRes.data.penalty_notice ||
           ""
       );
     }
@@ -523,6 +531,34 @@ function App() {
     }
 
     setGeneralNotice(value);
+  }
+
+  async function savePenaltyNotice(
+    value
+  ) {
+    const result =
+      await supabase
+        .from("site_settings")
+        .update({
+          penalty_notice:
+            value,
+        })
+        .eq("id", 1);
+
+    if (result.error) {
+      console.error(
+        "penalty notice:",
+        result.error
+      );
+
+      alert(
+        "ペナルティの保存に失敗しました"
+      );
+
+      return;
+    }
+
+    setPenaltyNotice(value);
   }
 
   function startEditEvent(event) {
@@ -1125,58 +1161,84 @@ function App() {
             </p>
           ) : (
             <>
-              <div className="compact-event-summary">
-                <div className="compact-event-main">
-                  <strong>
-                    {formatDate(
-                      nextEvent.date
+              <div className="compact-top-grid">
+                <div className="compact-event-summary">
+                  <div className="compact-event-main">
+                    <strong>
+                      {formatDate(
+                        nextEvent.date
+                      )}
+                    </strong>
+
+                    <span>
+                      {nextEvent.type}
+                    </span>
+
+                    <span>
+                      vs{" "}
+                      {nextEvent.title}
+                    </span>
+                  </div>
+
+                  <div className="compact-event-details">
+                    {nextEvent.time && (
+                      <span>
+                        ⌚️{" "}
+                        {nextEvent.time}
+                      </span>
                     )}
-                  </strong>
 
-                  <span>
-                    {nextEvent.type}
-                  </span>
+                    {nextEvent.meeting_time && (
+                      <span>
+                        ⌛{" "}
+                        {
+                          nextEvent.meeting_time
+                        }
+                      </span>
+                    )}
 
-                  <span>
-                    vs{" "}
-                    {nextEvent.title}
-                  </span>
+                    {nextEvent.place && (
+                      <span>
+                        📍{" "}
+                        {
+                          nextEvent.place
+                        }
+                      </span>
+                    )}
+
+                    {nextEvent.uniform && (
+                      <span>
+                        👕{" "}
+                        {
+                          nextEvent.uniform
+                        }
+                      </span>
+                    )}
+                  </div>
                 </div>
 
-                <div className="compact-event-details">
-                  {nextEvent.time && (
-                    <span>
-                      ⌚️{" "}
-                      {nextEvent.time}
-                    </span>
-                  )}
+                <div className="compact-penalty-box">
+                  <div className="compact-penalty-title">
+                    ⚠️ PENALTY
+                  </div>
 
-                  {nextEvent.meeting_time && (
-                    <span>
-                      ⌛{" "}
-                      {
-                        nextEvent.meeting_time
-                      }
-                    </span>
-                  )}
-
-                  {nextEvent.place && (
-                    <span>
-                      📍{" "}
-                      {
-                        nextEvent.place
-                      }
-                    </span>
-                  )}
-
-                  {nextEvent.uniform && (
-                    <span>
-                      👕{" "}
-                      {
-                        nextEvent.uniform
-                      }
-                    </span>
-                  )}
+                  <textarea
+                    className="compact-penalty-textarea"
+                    value={
+                      penaltyNotice
+                    }
+                    placeholder="例：&#10;カワバタ 500円&#10;○○ 2,000円"
+                    onChange={(e) =>
+                      setPenaltyNotice(
+                        e.target.value
+                      )
+                    }
+                    onBlur={(e) =>
+                      savePenaltyNotice(
+                        e.target.value
+                      )
+                    }
+                  />
                 </div>
               </div>
 
