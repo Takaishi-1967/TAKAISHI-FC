@@ -130,7 +130,6 @@ select {
   border-left: 4px solid #f5c518;
 }
 
-/* ★ ルール下の3行 */
 .rule-notes {
   margin-top: 7px;
   font-size: 10px;
@@ -159,8 +158,6 @@ select {
   font-weight: 600;
   line-height: 1.5;
   background: #fffafa;
-
-  /* 日本語入力対策 */
   ime-mode: active;
 }
 
@@ -485,8 +482,6 @@ button:active {
   background: #ffffff;
   color: #172033;
   font-size: 10px;
-
-  /* ★ IME入力時の安定化 */
   -webkit-user-select: text;
   user-select: text;
   touch-action: manipulation;
@@ -710,6 +705,21 @@ textarea {
 }
 
 /* =========================
+   COMPACT TOP AREA
+   左：試合情報
+   右：PENALTY
+========================= */
+
+.compact-top-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(150px, 0.75fr);
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+/* =========================
    COMPACT EVENT CARD
 ========================= */
 
@@ -718,10 +728,10 @@ textarea {
   border: 1px solid #dce2ea;
   border-radius: 14px;
   padding: 8px 10px;
-  margin-bottom: 6px;
   box-shadow:
     0 2px 8px
     rgba(8, 27, 58, 0.05);
+  min-width: 0;
 }
 
 .compact-event-main {
@@ -757,6 +767,56 @@ textarea {
 }
 
 /* =========================
+   COMPACT PENALTY
+========================= */
+
+.compact-penalty-box {
+  background: #fffafa;
+  border: 1px solid #f2c5c1;
+  border-radius: 14px;
+  padding: 8px;
+  box-shadow:
+    0 2px 8px
+    rgba(180, 35, 24, 0.04);
+  min-width: 0;
+}
+
+.compact-penalty-title {
+  margin-bottom: 5px;
+  color: #b42318;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.compact-penalty-box textarea {
+  width: 100%;
+  height: 100%;
+  min-height: 52px;
+  resize: none;
+  border: none;
+  border-radius: 8px;
+  padding: 4px;
+  background: transparent;
+  color: #9f1d15;
+  font-size: 9px;
+  line-height: 1.4;
+  font-weight: 600;
+  -webkit-user-select: text;
+  user-select: text;
+  touch-action: manipulation;
+}
+
+.compact-penalty-box textarea::placeholder {
+  color: #d58a83;
+  font-weight: 500;
+}
+
+.compact-penalty-box textarea:focus {
+  outline: none;
+}
+
+/* =========================
    COMPACT COUNTS
 ========================= */
 
@@ -765,7 +825,6 @@ textarea {
   justify-content: flex-start;
   align-items: center;
   gap: 4px;
-  margin-bottom: 6px;
   padding: 5px 8px;
   background: #ffffff;
   border-radius: 10px;
@@ -844,11 +903,7 @@ textarea {
 }
 
 .compact-table thead th:nth-child(3) {
-  width: 29%;
-}
-
-.compact-table thead th:nth-child(4) {
-  width: 24%;
+  width: 53%;
 }
 
 .compact-table tbody td {
@@ -897,41 +952,6 @@ textarea {
 }
 
 /* =========================
-   PENALTY
-========================= */
-
-.compact-penalty {
-  text-align: left !important;
-  padding: 3px 4px !important;
-}
-
-.compact-penalty input {
-  width: 100%;
-  min-width: 0;
-  padding: 3px 4px;
-  border: 1px solid #f2cfcb;
-  border-radius: 6px;
-  background: #fff8f7;
-  color: #b42318;
-  font-size: 8px;
-  line-height: 1.2;
-
-  /* ★ 日本語入力対策 */
-  -webkit-user-select: text;
-  user-select: text;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.compact-penalty input:focus {
-  outline: none;
-  border-color: #df8a83;
-  box-shadow:
-    0 0 0 2px
-    rgba(223, 138, 131, 0.1);
-}
-
-/* =========================
    MOBILE
 ========================= */
 
@@ -965,9 +985,9 @@ textarea {
     margin-bottom: 10px;
   }
 
-  /* -------------------------
+  /* =========================
      上部3ボックス
-  ------------------------- */
+  ========================= */
 
   .top-info-grid {
     grid-template-columns: 1fr 1fr;
@@ -997,7 +1017,6 @@ textarea {
     font-size: 8px;
   }
 
-  /* ★ ルール下3行をさらに小さく */
   .rule-notes {
     margin-top: 5px;
     font-size: 8px;
@@ -1017,9 +1036,9 @@ textarea {
     border-radius: 8px;
   }
 
-  /* -------------------------
+  /* =========================
      HOME BUTTON
-  ------------------------- */
+  ========================= */
 
   .home-actions {
     gap: 5px;
@@ -1032,9 +1051,9 @@ textarea {
     border-radius: 8px;
   }
 
-  /* -------------------------
+  /* =========================
      ATTENDANCE TABLE
-  ------------------------- */
+  ========================= */
 
   .player-name-header,
   .player-name {
@@ -1098,9 +1117,9 @@ textarea {
     border-radius: 7px;
   }
 
-  /* -------------------------
+  /* =========================
      ADMIN
-  ------------------------- */
+  ========================= */
 
   .admin-top {
     margin-bottom: 9px;
@@ -1139,9 +1158,9 @@ textarea {
     font-size: 10px;
   }
 
-  /* -------------------------
+  /* =========================
      EVENT FORM
-  ------------------------- */
+  ========================= */
 
   .event-form {
     grid-template-columns: 1fr;
@@ -1183,9 +1202,9 @@ textarea {
     gap: 3px;
   }
 
-  /* -------------------------
+  /* =========================
      COMPACT
-  ------------------------- */
+  ========================= */
 
   .compact-header {
     padding: 9px 10px;
@@ -1218,10 +1237,19 @@ textarea {
     font-size: 7px;
   }
 
+  /* 左右の試合情報・ペナルティ枠 */
+
+  .compact-top-grid {
+    grid-template-columns:
+      minmax(0, 1.35fr)
+      minmax(0, 0.9fr);
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
   .compact-event-summary {
     border-radius: 10px;
     padding: 6px 7px;
-    margin-bottom: 4px;
   }
 
   .compact-event-main {
@@ -1243,8 +1271,26 @@ textarea {
     gap: 2px 5px;
   }
 
+  /* PENALTY */
+
+  .compact-penalty-box {
+    border-radius: 10px;
+    padding: 6px;
+  }
+
+  .compact-penalty-title {
+    margin-bottom: 3px;
+    font-size: 8px;
+  }
+
+  .compact-penalty-box textarea {
+    min-height: 48px;
+    padding: 2px;
+    font-size: 7px;
+    line-height: 1.35;
+  }
+
   .compact-counts {
-    margin-bottom: 4px;
     padding: 3px 6px;
     font-size: 8px;
     gap: 3px;
@@ -1273,11 +1319,7 @@ textarea {
   }
 
   .compact-table thead th:nth-child(3) {
-    width: 28%;
-  }
-
-  .compact-table thead th:nth-child(4) {
-    width: 29%;
+    width: 57%;
   }
 
   .compact-table tbody th {
@@ -1292,16 +1334,6 @@ textarea {
 
   .compact-memo {
     font-size: 6px !important;
-  }
-
-  .compact-penalty {
-    padding: 2px !important;
-  }
-
-  .compact-penalty input {
-    padding: 2px 3px;
-    border-radius: 5px;
-    font-size: 7px;
   }
 }
 
@@ -1366,6 +1398,29 @@ textarea {
     max-width: 36px;
   }
 
+  .compact-top-grid {
+    grid-template-columns:
+      minmax(0, 1.25fr)
+      minmax(0, 0.85fr);
+  }
+
+  .compact-event-summary {
+    padding: 5px 6px;
+  }
+
+  .compact-penalty-box {
+    padding: 5px;
+  }
+
+  .compact-penalty-title {
+    font-size: 7px;
+  }
+
+  .compact-penalty-box textarea {
+    min-height: 44px;
+    font-size: 6px;
+  }
+
   .compact-table thead th:nth-child(1) {
     width: 30%;
   }
@@ -1375,11 +1430,7 @@ textarea {
   }
 
   .compact-table thead th:nth-child(3) {
-    width: 27%;
-  }
-
-  .compact-table thead th:nth-child(4) {
-    width: 32%;
+    width: 59%;
   }
 
   .compact-table tbody th {
@@ -1392,9 +1443,5 @@ textarea {
 
   .compact-memo {
     font-size: 6px !important;
-  }
-
-  .compact-penalty input {
-    font-size: 6px;
   }
 }
