@@ -1797,27 +1797,33 @@ async function saveGeneralNotice(
           </section>
 
           <section className="info-box notice-box">
-            <h3>
-              全体連絡(誰でも記載可)
-            </h3>
+  <div className="notice-header">
+    <h3>
+      全体連絡(誰でも記載可)
+    </h3>
 
-            <textarea
-              value={
-                generalNotice
-              }
-              placeholder="特記事項など"
-              onChange={(e) =>
-                setGeneralNotice(
-                  e.target.value
-                )
-              }
-              onBlur={(e) => {
-                saveGeneralNotice(
-                  e.target.value
-                );
-              }}
-            />
-          </section>
+    <button
+      className="save-button"
+      onClick={() =>
+        saveGeneralNotice(
+          generalNotice
+        )
+      }
+    >
+      💾 保存
+    </button>
+  </div>
+
+  <textarea
+    value={generalNotice}
+    placeholder="特記事項など"
+    onChange={(e) =>
+      setGeneralNotice(
+        e.target.value
+      )
+    }
+  />
+</section>
         </div>
 
         <div className="home-actions">
@@ -1993,39 +1999,43 @@ async function saveGeneralNotice(
                           }
                         )}
 
-                        <td className="player-memo-cell">
-                          <input
-                            type="text"
-                            placeholder="備考"
-                            value={
-                              playerMemos[
-                                player.id
-                              ] ?? ""
-                            }
-                            onChange={(e) => {
-                              const value =
-                                e.target
-                                  .value;
+                      <td className="player-memo-cell">
+  <input
+    type="text"
+    placeholder="備考"
+    value={
+      playerMemos[
+        player.id
+      ] ?? ""
+    }
+    onChange={(e) => {
+      const value =
+        e.target.value;
 
-                              setPlayerMemos(
-                                (
-                                  current
-                                ) => ({
-                                  ...current,
-                                  [player.id]:
-                                    value,
-                                })
-                              );
-                            }}
-                            onBlur={(e) => {
-                              savePlayerMemo(
-                                player.id,
-                                e.target
-                                  .value
-                              );
-                            }}
-                          />
-                        </td>
+      setPlayerMemos(
+        (current) => ({
+          ...current,
+          [player.id]:
+            value,
+        })
+      );
+    }}
+  />
+
+  <button
+    className="save-button memo-save-button"
+    onClick={() =>
+      savePlayerMemo(
+        player.id,
+        playerMemos[
+          player.id
+        ] ?? ""
+      )
+    }
+  >
+    💾
+  </button>
+</td>
                       </tr>
                     )
                   )}
