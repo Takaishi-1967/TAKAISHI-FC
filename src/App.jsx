@@ -1796,7 +1796,7 @@ async function saveGeneralNotice(
             </div>
           </section>
 
-          <section className="info-box notice-box">
+<section className="info-box notice-box">
   <div className="notice-header">
     <h3>
       全体連絡(誰でも記載可)
@@ -1810,7 +1810,7 @@ async function saveGeneralNotice(
         )
       }
     >
-      💾 保存
+      保存
     </button>
   </div>
 
@@ -1999,7 +1999,7 @@ async function saveGeneralNotice(
                           }
                         )}
 
-                      <td className="player-memo-cell">
+<td className="player-memo-cell">
   <input
     type="text"
     placeholder="備考"
@@ -2033,7 +2033,7 @@ async function saveGeneralNotice(
       )
     }
   >
-    💾
+    保存
   </button>
 </td>
                       </tr>
