@@ -1445,3 +1445,34 @@ textarea {
     font-size: 6px !important;
   }
 }
+/* 保存ボタン */
+.save-button {
+  border: none;
+  background: transparent;
+  color: #555;
+  font-size: 12px;
+  padding: 2px 6px;
+  min-width: auto;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.save-button:hover {
+  opacity: 1;
+}
+
+/* 選手の備考用 */
+.memo-save-button {
+  font-size: 11px;
+  padding: 1px 4px;
+}
+
+/* 全体連絡の見出しと保存ボタン */
+.notice-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
