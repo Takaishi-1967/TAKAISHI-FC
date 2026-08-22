@@ -1209,10 +1209,7 @@ function App() {
     )}
   </div>
 </div>
-                </div>
-              </div>
-
-              <div className="compact-table-wrapper">
+            　 <div className="compact-table-wrapper">
                 <table className="compact-table">
                   <thead>
                     <tr>
