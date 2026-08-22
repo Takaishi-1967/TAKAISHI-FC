@@ -1826,24 +1826,33 @@ async function saveGeneralNotice(
 </section>
         </div>
 
-        <div className="home-actions">
-          <button
-            className="compact-button"
-            onClick={() =>
-              setPage("compact")
-            }
-          >
-            📸 締切確認
-          </button>
+<div className="home-actions">
+  <button
+    className="compact-button"
+    onClick={() =>
+      setPage("compact")
+    }
+  >
+    📸 締切確認
+  </button>
 
-          <button
-            onClick={() =>
-              setPage("login")
-            }
-          >
-            管理者ページ
-          </button>
-        </div>
+  <a
+    className="ofa-button"
+    href="https://osaka-fa.or.jp/1shu/game_information/2026_osaka_syakaijin_league/"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    ⚽ OFA リーグ情報
+  </a>
+
+  <button
+    onClick={() =>
+      setPage("login")
+    }
+  >
+    管理者ページ
+  </button>
+</div>
 
         <section className="section">
           <h2>
