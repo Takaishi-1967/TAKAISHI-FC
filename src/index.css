@@ -1465,8 +1465,9 @@ textarea {
 
 /* 選手の備考用 */
 .memo-save-button {
-  font-size: 11px;
-  padding: 1px 4px;
+  font-size: 9px;
+  padding: 1px 3px;
+    opacity: 0.6;
 }
 
 /* 全体連絡の見出しと保存ボタン */
