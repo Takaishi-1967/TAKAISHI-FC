@@ -421,47 +421,53 @@ function App() {
     }
   }
 
-  async function savePlayerMemo(
-    playerId,
-    memo
-  ) {
-    const trimmedMemo =
-      memo.trim();
+async function savePlayerMemo(
+  playerId,
+  memo
+) {
+  const trimmedMemo =
+    memo.trim();
 
-    const result =
-      await supabase
-        .from("players")
-        .update({
-          memo: trimmedMemo,
-        })
-        .eq("id", playerId);
+  const result =
+    await supabase
+      .from("players")
+      .update({
+        memo: trimmedMemo,
+      })
+      .eq("id", playerId)
+      .select()
+      .single();
 
-    if (result.error) {
-      console.error(
-        "player memo:",
-        result.error
-      );
-
-      alert(
-        "備考の保存に失敗しました"
-      );
-
-      return;
-    }
-
-    setPlayers((current) =>
-      current.map(
-        (player) =>
-          player.id === playerId
-            ? {
-                ...player,
-                memo: trimmedMemo,
-              }
-            : player
-      )
+  if (result.error) {
+    console.error(
+      "player memo:",
+      result.error
     );
+
+    alert(
+      "備考の保存に失敗しました"
+    );
+
+    return;
   }
 
+  setPlayerMemos((current) => ({
+    ...current,
+    [playerId]: trimmedMemo,
+  }));
+
+  setPlayers((current) =>
+    current.map(
+      (player) =>
+        player.id === playerId
+          ? {
+              ...player,
+              memo: trimmedMemo,
+            }
+          : player
+    )
+  );
+}
   async function savePlayerPenalty(
     playerId,
     penalty
@@ -505,33 +511,37 @@ function App() {
     );
   }
 
-  async function saveGeneralNotice(
-    value
-  ) {
-    const result =
-      await supabase
-        .from("site_settings")
-        .update({
-          general_notice:
-            value,
-        })
-        .eq("id", 1);
+async function saveGeneralNotice(
+  value
+) {
+  const result =
+    await supabase
+      .from("site_settings")
+      .update({
+        general_notice:
+          value,
+      })
+      .eq("id", 1)
+      .select()
+      .single();
 
-    if (result.error) {
-      console.error(
-        "general notice:",
-        result.error
-      );
+  if (result.error) {
+    console.error(
+      "general notice:",
+      result.error
+    );
 
-      alert(
-        "全体連絡の保存に失敗しました"
-      );
+    alert(
+      "全体連絡の保存に失敗しました"
+    );
 
-      return;
-    }
-
-    setGeneralNotice(value);
+    return;
   }
+
+  setGeneralNotice(
+    result.data.general_notice || ""
+  );
+}
 
   async function savePenaltyNotice(
     value
