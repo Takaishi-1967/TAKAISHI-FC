@@ -1222,23 +1222,14 @@ function App() {
                     ⚠️ PENALTY
                   </div>
 
-                  <textarea
-                    className="compact-penalty-textarea"
-                    value={
-                      penaltyNotice
-                    }
-                    placeholder="例：&#10;カワバタ 500円&#10;○○ 2,000円"
-                    onChange={(e) =>
-                      setPenaltyNotice(
-                        e.target.value
-                      )
-                    }
-                    onBlur={(e) =>
-                      savePenaltyNotice(
-                        e.target.value
-                      )
-                    }
-                  />
+<textarea
+  className="compact-penalty-textarea"
+  value={penaltyNotice}
+  placeholder={"例：\nカワバタ 500円\n○○ 2,000円"}
+  onChange={(e) => {
+    setPenaltyNotice(e.target.value);
+  }}
+/>
                 </div>
               </div>
 
